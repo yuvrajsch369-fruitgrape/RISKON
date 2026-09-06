@@ -1,0 +1,375 @@
+{
+  "incident_id": "INC-2101",
+  "schema_version": "1.0.0",
+  "pipeline_run_id": "RUN-INC-2101-A1",
+  "generated_at": "2026-09-03T14:32:00Z",
+  "model": "claude-sonnet-5",
+  "stage_1_ingestion": {
+    "incident_id": "INC-2101",
+    "facility_id": "FAC-002",
+    "reporter_employee_id": "EMP-0014",
+    "raw_report_text": "While walking through the main aisle near the electric forklift charging station in the warehouse, I had to jump back when a forklift carrying a pallet turned the corner without sounding its horn. No contact was made. The operator said the pallet was blocking their view around the corner. This happened around 2:15pm on day shift. No injuries.",
+    "date_submitted": "2026-08-14T15:05:00Z",
+    "attachments_present": false,
+    "ingestion_status": "complete"
+  },
+  "stage_2_information_extraction": {
+    "who_involved": {
+      "value": "Reporting pedestrian (warehouse associate); forklift operator (unnamed in report)",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.9,
+      "reasoning": "Reporter self-identifies as pedestrian; operator is referenced but not named in the text.",
+      "requires_human_approval": false
+    },
+    "what_happened": {
+      "value": "Forklift carrying a pallet turned a blind corner without sounding its horn; pedestrian stepped back to avoid contact; no contact occurred.",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.95,
+      "reasoning": "Directly stated in report body.",
+      "requires_human_approval": false
+    },
+    "when_occurred": {
+      "value": "Approx. 2:15pm, day shift, 2026-08-14",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.85,
+      "reasoning": "Reporter states 'around 2:15pm on day shift'; exact minute not confirmed.",
+      "requires_human_approval": false
+    },
+    "where_location": {
+      "value": "Main warehouse aisle near electric forklift charging station",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.9,
+      "reasoning": "Directly stated.",
+      "requires_human_approval": false
+    },
+    "equipment_involved": {
+      "value": "Electric forklift (EQ-0031)",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.7,
+      "reasoning": "Report identifies 'forklift'; specific unit matched via facility equipment log for the charging-station area.",
+      "requires_human_approval": false
+    },
+    "injuries_reported": {
+      "value": "None",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.95,
+      "reasoning": "Reporter explicitly states 'No injuries'.",
+      "requires_human_approval": false
+    },
+    "witnesses": {
+      "value": null,
+      "insufficient_information": true,
+      "source": "extracted_from_report",
+      "confidence": null,
+      "reasoning": "Report does not name any witnesses beyond the two involved parties.",
+      "requires_human_approval": false
+    },
+    "environmental_conditions": {
+      "value": null,
+      "insufficient_information": true,
+      "source": "extracted_from_report",
+      "confidence": null,
+      "reasoning": "Lighting, floor condition, and noise levels at the corner are not described in the report.",
+      "requires_human_approval": false
+    }
+  },
+  "stage_3_classification": {
+    "incident_category": {
+      "value": "Forklift / Vehicle Incident",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.93,
+      "reasoning": "Event centers on a powered industrial truck interacting with a pedestrian; matches this category's definition directly.",
+      "requires_human_approval": true
+    },
+    "incident_type": {
+      "value": "Near Miss",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.97,
+      "reasoning": "No contact and no injury occurred, but potential for harm was present.",
+      "requires_human_approval": true
+    },
+    "hazard_taxonomy_code": {
+      "value": "VEH-PED-01",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.9,
+      "reasoning": "Maps to the pedestrian/vehicle interaction subcategory of the vehicle-incident taxonomy.",
+      "requires_human_approval": true
+    }
+  },
+  "stage_4_hazard_identification": {
+    "hazards": [
+      {
+        "id": "HAZ-1",
+        "confidence": 0.9,
+        "source": "ai_inference",
+        "evidence": "Blind corner combined with a load-obstructed operator view creates a pedestrian strike hazard.",
+        "requires_human_approval": true,
+        "hazard_type": "Forklift / Vehicle Incident",
+        "description": "Pedestrian-forklift interaction at a blind aisle corner with obstructed operator sightline."
+      },
+      {
+        "id": "HAZ-2",
+        "confidence": 0.75,
+        "source": "ai_inference",
+        "evidence": "Report states the horn was not sounded at the corner, a control specifically meant to mitigate this hazard.",
+        "requires_human_approval": true,
+        "hazard_type": "Forklift / Vehicle Incident",
+        "description": "Non-use of audible warning (horn) at a blind intersection."
+      }
+    ],
+    "coverage_note": "No hazards beyond the vehicle/pedestrian interaction were identified from the report text."
+  },
+  "stage_5_potential_consequences": {
+    "consequences": [
+      {
+        "id": "CONS-1",
+        "confidence": 0.85,
+        "source": "ai_inference",
+        "evidence": "Forklift-pedestrian strikes at blind corners are a recognized high-severity industrial hazard pattern; the pallet load and lack of horn increase strike likelihood in a repeat scenario.",
+        "requires_human_approval": true,
+        "description": "Pedestrian struck by forklift, resulting in crush injury or fatality.",
+        "plausible_worst_case_severity": "Critical"
+      }
+    ],
+    "coverage_note": "Assessment reflects reasonable worst case for this hazard type, not what occurred."
+  },
+  "stage_6_preliminary_severity_assessment": {
+    "ai_suggested_severity": {
+      "value": "Medium",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.7,
+      "reasoning": "Actual outcome was no-harm (near miss), but the potential consequence (Stage 5) is Critical and the hazard pattern (blind corner, load-obstructed view, no horn) appears likely to recur without controls. Preliminary rating balances actual-harm-none against high recurrence-weighted potential.",
+      "requires_human_approval": true
+    },
+    "ai_suggested_recurrence_likelihood": {
+      "value": "Likely",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.65,
+      "reasoning": "No engineering or procedural gap identified in Stage 4/7 appears to have been corrected between incidents; corner geometry and traffic pattern are structural, not one-off.",
+      "requires_human_approval": true
+    },
+    "status": "pending_human_confirmation",
+    "requires_human_approval": true
+  },
+  "stage_7_contributing_factors": {
+    "factors": [
+      {
+        "id": "CF-1",
+        "confidence": 0.85,
+        "source": "ai_inference",
+        "evidence": "Report states pallet load blocked operator's forward view around the corner.",
+        "requires_human_approval": true,
+        "category": "Equipment",
+        "description": "Load size/placement obstructed operator sightline."
+      },
+      {
+        "id": "CF-2",
+        "confidence": 0.7,
+        "source": "ai_inference",
+        "evidence": "Report states horn was not sounded before the turn.",
+        "requires_human_approval": true,
+        "category": "Human",
+        "description": "Operator did not sound horn at blind intersection per expected practice."
+      },
+      {
+        "id": "CF-3",
+        "confidence": 0.55,
+        "source": "ai_inference",
+        "evidence": "No mirror, signage, or pedestrian lane markings are mentioned as present at this corner; typically inferred as absent when a report describes an unmitigated blind-corner event and none are referenced.",
+        "requires_human_approval": true,
+        "category": "Environmental",
+        "description": "Aisle corner design lacks visibility aids (unconfirmed - see Stage 9)."
+      }
+    ],
+    "coverage_note": "Factors limited to what can be inferred from the report; facility layout was not independently inspected."
+  },
+  "stage_8_root_cause_hypotheses": {
+    "hypotheses": [
+      {
+        "id": "RC-1",
+        "confidence": 0.75,
+        "source": "ai_inference",
+        "evidence": "Direct combination of Stage 7 factors CF-1 and CF-2 in a location with no cited visibility aid.",
+        "requires_human_approval": true,
+        "rank": 1,
+        "statement": "Absence of an engineering control (e.g. convex mirror) at a known blind corner, combined with inconsistent horn-use practice, allowed a load-obstructed forklift to enter a shared pedestrian path undetected.",
+        "label": "hypothesis_not_confirmed",
+        "supporting_evidence": "Report confirms blocked view and no horn sounded; corner is on a route pedestrians and forklifts both use."
+      },
+      {
+        "id": "RC-2",
+        "confidence": 0.4,
+        "source": "ai_inference",
+        "evidence": "Plausible secondary contributor but not directly evidenced in the report text.",
+        "requires_human_approval": true,
+        "rank": 2,
+        "statement": "Operator training on horn-use-at-intersections may not be consistently reinforced.",
+        "label": "hypothesis_not_confirmed",
+        "supporting_evidence": "General pattern in similar near-miss reports; not confirmed for this specific operator.",
+        "contradicting_evidence": "No training record was reviewed as part of this report; SOP-0005 (forklift operation) is Active per facility records."
+      }
+    ],
+    "coverage_note": "Hypotheses are ranked by evidentiary support from the report text alone; a full investigation may surface additional causes."
+  },
+  "stage_9_existing_controls": {
+    "controls": [
+      {
+        "id": "CTRL-1",
+        "confidence": 0.9,
+        "source": "system_reference",
+        "evidence": "SOP-0005 governs powered industrial truck operation for this facility and is currently Active.",
+        "requires_human_approval": false,
+        "control_description": "Powered Industrial Truck (Forklift) Operation SOP, including horn-at-intersection requirement.",
+        "control_type": "Procedural",
+        "status": "present",
+        "related_sop_id": "SOP-0005"
+      },
+      {
+        "id": "CTRL-2",
+        "confidence": 0.3,
+        "source": "extracted_from_report",
+        "evidence": "Report does not mention a mirror, signage, or marked pedestrian lane at this corner.",
+        "requires_human_approval": false,
+        "control_description": "Visual aid (convex mirror) or marked pedestrian lane at blind corner.",
+        "control_type": "Engineering",
+        "status": "unknown_insufficient_information",
+        "related_sop_id": null
+      }
+    ],
+    "coverage_note": "Control presence for CTRL-1 confirmed against facility SOP register; CTRL-2 status could not be confirmed from the report alone and should be verified by facility walk-down."
+  },
+  "stage_10_control_gaps": {
+    "gaps": [
+      {
+        "id": "GAP-1",
+        "confidence": 0.75,
+        "source": "ai_inference",
+        "evidence": "No engineering control (mirror/marking) is confirmed present at a corner where a near miss of this type occurred; SOP-0005 alone did not prevent the event.",
+        "requires_human_approval": true,
+        "related_control_id": "CTRL-2",
+        "gap_description": "No confirmed engineering control (mirror or marked pedestrian lane) at the blind corner where the near miss occurred.",
+        "required_by_sop_id": null
+      },
+      {
+        "id": "GAP-2",
+        "confidence": 0.6,
+        "source": "ai_inference",
+        "evidence": "SOP-0005 requires horn use at intersections; report indicates this was not followed on this occasion.",
+        "requires_human_approval": true,
+        "related_control_id": "CTRL-1",
+        "gap_description": "Procedural compliance gap: horn-at-intersection requirement in SOP-0005 not followed in this instance.",
+        "required_by_sop_id": "SOP-0005"
+      }
+    ],
+    "coverage_note": "Gaps reflect what the report evidences; confirmation requires facility walk-down and operator interview."
+  },
+  "stage_11_recommended_actions": {
+    "actions": [
+      {
+        "id": "ACT-1",
+        "confidence": 0.8,
+        "source": "ai_inference",
+        "evidence": "Directly addresses GAP-1; convex mirrors are a standard engineering control for blind warehouse corners.",
+        "requires_human_approval": true,
+        "action_type": "Preventive",
+        "description": "Install a convex mirror and repaint/mark a pedestrian lane at the aisle corner near the forklift charging station.",
+        "priority": "High",
+        "suggested_owner_role": "Maintenance Technician",
+        "suggested_timeframe_days": 30,
+        "addresses_gap_ids": [
+          "GAP-1"
+        ]
+      },
+      {
+        "id": "ACT-2",
+        "confidence": 0.7,
+        "source": "ai_inference",
+        "evidence": "Directly addresses GAP-2; refresher training is the standard corrective response to a procedural compliance gap.",
+        "requires_human_approval": true,
+        "action_type": "Corrective",
+        "description": "Refresher training for forklift operators on SOP-0005 horn-at-intersection requirement, with signed acknowledgment.",
+        "priority": "Medium",
+        "suggested_owner_role": "Safety Manager",
+        "suggested_timeframe_days": 14,
+        "addresses_gap_ids": [
+          "GAP-2"
+        ]
+      }
+    ],
+    "coverage_note": "Two actions proposed, mapped 1:1 to the two identified control gaps."
+  },
+  "stage_12_risk_register_impact": {
+    "proposed_action": "create_new_risk",
+    "hazard_category": "Forklift / Vehicle Incident",
+    "likelihood": {
+      "value": 4,
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.65,
+      "reasoning": "Blind-corner pedestrian/forklift routes with no confirmed engineering control tend to recur; rated Likely per Stage 6.",
+      "requires_human_approval": true
+    },
+    "impact": {
+      "value": 4,
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.75,
+      "reasoning": "Stage 5 worst-case consequence is Critical (struck-by, potential fatality); impact rated High-to-Critical band.",
+      "requires_human_approval": true
+    },
+    "risk_score": {
+      "value": 16,
+      "insufficient_information": false,
+      "source": "derived_from_prior_stage",
+      "confidence": null,
+      "reasoning": "likelihood (4) x impact (4) = 16.",
+      "requires_human_approval": true
+    },
+    "risk_level": {
+      "value": "High",
+      "insufficient_information": false,
+      "source": "derived_from_prior_stage",
+      "confidence": null,
+      "reasoning": "Score of 16 falls in the High band (12-19) per facility risk matrix.",
+      "requires_human_approval": true
+    },
+    "existing_risk_assessment_id": null,
+    "reasoning": "No existing risk register entry covers this specific blind-corner pedestrian/vehicle interaction; proposing a new entry.",
+    "requires_human_approval": true,
+    "write_status": "not_written_pending_approval"
+  },
+  "stage_13_human_review_package": {
+    "package_id": "RVW-647478a5",
+    "incident_id": "INC-2101",
+    "summary_for_reviewer": "Near-miss forklift/pedestrian event at a blind warehouse corner. No injury occurred. AI identifies a likely engineering-control gap (no mirror/marking) plus a procedural compliance gap (horn not sounded), and proposes a new High risk-register entry pending your review.",
+    "stages_requiring_approval": [
+      "stage_3_classification",
+      "stage_4_hazard_identification",
+      "stage_5_potential_consequences",
+      "stage_6_preliminary_severity_assessment",
+      "stage_7_contributing_factors",
+      "stage_8_root_cause_hypotheses",
+      "stage_10_control_gaps",
+      "stage_11_recommended_actions",
+      "stage_12_risk_register_impact"
+    ],
+    "approval": {
+      "decision": "pending",
+      "reviewer_employee_id": null,
+      "reviewed_at": null,
+      "comments": null,
+      "edited_fields": []
+    }
+  }
+}

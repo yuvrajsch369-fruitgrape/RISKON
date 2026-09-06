@@ -1,0 +1,29 @@
+[
+  {
+    "facility_id": "FAC-001",
+    "name": "Rex Industrial \u2013 Plant 1 (Ohio Manufacturing Complex)",
+    "facility_type": "Heavy Manufacturing",
+    "address": "4820 Blue Ridge Industrial Pkwy, Canton, OH 44706",
+    "square_footage": 285000,
+    "year_established": 1978,
+    "employee_capacity": 340
+  },
+  {
+    "facility_id": "FAC-002",
+    "name": "Rex Industrial \u2013 Plant 2 (Texas Assembly Facility)",
+    "facility_type": "Assembly & Fabrication",
+    "address": "1150 Gulf Freight Rd, Baytown, TX 77520",
+    "square_footage": 190000,
+    "year_established": 1996,
+    "employee_capacity": 260
+  },
+  {
+    "facility_id": "FAC-003",
+    "name": "Rex Industrial \u2013 Plant 3 (Georgia Distribution & Fab Center)",
+    "facility_type": "Distribution & Light Fabrication",
+    "address": "770 Peachtree Logistics Dr, Savannah, GA 31408",
+    "square_footage": 150000,
+    "year_established": 2008,
+    "employee_capacity": 180
+  }
+]

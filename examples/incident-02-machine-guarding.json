@@ -1,0 +1,401 @@
+{
+  "incident_id": "INC-2102",
+  "schema_version": "1.0.0",
+  "pipeline_run_id": "RUN-INC-2102-A2",
+  "generated_at": "2026-09-03T14:32:00Z",
+  "model": "claude-sonnet-5",
+  "stage_1_ingestion": {
+    "incident_id": "INC-2102",
+    "facility_id": "FAC-001",
+    "reporter_employee_id": "EMP-0022",
+    "raw_report_text": "Operator was clearing a jam on the punch press when their glove got caught between the die and the guard, which was found propped open with a wood block. Operator pulled hand back before the press cycled again. Minor cut to the back of the hand, treated with first aid on site. Machine was locked out after the incident. This occurred on night shift around 11pm.",
+    "date_submitted": "2026-07-02T23:40:00Z",
+    "attachments_present": false,
+    "ingestion_status": "complete"
+  },
+  "stage_2_information_extraction": {
+    "who_involved": {
+      "value": "Punch press operator (reporter)",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.9,
+      "reasoning": "Reporter is the operator involved.",
+      "requires_human_approval": false
+    },
+    "what_happened": {
+      "value": "Operator's glove was caught between die and guard while clearing a jam; guard was found propped open with a wood block; operator withdrew hand before next cycle; minor hand laceration.",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.95,
+      "reasoning": "Directly stated.",
+      "requires_human_approval": false
+    },
+    "when_occurred": {
+      "value": "Approx. 11:00pm, night shift, 2026-07-02",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.8,
+      "reasoning": "Reporter states 'around 11pm' on night shift.",
+      "requires_human_approval": false
+    },
+    "where_location": {
+      "value": "Punch press station (production floor)",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.85,
+      "reasoning": "Inferred from equipment context; specific bay not named.",
+      "requires_human_approval": false
+    },
+    "equipment_involved": {
+      "value": "Punch Press (EQ-0009)",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.75,
+      "reasoning": "Report identifies 'punch press'; matched to facility equipment log.",
+      "requires_human_approval": false
+    },
+    "injuries_reported": {
+      "value": "Minor laceration to back of hand, treated with on-site first aid",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.9,
+      "reasoning": "Directly stated.",
+      "requires_human_approval": false
+    },
+    "witnesses": {
+      "value": null,
+      "insufficient_information": true,
+      "source": "extracted_from_report",
+      "confidence": null,
+      "reasoning": "No witnesses named in report.",
+      "requires_human_approval": false
+    },
+    "environmental_conditions": {
+      "value": "Night shift",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.6,
+      "reasoning": "Only shift timing given; lighting/staffing levels not described.",
+      "requires_human_approval": false
+    }
+  },
+  "stage_3_classification": {
+    "incident_category": {
+      "value": "Machine Guarding Failure",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.95,
+      "reasoning": "A guard was defeated (propped open) and directly implicated in exposure to a pinch point.",
+      "requires_human_approval": true
+    },
+    "incident_type": {
+      "value": "Injury",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.95,
+      "reasoning": "First-aid-level injury was sustained.",
+      "requires_human_approval": true
+    },
+    "hazard_taxonomy_code": {
+      "value": "MACH-GRD-02",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.9,
+      "reasoning": "Maps to defeated/bypassed machine guard subcategory.",
+      "requires_human_approval": true
+    }
+  },
+  "stage_4_hazard_identification": {
+    "hazards": [
+      {
+        "id": "HAZ-1",
+        "confidence": 0.95,
+        "source": "ai_inference",
+        "evidence": "Guard explicitly found propped open with a wood block, exposing the die pinch point during jam-clearing.",
+        "requires_human_approval": true,
+        "hazard_type": "Machine Guarding Failure",
+        "description": "Guard defeated (propped open), exposing operator to die pinch point."
+      },
+      {
+        "id": "HAZ-2",
+        "confidence": 0.6,
+        "source": "ai_inference",
+        "evidence": "Clearing a jam by hand while the machine is not confirmed de-energized is a recognized caught-in hazard, consistent with this event.",
+        "requires_human_approval": true,
+        "hazard_type": "Caught-In / Caught-Between",
+        "description": "Manual jam-clearing without confirmed lockout/tagout of the press."
+      }
+    ],
+    "coverage_note": "Two related hazards identified: the defeated guard itself, and the jam-clearing practice that placed a hand in the point of operation."
+  },
+  "stage_5_potential_consequences": {
+    "consequences": [
+      {
+        "id": "CONS-1",
+        "confidence": 0.9,
+        "source": "ai_inference",
+        "evidence": "Point-of-operation press hazards with a defeated guard and no confirmed lockout are associated with amputation-level injuries in similar incidents.",
+        "requires_human_approval": true,
+        "description": "Amputation or crush injury to hand/fingers if press cycled while hand was in the die area.",
+        "plausible_worst_case_severity": "Critical"
+      }
+    ],
+    "coverage_note": "Reflects worst-case for this hazard pattern, not what occurred (actual injury was a minor laceration)."
+  },
+  "stage_6_preliminary_severity_assessment": {
+    "ai_suggested_severity": {
+      "value": "High",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.8,
+      "reasoning": "Actual injury was minor, but a defeated guard plus unlocked point-of-operation access during jam-clearing is a high-severity hazard pattern with narrowly avoided amputation potential (Stage 5). Rated above actual-harm level due to control failure severity.",
+      "requires_human_approval": true
+    },
+    "ai_suggested_recurrence_likelihood": {
+      "value": "Possible",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.55,
+      "reasoning": "Machine was locked out after this event, which may reduce near-term recurrence, but the underlying practice of propping guards during jam-clearing is not confirmed as corrected.",
+      "requires_human_approval": true
+    },
+    "status": "pending_human_confirmation",
+    "requires_human_approval": true
+  },
+  "stage_7_contributing_factors": {
+    "factors": [
+      {
+        "id": "CF-1",
+        "confidence": 0.9,
+        "source": "ai_inference",
+        "evidence": "Report explicitly states the guard was propped open with a wood block.",
+        "requires_human_approval": true,
+        "category": "Procedural",
+        "description": "Guard intentionally defeated to facilitate jam-clearing access."
+      },
+      {
+        "id": "CF-2",
+        "confidence": 0.6,
+        "source": "ai_inference",
+        "evidence": "Report does not state the press was locked out before jam-clearing began (only that it was locked out after the incident).",
+        "requires_human_approval": true,
+        "category": "Procedural",
+        "description": "Jam likely cleared without confirmed prior lockout/tagout of the press."
+      },
+      {
+        "id": "CF-3",
+        "confidence": 0.4,
+        "source": "ai_inference",
+        "evidence": "Night shift context with unconfirmed staffing/supervision levels is a commonly associated factor in guard-defeat incidents, though not directly evidenced here.",
+        "requires_human_approval": true,
+        "category": "Organizational",
+        "description": "Reduced night-shift oversight of guarding practices (unconfirmed)."
+      }
+    ],
+    "coverage_note": "CF-1 is directly evidenced; CF-2 and CF-3 are inferred and should be confirmed by investigation."
+  },
+  "stage_8_root_cause_hypotheses": {
+    "hypotheses": [
+      {
+        "id": "RC-1",
+        "confidence": 0.8,
+        "source": "ai_inference",
+        "evidence": "Guard defeat is a known workaround when jam-clearing is frequent and guard design impedes quick access; consistent with a wood block being readily used.",
+        "requires_human_approval": true,
+        "rank": 1,
+        "statement": "Frequent jams on this press create pressure to bypass the guard for faster clearing, and no safe/quick jam-clearing procedure with guard intact is in place or followed.",
+        "label": "hypothesis_not_confirmed",
+        "supporting_evidence": "Guard found propped open specifically to allow jam access; suggests a recurring workaround rather than a one-off."
+      },
+      {
+        "id": "RC-2",
+        "confidence": 0.5,
+        "source": "ai_inference",
+        "evidence": "LOTO omission before manual intervention is a common contributor to point-of-operation injuries.",
+        "requires_human_approval": true,
+        "rank": 2,
+        "statement": "LOTO was not applied before manual jam-clearing began, removing the last-line control once the guard was already defeated.",
+        "label": "hypothesis_not_confirmed",
+        "supporting_evidence": "Report only confirms lockout occurred after the incident, not before jam-clearing.",
+        "contradicting_evidence": "SOP-0001 (LOTO) is Active for this facility; whether it was followed for jam-clearing specifically is unconfirmed."
+      }
+    ],
+    "coverage_note": "Frequency-of-jams data was not available in the report; recommend maintenance log review to confirm RC-1."
+  },
+  "stage_9_existing_controls": {
+    "controls": [
+      {
+        "id": "CTRL-1",
+        "confidence": 0.9,
+        "source": "system_reference",
+        "evidence": "SOP-0001 (LOTO) is Active for this facility and applies to maintenance/jam-clearing on production equipment.",
+        "requires_human_approval": false,
+        "control_description": "Lockout/Tagout Procedure covering press jam-clearing.",
+        "control_type": "Procedural",
+        "status": "present",
+        "related_sop_id": "SOP-0001"
+      },
+      {
+        "id": "CTRL-2",
+        "confidence": 0.9,
+        "source": "extracted_from_report",
+        "evidence": "Physical guard exists on the press (it was propped open, implying it is normally closed/functional).",
+        "requires_human_approval": false,
+        "control_description": "Fixed/interlocked guard over die point of operation.",
+        "control_type": "Engineering",
+        "status": "present",
+        "related_sop_id": null
+      },
+      {
+        "id": "CTRL-3",
+        "confidence": 0.3,
+        "source": "extracted_from_report",
+        "evidence": "Report does not mention a documented safe jam-clearing procedure distinct from general LOTO.",
+        "requires_human_approval": false,
+        "control_description": "Specific jam-clearing work instruction for this press.",
+        "control_type": "Procedural",
+        "status": "unknown_insufficient_information",
+        "related_sop_id": null
+      }
+    ],
+    "coverage_note": "CTRL-1 and CTRL-2 confirmed present; CTRL-3 (jam-specific procedure) could not be confirmed from the report."
+  },
+  "stage_10_control_gaps": {
+    "gaps": [
+      {
+        "id": "GAP-1",
+        "confidence": 0.85,
+        "source": "ai_inference",
+        "evidence": "Guard was defeated and LOTO does not appear to have been applied before manual access, meaning both the engineering control and the procedural control failed simultaneously.",
+        "requires_human_approval": true,
+        "related_control_id": "CTRL-2",
+        "gap_description": "Guard was defeatable/defeated with a simple physical object (wood block) rather than requiring a controlled, logged override.",
+        "required_by_sop_id": null
+      },
+      {
+        "id": "GAP-2",
+        "confidence": 0.6,
+        "source": "ai_inference",
+        "evidence": "No confirmed jam-specific safe-clearing procedure, which may be why operators default to propping the guard.",
+        "requires_human_approval": true,
+        "related_control_id": "CTRL-3",
+        "gap_description": "No confirmed documented procedure for safely clearing jams on this press without defeating the guard.",
+        "required_by_sop_id": null
+      }
+    ],
+    "coverage_note": "Gaps target both the physical guard defeat and the likely underlying workflow pressure causing it."
+  },
+  "stage_11_recommended_actions": {
+    "actions": [
+      {
+        "id": "ACT-1",
+        "confidence": 0.85,
+        "source": "ai_inference",
+        "evidence": "Directly addresses GAP-1; interlocked guards that cannot be propped open are a standard engineering fix for this exact failure mode.",
+        "requires_human_approval": true,
+        "action_type": "Corrective",
+        "description": "Replace or retrofit the punch press guard with an interlocked guard that stops the press when opened, and remove ability to prop it open.",
+        "priority": "Critical",
+        "suggested_owner_role": "Mechanical Engineer",
+        "suggested_timeframe_days": 30,
+        "addresses_gap_ids": [
+          "GAP-1"
+        ]
+      },
+      {
+        "id": "ACT-2",
+        "confidence": 0.7,
+        "source": "ai_inference",
+        "evidence": "Directly addresses GAP-2; a documented safe jam-clearing procedure with mandatory LOTO removes the incentive to bypass the guard.",
+        "requires_human_approval": true,
+        "action_type": "Preventive",
+        "description": "Develop and train a documented jam-clearing work instruction for the punch press that mandates LOTO before any manual access.",
+        "priority": "High",
+        "suggested_owner_role": "Safety Manager",
+        "suggested_timeframe_days": 21,
+        "addresses_gap_ids": [
+          "GAP-2"
+        ]
+      },
+      {
+        "id": "ACT-3",
+        "confidence": 0.6,
+        "source": "ai_inference",
+        "evidence": "Immediate containment action independent of root-cause fix, appropriate given the severity of the near-amputation exposure.",
+        "requires_human_approval": true,
+        "action_type": "Corrective",
+        "description": "Retrain all punch press operators on the requirement to never defeat machine guards, with signed acknowledgment.",
+        "priority": "High",
+        "suggested_owner_role": "Shift Supervisor",
+        "suggested_timeframe_days": 7,
+        "addresses_gap_ids": [
+          "GAP-1"
+        ]
+      }
+    ],
+    "coverage_note": "Three actions: one engineering fix, one procedural fix, one immediate behavioral reinforcement."
+  },
+  "stage_12_risk_register_impact": {
+    "proposed_action": "create_new_risk",
+    "hazard_category": "Machine Guarding Failure",
+    "likelihood": {
+      "value": 3,
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.6,
+      "reasoning": "Guard-defeat workarounds tend to recur until the underlying jam-frequency/procedure issue is fixed; rated Possible per Stage 6.",
+      "requires_human_approval": true
+    },
+    "impact": {
+      "value": 5,
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.85,
+      "reasoning": "Stage 5 worst case is amputation/crush injury; impact rated at the top of the scale for point-of-operation press hazards.",
+      "requires_human_approval": true
+    },
+    "risk_score": {
+      "value": 15,
+      "insufficient_information": false,
+      "source": "derived_from_prior_stage",
+      "confidence": null,
+      "reasoning": "likelihood (3) x impact (5) = 15.",
+      "requires_human_approval": true
+    },
+    "risk_level": {
+      "value": "High",
+      "insufficient_information": false,
+      "source": "derived_from_prior_stage",
+      "confidence": null,
+      "reasoning": "Score of 15 falls in the High band (12-19) per facility risk matrix.",
+      "requires_human_approval": true
+    },
+    "existing_risk_assessment_id": null,
+    "reasoning": "No existing risk register entry specifically covers guard-defeat on this press; proposing a new entry given the severity of the exposure.",
+    "requires_human_approval": true,
+    "write_status": "not_written_pending_approval"
+  },
+  "stage_13_human_review_package": {
+    "package_id": "RVW-414eaf70",
+    "incident_id": "INC-2102",
+    "summary_for_reviewer": "Operator sustained a minor hand laceration after a defeated punch-press guard (propped open) exposed the die pinch point during jam-clearing. AI flags this as a High-severity near-amputation exposure despite the minor actual injury, identifies a likely LOTO-before-jam-clearing gap, and proposes three actions plus a new High risk-register entry.",
+    "stages_requiring_approval": [
+      "stage_3_classification",
+      "stage_4_hazard_identification",
+      "stage_5_potential_consequences",
+      "stage_6_preliminary_severity_assessment",
+      "stage_7_contributing_factors",
+      "stage_8_root_cause_hypotheses",
+      "stage_10_control_gaps",
+      "stage_11_recommended_actions",
+      "stage_12_risk_register_impact"
+    ],
+    "approval": {
+      "decision": "pending",
+      "reviewer_employee_id": null,
+      "reviewed_at": null,
+      "comments": null,
+      "edited_fields": []
+    }
+  }
+}

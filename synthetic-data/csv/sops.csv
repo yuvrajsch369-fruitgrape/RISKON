@@ -1,0 +1,31 @@
+sop_id,title,category,version,effective_date,next_review_date,owner_employee_id,facility_id,status
+SOP-0001,Lockout/Tagout (LOTO) Procedure,Energy Control,2.5,2020-01-15,2022-01-14,EMP-0024,FAC-003,Active
+SOP-0002,Confined Space Entry Permit Procedure,Confined Space,2.1,2024-03-26,2025-03-26,EMP-0018,FAC-002,Active
+SOP-0003,Personal Protective Equipment (PPE) Requirements,PPE,4.7,2024-03-24,2025-03-24,EMP-0027,ALL,Active
+SOP-0004,Machine Guarding Standard,Machine Safety,4.3,2021-04-20,2022-04-20,EMP-0002,FAC-003,Active
+SOP-0005,Powered Industrial Truck (Forklift) Operation,Vehicle Safety,3.6,2023-04-23,2026-04-22,EMP-0024,FAC-003,Active
+SOP-0006,Hot Work Permit Procedure,Fire Safety,3.3,2021-01-14,2023-01-14,EMP-0027,FAC-001,Active
+SOP-0007,Hazardous Chemical Handling & Storage,Chemical Safety,2.3,2019-05-05,2022-05-04,EMP-0024,FAC-002,Active
+SOP-0008,Emergency Response & Evacuation Plan,Emergency Preparedness,3.1,2024-08-11,2027-08-11,EMP-0018,FAC-002,Active
+SOP-0009,Overhead Crane & Rigging Operation,Material Handling,1.8,2020-01-05,2022-01-04,EMP-0024,FAC-002,Active
+SOP-0010,Electrical Safe Work Practices (Arc Flash),Electrical Safety,2.7,2024-03-16,2026-03-16,EMP-0001,FAC-001,Active
+SOP-0011,Fall Protection Program,Fall Safety,4.5,2023-04-07,2025-04-06,EMP-0018,FAC-002,Under Revision
+SOP-0012,Hazardous Waste Disposal Procedure,Environmental,1.6,2023-05-11,2024-05-10,EMP-0018,ALL,Active
+SOP-0013,Ergonomic Workstation Guidelines,Ergonomics,3.1,2019-09-14,2020-09-13,EMP-0001,FAC-002,Active
+SOP-0014,Fire Prevention & Extinguisher Use,Fire Safety,2.8,2024-10-19,2027-10-19,EMP-0025,ALL,Active
+SOP-0015,Spill Prevention & Response Plan,Environmental,4.4,2021-05-02,2024-05-01,EMP-0027,FAC-001,Active
+SOP-0016,Respiratory Protection Program,PPE,2.4,2020-05-01,2023-05-01,EMP-0002,FAC-001,Active
+SOP-0017,Hearing Conservation Program,Industrial Hygiene,2.0,2024-03-10,2025-03-10,EMP-0003,ALL,Active
+SOP-0018,Incident Reporting & Investigation Procedure,EHS Management,2.4,2021-04-07,2022-04-07,EMP-0027,FAC-003,Active
+SOP-0019,New Employee Safety Orientation,Training,2.4,2018-10-19,2021-10-18,EMP-0027,FAC-002,Active
+SOP-0020,Job Hazard Analysis (JHA) Procedure,EHS Management,2.1,2019-09-03,2021-09-02,EMP-0006,FAC-001,Active
+SOP-0021,Compressed Gas Cylinder Handling,Chemical Safety,3.7,2024-09-03,2027-09-03,EMP-0018,FAC-001,Active
+SOP-0022,Robotic Cell Safety Procedure,Machine Safety,4.7,2022-07-07,2024-07-06,EMP-0018,FAC-001,Active
+SOP-0023,Preventive Maintenance Safety Procedure,Maintenance,3.0,2021-08-13,2024-08-12,EMP-0025,FAC-001,Active
+SOP-0024,Housekeeping & Walkway Safety Standard,General Safety,1.2,2021-01-08,2024-01-08,EMP-0001,ALL,Active
+SOP-0025,Contractor Safety Management Program,EHS Management,4.7,2021-02-13,2022-02-13,EMP-0027,FAC-001,Active
+SOP-0026,Welding & Cutting Safety Procedure,Fire Safety,1.2,2021-09-27,2023-09-27,EMP-0025,FAC-003,Active
+SOP-0027,Boiler & Pressure Vessel Safety Procedure,Utilities Safety,4.8,2021-03-26,2024-03-25,EMP-0027,FAC-001,Active
+SOP-0028,Environmental Air Emissions Monitoring,Environmental,1.6,2020-10-30,2022-10-30,EMP-0024,FAC-001,Active
+SOP-0029,"Slip, Trip & Fall Prevention Standard",General Safety,2.8,2022-08-20,2023-08-20,EMP-0027,FAC-003,Active
+SOP-0030,Management of Change (MOC) Procedure,EHS Management,2.4,2022-12-16,2023-12-16,EMP-0027,FAC-002,Under Revision

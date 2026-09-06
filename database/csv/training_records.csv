@@ -1,0 +1,51 @@
+training_record_id,employee_id,contractor_id,training_topic,training_date,expiry_date,status,conducted_by_employee_id,result
+TRN-0001,,CTR-0003,Lockout/Tagout (LOTO),2024-02-11,2025-02-10,Expired,EMP-0009,Pass (expired)
+TRN-0002,,CTR-0007,Confined Space Entry,,,Not Completed,,
+TRN-0003,,CTR-0011,Contractor Safety Orientation,2024-01-07,2025-01-06,Expired,EMP-0007,Pass (expired)
+TRN-0004,,CTR-0014,Lockout/Tagout (LOTO),,,Not Completed,,
+TRN-0005,EMP-0003,,Machine Guarding,2025-11-14,2027-11-14,Current,EMP-0007,Pass
+TRN-0006,EMP-0007,,Hearing Conservation,2025-05-08,2027-05-08,Current,EMP-0009,Pass
+TRN-0007,EMP-0010,,Forklift Operation,2025-01-14,2027-01-14,Current,EMP-0007,Pass
+TRN-0008,EMP-0015,,Forklift Operation,2026-02-22,2028-02-22,Current,EMP-0007,Pass
+TRN-0009,EMP-0010,,Contractor Safety Orientation,2025-01-17,2027-01-17,Current,EMP-0007,Pass
+TRN-0010,EMP-0015,,Emergency Response,2025-09-27,2027-09-27,Current,EMP-0007,Pass
+TRN-0011,EMP-0004,,PPE Requirements,2025-08-07,2027-08-07,Current,EMP-0007,Pass
+TRN-0012,EMP-0007,,Fall Protection,2026-06-23,2028-06-22,Current,EMP-0007,Pass
+TRN-0013,EMP-0003,,Fall Protection,2025-06-25,2027-06-25,Current,EMP-0007,Pass
+TRN-0014,EMP-0021,,Machine Guarding,2025-01-14,2027-01-14,Current,EMP-0007,Pass
+TRN-0015,EMP-0002,,Contractor Safety Orientation,2026-05-03,2028-05-02,Current,EMP-0009,Pass
+TRN-0016,EMP-0009,,Emergency Response,2026-06-08,2028-06-07,Current,EMP-0009,Pass
+TRN-0017,,CTR-0010,Lockout/Tagout (LOTO),2025-06-29,2026-06-29,Current,EMP-0009,Pass
+TRN-0018,EMP-0025,,PPE Requirements,2025-07-10,2027-07-10,Current,EMP-0009,Pass
+TRN-0019,EMP-0027,,Contractor Safety Orientation,2026-03-23,2028-03-22,Current,EMP-0009,Pass
+TRN-0020,EMP-0025,,Forklift Operation,2026-01-26,2028-01-26,Current,EMP-0007,Pass
+TRN-0021,EMP-0019,,Fall Protection,2025-09-13,2027-09-13,Current,EMP-0009,Pass
+TRN-0022,EMP-0018,,Lockout/Tagout (LOTO),2025-12-13,2027-12-13,Current,EMP-0007,Pass
+TRN-0023,EMP-0023,,PPE Requirements,2026-01-29,2028-01-29,Current,EMP-0007,Pass
+TRN-0024,,CTR-0017,Confined Space Entry,2025-11-16,2026-11-16,Current,EMP-0007,Pass
+TRN-0025,,CTR-0001,Confined Space Entry,2026-04-05,2027-04-05,Current,EMP-0007,Pass
+TRN-0026,EMP-0022,,Hearing Conservation,2025-07-29,2027-07-29,Current,EMP-0009,Pass
+TRN-0027,EMP-0008,,Confined Space Entry,2025-08-05,2027-08-05,Current,EMP-0009,Pass
+TRN-0028,,CTR-0018,PPE Requirements,2025-11-19,2026-11-19,Current,EMP-0009,Pass
+TRN-0029,EMP-0027,,Hazard Communication / Chemical Safety,2025-06-25,2027-06-25,Current,EMP-0007,Pass
+TRN-0030,EMP-0006,,Forklift Operation,2026-03-29,2028-03-28,Current,EMP-0007,Pass
+TRN-0031,EMP-0023,,Fall Protection,2026-02-17,2028-02-17,Current,EMP-0007,Pass
+TRN-0032,,CTR-0005,Contractor Safety Orientation,2025-11-07,2026-11-07,Current,EMP-0009,Pass
+TRN-0033,EMP-0025,,Fall Protection,2026-04-17,2028-04-16,Current,EMP-0007,Pass
+TRN-0034,EMP-0018,,Contractor Safety Orientation,2025-01-12,2027-01-12,Current,EMP-0007,Pass
+TRN-0035,,CTR-0018,Lockout/Tagout (LOTO),2025-08-12,2026-08-12,Current,EMP-0007,Pass
+TRN-0036,,CTR-0005,Contractor Safety Orientation,2026-03-19,2027-03-19,Current,EMP-0007,Pass
+TRN-0037,EMP-0022,,Fall Protection,2026-06-20,2028-06-19,Current,EMP-0009,Pass
+TRN-0038,,CTR-0015,PPE Requirements,2026-02-25,2027-02-25,Current,EMP-0009,Pass
+TRN-0039,EMP-0024,,Contractor Safety Orientation,2025-06-30,2027-06-30,Current,EMP-0009,Pass
+TRN-0040,EMP-0013,,Lockout/Tagout (LOTO),2025-12-08,2027-12-08,Current,EMP-0007,Pass
+TRN-0041,EMP-0006,,Hearing Conservation,2026-06-25,2028-06-24,Current,EMP-0009,Pass
+TRN-0042,EMP-0027,,Hazard Communication / Chemical Safety,2026-04-07,2028-04-06,Current,EMP-0007,Pass
+TRN-0043,EMP-0015,,Fall Protection,2025-03-19,2027-03-19,Current,EMP-0009,Pass
+TRN-0044,,CTR-0008,Confined Space Entry,2025-01-27,2026-01-27,Current,EMP-0007,Pass
+TRN-0045,EMP-0018,,Machine Guarding,2025-04-20,2027-04-20,Current,EMP-0009,Pass
+TRN-0046,EMP-0025,,Confined Space Entry,2026-06-26,2028-06-25,Current,EMP-0007,Pass
+TRN-0047,EMP-0007,,Forklift Operation,2026-05-30,2028-05-29,Current,EMP-0007,Pass
+TRN-0048,,CTR-0004,Contractor Safety Orientation,2025-10-08,2026-10-08,Current,EMP-0007,Pass
+TRN-0049,EMP-0003,,Machine Guarding,2025-02-11,2027-02-11,Current,EMP-0007,Pass
+TRN-0050,EMP-0010,,Machine Guarding,2026-02-15,2028-02-15,Current,EMP-0007,Pass

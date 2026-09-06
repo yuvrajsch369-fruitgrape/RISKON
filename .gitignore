@@ -1,0 +1,34 @@
+# --- Secrets — never commit these ------------------------------------------
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# --- Python ------------------------------------------------------------------
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+
+# --- Node (unused today, but the backend's requirements list npm-based
+#      tooling as a possible future path — see RISKON_ARCHITECTURE.md) -------
+node_modules/
+.next/
+dist/
+build/
+
+# --- Logs / coverage -----------------------------------------------------------
+coverage/
+*.log
+
+# --- OS / editor cruft ------------------------------------------------------------
+.DS_Store
+.vscode/
+.idea/
+
+# --- Claude Code local session settings (machine/user-specific, not project config) -
+.claude/settings.local.json*

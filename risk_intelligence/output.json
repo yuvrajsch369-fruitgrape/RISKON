@@ -1,0 +1,3631 @@
+{
+  "generated_at": "2026-09-03",
+  "source": "database/riskon.db (Rex Industrial Manufacturing synthetic dataset)",
+  "methodology_doc": "docs/risk-intelligence-engine.md",
+  "emerging_risks_all": [
+    {
+      "risk_id": "ERISK-012",
+      "risk_name": "Heat Stress",
+      "hazard_category": "Heat Stress",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 83.8,
+      "risk_band": "Critical",
+      "signal": "Increasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 9,
+          "score": 1.0,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1.91,
+          "score": 0.48,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 3,
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Increasing",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Ineffective",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "3/7",
+          "score": 0.43,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "11 total incidents recorded under hazard category 'Heat Stress' (9 within the trailing 12 months).",
+          "refs": [
+            "INC-0031",
+            "INC-0035",
+            "INC-0037",
+            "INC-0042",
+            "INC-0044",
+            "INC-0045",
+            "INC-0059",
+            "INC-0063",
+            "INC-0064",
+            "INC-0077",
+            "INC-0080"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 3 separate facilities: Rex North Plant, Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 5 incidents in the most recent 6 months vs. 4 in the prior 6 months -> Increasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Ineffective'.",
+          "refs": [
+            "CTL-0006",
+            "CTL-0011",
+            "CTL-0017",
+            "CTL-0021",
+            "CTL-0026",
+            "CTL-0046"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "3 of 7 related corrective/preventive actions are currently Overdue (1 rescheduled 2+ times).",
+          "refs": [
+            "ACT-0009",
+            "ACT-0027",
+            "ACT-0077"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Inadequate Training' recorded on 3 of 8 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0035",
+            "INC-0045",
+            "INC-0059"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0031",
+        "INC-0035",
+        "INC-0037",
+        "INC-0042",
+        "INC-0044",
+        "INC-0045",
+        "INC-0059",
+        "INC-0063",
+        "INC-0064",
+        "INC-0077",
+        "INC-0080"
+      ],
+      "related_hazards": [
+        "HAZ-0016",
+        "HAZ-0025",
+        "HAZ-0031",
+        "HAZ-0039",
+        "HAZ-0042",
+        "HAZ-0043",
+        "HAZ-0056",
+        "HAZ-0066",
+        "HAZ-0070"
+      ],
+      "related_controls": [
+        "CTL-0006",
+        "CTL-0011",
+        "CTL-0017",
+        "CTL-0021",
+        "CTL-0026",
+        "CTL-0046"
+      ],
+      "related_actions_overdue": [
+        "ACT-0009",
+        "ACT-0027",
+        "ACT-0077"
+      ],
+      "confidence": "High",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Heat Stress' may not be functioning as designed; and the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one; and a recurring 'inadequate training' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 3 overdue action(s) address the root cause."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-015",
+      "risk_name": "Machine Guarding Failure (Point-of-Operation)",
+      "hazard_category": "Machine Guarding Failure",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 77.5,
+      "risk_band": "High",
+      "signal": "Stable",
+      "score_breakdown": {
+        "frequency": {
+          "value": 10,
+          "score": 1.0,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1.92,
+          "score": 0.48,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 3,
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Stable",
+          "score": 0.5,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Ineffective",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "7/13",
+          "score": 0.54,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "12 total incidents recorded under hazard category 'Machine Guarding Failure' (10 within the trailing 12 months).",
+          "refs": [
+            "INC-0008",
+            "INC-0009",
+            "INC-0010",
+            "INC-0011",
+            "INC-0012",
+            "INC-0013",
+            "INC-0024",
+            "INC-0074",
+            "INC-0087",
+            "INC-0095",
+            "INC-0097",
+            "INC-0098"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "2 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0008",
+            "INC-0087"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 3 separate facilities: Rex North Plant, Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 5 incidents in the most recent 6 months vs. 5 in the prior 6 months -> Stable.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Ineffective'.",
+          "refs": [
+            "CTL-0001",
+            "CTL-0028",
+            "CTL-0029",
+            "CTL-0045"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "7 of 13 related corrective/preventive actions are currently Overdue (5 rescheduled 2+ times).",
+          "refs": [
+            "ACT-0001",
+            "ACT-0002",
+            "ACT-0003",
+            "ACT-0004",
+            "ACT-0007",
+            "ACT-0030",
+            "ACT-0075"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Communication Breakdown' recorded on 3 of 12 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0010",
+            "INC-0087",
+            "INC-0098"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0008",
+        "INC-0009",
+        "INC-0010",
+        "INC-0011",
+        "INC-0012",
+        "INC-0013",
+        "INC-0024",
+        "INC-0074",
+        "INC-0087",
+        "INC-0095",
+        "INC-0097",
+        "INC-0098"
+      ],
+      "related_hazards": [
+        "HAZ-0003",
+        "HAZ-0022",
+        "HAZ-0054",
+        "HAZ-0068",
+        "HAZ-0075"
+      ],
+      "related_controls": [
+        "CTL-0001",
+        "CTL-0028",
+        "CTL-0029",
+        "CTL-0045"
+      ],
+      "related_actions_overdue": [
+        "ACT-0001",
+        "ACT-0002",
+        "ACT-0003",
+        "ACT-0004",
+        "ACT-0007",
+        "ACT-0030",
+        "ACT-0075"
+      ],
+      "confidence": "High",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Machine Guarding Failure' may not be functioning as designed; and the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one; and a recurring 'communication breakdown' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 7 overdue action(s) address the root cause."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-011",
+      "risk_name": "Forklift/Pedestrian Interaction",
+      "hazard_category": "Forklift / Vehicle Incident",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 60.5,
+      "risk_band": "High",
+      "signal": "Decreasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 7,
+          "score": 0.88,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1.92,
+          "score": 0.48,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 3,
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Decreasing",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Partially Effective",
+          "score": 0.6,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "2/10",
+          "score": 0.2,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "12 total incidents recorded under hazard category 'Forklift / Vehicle Incident' (7 within the trailing 12 months).",
+          "refs": [
+            "INC-0001",
+            "INC-0002",
+            "INC-0003",
+            "INC-0004",
+            "INC-0005",
+            "INC-0006",
+            "INC-0007",
+            "INC-0043",
+            "INC-0048",
+            "INC-0084",
+            "INC-0085",
+            "INC-0090"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "10 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0001",
+            "INC-0002",
+            "INC-0003",
+            "INC-0004",
+            "INC-0005",
+            "INC-0006",
+            "INC-0007",
+            "INC-0043",
+            "INC-0085",
+            "INC-0090"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 3 separate facilities: Rex North Plant, Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 3 incidents in the most recent 6 months vs. 4 in the prior 6 months -> Decreasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Partially Effective'.",
+          "refs": [
+            "CTL-0002",
+            "CTL-0003",
+            "CTL-0023",
+            "CTL-0039"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "2 of 10 related corrective/preventive actions are currently Overdue.",
+          "refs": [
+            "ACT-0036",
+            "ACT-0052"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Procedural Non-Compliance' recorded on 3 of 10 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0002",
+            "INC-0003",
+            "INC-0005"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0001",
+        "INC-0002",
+        "INC-0003",
+        "INC-0004",
+        "INC-0005",
+        "INC-0006",
+        "INC-0007",
+        "INC-0043",
+        "INC-0048",
+        "INC-0084",
+        "INC-0085",
+        "INC-0090"
+      ],
+      "related_hazards": [
+        "HAZ-0001",
+        "HAZ-0002",
+        "HAZ-0011",
+        "HAZ-0035",
+        "HAZ-0053"
+      ],
+      "related_controls": [
+        "CTL-0002",
+        "CTL-0003",
+        "CTL-0023",
+        "CTL-0039"
+      ],
+      "related_actions_overdue": [
+        "ACT-0036",
+        "ACT-0052"
+      ],
+      "confidence": "High",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Forklift / Vehicle Incident' may not be functioning as designed; and the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one; and a recurring 'procedural non-compliance' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 2 overdue action(s) address the root cause."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-014",
+      "risk_name": "Lockout/Tagout (LOTO) Non-Compliance",
+      "hazard_category": "Lockout/Tagout Violation",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 57.0,
+      "risk_band": "High",
+      "signal": "Decreasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 6,
+          "score": 0.75,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1.75,
+          "score": 0.44,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 3,
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Decreasing",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Partially Effective",
+          "score": 0.6,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "1/4",
+          "score": 0.25,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "8 total incidents recorded under hazard category 'Lockout/Tagout Violation' (6 within the trailing 12 months).",
+          "refs": [
+            "INC-0017",
+            "INC-0018",
+            "INC-0022",
+            "INC-0027",
+            "INC-0028",
+            "INC-0050",
+            "INC-0089",
+            "INC-0091"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "5 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0017",
+            "INC-0027",
+            "INC-0028",
+            "INC-0050",
+            "INC-0091"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 3 separate facilities: Rex North Plant, Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 2 incidents in the most recent 6 months vs. 4 in the prior 6 months -> Decreasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Partially Effective'.",
+          "refs": [
+            "CTL-0004",
+            "CTL-0022",
+            "CTL-0030"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "1 of 4 related corrective/preventive actions are currently Overdue.",
+          "refs": [
+            "ACT-0028"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Procedural Non-Compliance' recorded on 3 of 8 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0017",
+            "INC-0027",
+            "INC-0050"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0017",
+        "INC-0018",
+        "INC-0022",
+        "INC-0027",
+        "INC-0028",
+        "INC-0050",
+        "INC-0089",
+        "INC-0091"
+      ],
+      "related_hazards": [
+        "HAZ-0006",
+        "HAZ-0045",
+        "HAZ-0065",
+        "HAZ-0071",
+        "HAZ-0073"
+      ],
+      "related_controls": [
+        "CTL-0004",
+        "CTL-0022",
+        "CTL-0030"
+      ],
+      "related_actions_overdue": [
+        "ACT-0028"
+      ],
+      "confidence": "High",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Lockout/Tagout Violation' may not be functioning as designed; and the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one; and a recurring 'procedural non-compliance' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 1 overdue action(s) address the root cause."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-016",
+      "risk_name": "Noise Exposure",
+      "hazard_category": "Noise Exposure",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 55.7,
+      "risk_band": "High",
+      "signal": "Decreasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 3,
+          "score": 0.38,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 2.67,
+          "score": 0.67,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 3,
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Decreasing",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Ineffective",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "0/2",
+          "score": 0.0,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "3 total incidents recorded under hazard category 'Noise Exposure' (3 within the trailing 12 months).",
+          "refs": [
+            "INC-0033",
+            "INC-0058",
+            "INC-0071"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 3 separate facilities: Rex North Plant, Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 1 incidents in the most recent 6 months vs. 2 in the prior 6 months -> Decreasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Ineffective'.",
+          "refs": [
+            "CTL-0005",
+            "CTL-0015",
+            "CTL-0020",
+            "CTL-0027",
+            "CTL-0040",
+            "CTL-0041"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0033",
+        "INC-0058",
+        "INC-0071"
+      ],
+      "related_hazards": [
+        "HAZ-0010",
+        "HAZ-0013",
+        "HAZ-0014",
+        "HAZ-0034",
+        "HAZ-0060",
+        "HAZ-0061"
+      ],
+      "related_controls": [
+        "CTL-0005",
+        "CTL-0015",
+        "CTL-0020",
+        "CTL-0027",
+        "CTL-0040",
+        "CTL-0041"
+      ],
+      "related_actions_overdue": [],
+      "confidence": "Medium",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Noise Exposure' may not be functioning as designed; and the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s)."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-003",
+      "risk_name": "Confined Space Hazard",
+      "hazard_category": "Confined Space Hazard",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 53.4,
+      "risk_band": "Medium",
+      "signal": "Increasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 3,
+          "score": 0.38,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 2.2,
+          "score": 0.55,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 3,
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Increasing",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Effective",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "0/1",
+          "score": 0.0,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "5 total incidents recorded under hazard category 'Confined Space Hazard' (3 within the trailing 12 months).",
+          "refs": [
+            "INC-0019",
+            "INC-0030",
+            "INC-0034",
+            "INC-0036",
+            "INC-0082"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "4 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0019",
+            "INC-0030",
+            "INC-0034",
+            "INC-0082"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 3 separate facilities: Rex North Plant, Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 2 incidents in the most recent 6 months vs. 1 in the prior 6 months -> Increasing.",
+          "refs": []
+        }
+      ],
+      "related_incidents": [
+        "INC-0019",
+        "INC-0030",
+        "INC-0034",
+        "INC-0036",
+        "INC-0082"
+      ],
+      "related_hazards": [
+        "HAZ-0021",
+        "HAZ-0024",
+        "HAZ-0036",
+        "HAZ-0064"
+      ],
+      "related_controls": [
+        "CTL-0037"
+      ],
+      "related_actions_overdue": [],
+      "confidence": "Medium",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s)."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-004",
+      "risk_name": "Electrical Hazard / Arc Flash",
+      "hazard_category": "Electrical Hazard / Arc Flash",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 52.5,
+      "risk_band": "Medium",
+      "signal": "Stable",
+      "score_breakdown": {
+        "frequency": {
+          "value": 4,
+          "score": 0.5,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1.5,
+          "score": 0.38,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 2,
+          "score": 0.67,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Stable",
+          "score": 0.5,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Ineffective",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "0/3",
+          "score": 0.0,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "4 total incidents recorded under hazard category 'Electrical Hazard / Arc Flash' (4 within the trailing 12 months).",
+          "refs": [
+            "INC-0038",
+            "INC-0049",
+            "INC-0061",
+            "INC-0068"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "4 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0038",
+            "INC-0049",
+            "INC-0061",
+            "INC-0068"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 2 separate facilities: Rex North Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 2 incidents in the most recent 6 months vs. 2 in the prior 6 months -> Stable.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Ineffective'.",
+          "refs": [
+            "CTL-0010",
+            "CTL-0018",
+            "CTL-0025",
+            "CTL-0032"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0038",
+        "INC-0049",
+        "INC-0061",
+        "INC-0068"
+      ],
+      "related_hazards": [
+        "HAZ-0019",
+        "HAZ-0028",
+        "HAZ-0032",
+        "HAZ-0069"
+      ],
+      "related_controls": [
+        "CTL-0010",
+        "CTL-0018",
+        "CTL-0025",
+        "CTL-0032"
+      ],
+      "related_actions_overdue": [],
+      "confidence": "Medium",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Electrical Hazard / Arc Flash' may not be functioning as designed; and the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s)."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-007",
+      "risk_name": "Ergonomic Strain",
+      "hazard_category": "Ergonomic Strain",
+      "facility": "Rex Central Plant",
+      "facilities": [
+        "Rex Central Plant"
+      ],
+      "risk_signal_score": 51.4,
+      "risk_band": "Medium",
+      "signal": "Increasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 3,
+          "score": 0.38,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1.6,
+          "score": 0.4,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 1,
+          "score": 0.33,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Increasing",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Partially Effective",
+          "score": 0.6,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "2/4",
+          "score": 0.5,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "5 total incidents recorded under hazard category 'Ergonomic Strain' (3 within the trailing 12 months).",
+          "refs": [
+            "INC-0047",
+            "INC-0065",
+            "INC-0072",
+            "INC-0083",
+            "INC-0092"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 2 incidents in the most recent 6 months vs. 1 in the prior 6 months -> Increasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Partially Effective'.",
+          "refs": [
+            "CTL-0033",
+            "CTL-0036"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "2 of 4 related corrective/preventive actions are currently Overdue (1 rescheduled 2+ times).",
+          "refs": [
+            "ACT-0008",
+            "ACT-0026"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0047",
+        "INC-0065",
+        "INC-0072",
+        "INC-0083",
+        "INC-0092"
+      ],
+      "related_hazards": [
+        "HAZ-0007",
+        "HAZ-0029",
+        "HAZ-0062",
+        "HAZ-0072"
+      ],
+      "related_controls": [
+        "CTL-0033",
+        "CTL-0036"
+      ],
+      "related_actions_overdue": [
+        "ACT-0008",
+        "ACT-0026"
+      ],
+      "confidence": "Medium",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Ergonomic Strain' may not be functioning as designed. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the assigned Safety Manager should review this cluster's incidents and the related control(s) and confirm whether the 2 overdue action(s) address the root cause."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-019",
+      "risk_name": "Slip/Trip/Fall",
+      "hazard_category": "Slip/Trip/Fall",
+      "facility": "Rex Central Plant",
+      "facilities": [
+        "Rex Central Plant"
+      ],
+      "risk_signal_score": 51.2,
+      "risk_band": "Medium",
+      "signal": "Increasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 2,
+          "score": 0.25,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 2,
+          "score": 0.5,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 1,
+          "score": 0.33,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Increasing",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Ineffective",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "0/2",
+          "score": 0.0,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "2 total incidents recorded under hazard category 'Slip/Trip/Fall' (2 within the trailing 12 months).",
+          "refs": [
+            "INC-0039",
+            "INC-0057"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "1 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0057"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 2 incidents in the most recent 6 months vs. 0 in the prior 6 months -> Increasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Ineffective'.",
+          "refs": [
+            "CTL-0016",
+            "CTL-0031",
+            "CTL-0047",
+            "CTL-0049"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0039",
+        "INC-0057"
+      ],
+      "related_hazards": [
+        "HAZ-0018",
+        "HAZ-0046",
+        "HAZ-0048",
+        "HAZ-0059"
+      ],
+      "related_controls": [
+        "CTL-0016",
+        "CTL-0031",
+        "CTL-0047",
+        "CTL-0049"
+      ],
+      "related_actions_overdue": [],
+      "confidence": "Low",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Slip/Trip/Fall' may not be functioning as designed. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the assigned Safety Manager should review this cluster's incidents and the related control(s)."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-002",
+      "risk_name": "Chemical Exposure",
+      "hazard_category": "Chemical Exposure",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 50.9,
+      "risk_band": "Medium",
+      "signal": "Increasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 3,
+          "score": 0.38,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 2.2,
+          "score": 0.55,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 2,
+          "score": 0.67,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Increasing",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Effective",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "1/4",
+          "score": 0.25,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "5 total incidents recorded under hazard category 'Chemical Exposure' (3 within the trailing 12 months).",
+          "refs": [
+            "INC-0023",
+            "INC-0032",
+            "INC-0052",
+            "INC-0081",
+            "INC-0094"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "2 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0081",
+            "INC-0094"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 2 separate facilities: Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 2 incidents in the most recent 6 months vs. 1 in the prior 6 months -> Increasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "1 of 4 related corrective/preventive actions are currently Overdue (1 rescheduled 2+ times).",
+          "refs": [
+            "ACT-0005"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Procedural Non-Compliance' recorded on 2 of 4 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0081",
+            "INC-0094"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0023",
+        "INC-0032",
+        "INC-0052",
+        "INC-0081",
+        "INC-0094"
+      ],
+      "related_hazards": [
+        "HAZ-0020",
+        "HAZ-0026",
+        "HAZ-0067"
+      ],
+      "related_controls": [
+        "CTL-0019"
+      ],
+      "related_actions_overdue": [
+        "ACT-0005"
+      ],
+      "confidence": "Medium",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one; and a recurring 'procedural non-compliance' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 1 overdue action(s) address the root cause."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-018",
+      "risk_name": "Pressure System Failure",
+      "hazard_category": "Pressure System Failure",
+      "facility": "Rex South Plant",
+      "facilities": [
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 50.6,
+      "risk_band": "Medium",
+      "signal": "Increasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 1,
+          "score": 0.12,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 2.5,
+          "score": 0.62,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 1,
+          "score": 0.33,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Increasing",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Ineffective",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "0/1",
+          "score": 0.0,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "2 total incidents recorded under hazard category 'Pressure System Failure' (1 within the trailing 12 months).",
+          "refs": [
+            "INC-0070",
+            "INC-0099"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "1 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0070"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 1 incidents in the most recent 6 months vs. 0 in the prior 6 months -> Increasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Ineffective'.",
+          "refs": [
+            "CTL-0012"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Inadequate Training' recorded on 2 of 2 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0070",
+            "INC-0099"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0070",
+        "INC-0099"
+      ],
+      "related_hazards": [
+        "HAZ-0023",
+        "HAZ-0052",
+        "HAZ-0058"
+      ],
+      "related_controls": [
+        "CTL-0012"
+      ],
+      "related_actions_overdue": [],
+      "confidence": "Low",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Pressure System Failure' may not be functioning as designed; and a recurring 'inadequate training' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the assigned Safety Manager should review this cluster's incidents and the related control(s)."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-009",
+      "risk_name": "Falling Object / Struck-By",
+      "hazard_category": "Falling Object / Struck-By",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 49.9,
+      "risk_band": "Medium",
+      "signal": "Decreasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 6,
+          "score": 0.75,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1.17,
+          "score": 0.29,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 2,
+          "score": 0.67,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Decreasing",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Partially Effective",
+          "score": 0.6,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "1/3",
+          "score": 0.33,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "6 total incidents recorded under hazard category 'Falling Object / Struck-By' (6 within the trailing 12 months).",
+          "refs": [
+            "INC-0051",
+            "INC-0062",
+            "INC-0073",
+            "INC-0088",
+            "INC-0093",
+            "INC-0096"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "3 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0051",
+            "INC-0088",
+            "INC-0096"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 2 separate facilities: Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 1 incidents in the most recent 6 months vs. 5 in the prior 6 months -> Decreasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Partially Effective'.",
+          "refs": [
+            "CTL-0044",
+            "CTL-0048"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "1 of 3 related corrective/preventive actions are currently Overdue.",
+          "refs": [
+            "ACT-0017"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Procedural Non-Compliance' recorded on 2 of 6 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0073",
+            "INC-0088"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0051",
+        "INC-0062",
+        "INC-0073",
+        "INC-0088",
+        "INC-0093",
+        "INC-0096"
+      ],
+      "related_hazards": [
+        "HAZ-0012",
+        "HAZ-0017",
+        "HAZ-0027",
+        "HAZ-0033"
+      ],
+      "related_controls": [
+        "CTL-0044",
+        "CTL-0048"
+      ],
+      "related_actions_overdue": [
+        "ACT-0017"
+      ],
+      "confidence": "High",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Falling Object / Struck-By' may not be functioning as designed; and the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one; and a recurring 'procedural non-compliance' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 1 overdue action(s) address the root cause."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-017",
+      "risk_name": "Overhead Crane / Rigging Hazard",
+      "hazard_category": "Overhead Crane / Rigging Hazard",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 44.9,
+      "risk_band": "Medium",
+      "signal": "Decreasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 3,
+          "score": 0.38,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1.5,
+          "score": 0.38,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 2,
+          "score": 0.67,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Decreasing",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Ineffective",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "0/4",
+          "score": 0.0,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "4 total incidents recorded under hazard category 'Overhead Crane / Rigging Hazard' (3 within the trailing 12 months).",
+          "refs": [
+            "INC-0025",
+            "INC-0046",
+            "INC-0076",
+            "INC-0086"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "1 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0076"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 2 separate facilities: Rex North Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 0 incidents in the most recent 6 months vs. 3 in the prior 6 months -> Decreasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Ineffective'.",
+          "refs": [
+            "CTL-0014",
+            "CTL-0043",
+            "CTL-0050"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Human Error' recorded on 2 of 4 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0046",
+            "INC-0076"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0025",
+        "INC-0046",
+        "INC-0076",
+        "INC-0086"
+      ],
+      "related_hazards": [
+        "HAZ-0015",
+        "HAZ-0037",
+        "HAZ-0041",
+        "HAZ-0055",
+        "HAZ-0074"
+      ],
+      "related_controls": [
+        "CTL-0014",
+        "CTL-0043",
+        "CTL-0050"
+      ],
+      "related_actions_overdue": [],
+      "confidence": "Medium",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Overhead Crane / Rigging Hazard' may not be functioning as designed; and the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one; and a recurring 'human error' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s)."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-013",
+      "risk_name": "Housekeeping / Walkway Obstruction",
+      "hazard_category": "Housekeeping / Walkway Obstruction",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 42.4,
+      "risk_band": "Medium",
+      "signal": "Decreasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 3,
+          "score": 0.38,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 2,
+          "score": 0.5,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 3,
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Decreasing",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Effective",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "1/5",
+          "score": 0.2,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "6 total incidents recorded under hazard category 'Housekeeping / Walkway Obstruction' (3 within the trailing 12 months).",
+          "refs": [
+            "INC-0020",
+            "INC-0021",
+            "INC-0026",
+            "INC-0060",
+            "INC-0067",
+            "INC-0079"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "5 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0020",
+            "INC-0026",
+            "INC-0060",
+            "INC-0067",
+            "INC-0079"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 3 separate facilities: Rex North Plant, Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 1 incidents in the most recent 6 months vs. 2 in the prior 6 months -> Decreasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "1 of 5 related corrective/preventive actions are currently Overdue (1 rescheduled 2+ times).",
+          "refs": [
+            "ACT-0006"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Human Error' recorded on 2 of 6 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0020",
+            "INC-0060"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0020",
+        "INC-0021",
+        "INC-0026",
+        "INC-0060",
+        "INC-0067",
+        "INC-0079"
+      ],
+      "related_hazards": [
+        "HAZ-0009",
+        "HAZ-0030",
+        "HAZ-0044",
+        "HAZ-0057"
+      ],
+      "related_controls": [
+        "CTL-0034"
+      ],
+      "related_actions_overdue": [
+        "ACT-0006"
+      ],
+      "confidence": "Medium",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one; and a recurring 'human error' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 1 overdue action(s) address the root cause."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-010",
+      "risk_name": "Fire / Explosion Risk",
+      "hazard_category": "Fire / Explosion Risk",
+      "facility": "Rex Central Plant",
+      "facilities": [
+        "Rex Central Plant"
+      ],
+      "risk_signal_score": 37.1,
+      "risk_band": "Medium",
+      "signal": "Increasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 1,
+          "score": 0.12,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1,
+          "score": 0.25,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 1,
+          "score": 0.33,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Increasing",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Partially Effective",
+          "score": 0.6,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "0/1",
+          "score": 0.0,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "1 total incidents recorded under hazard category 'Fire / Explosion Risk' (1 within the trailing 12 months).",
+          "refs": [
+            "INC-0040"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 1 incidents in the most recent 6 months vs. 0 in the prior 6 months -> Increasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Partially Effective'.",
+          "refs": [
+            "CTL-0013"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0040"
+      ],
+      "related_hazards": [
+        "HAZ-0040"
+      ],
+      "related_controls": [
+        "CTL-0013"
+      ],
+      "related_actions_overdue": [],
+      "confidence": "Low",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Fire / Explosion Risk' may not be functioning as designed. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the assigned Safety Manager should review this cluster's incidents and the related control(s)."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-006",
+      "risk_name": "Equipment Failure Following Deferred Maintenance",
+      "hazard_category": "Equipment Failure Risk",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 36.8,
+      "risk_band": "Medium",
+      "signal": "Stable",
+      "score_breakdown": {
+        "frequency": {
+          "value": 2,
+          "score": 0.25,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 2,
+          "score": 0.5,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 2,
+          "score": 0.67,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Stable",
+          "score": 0.5,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Effective",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "0/2",
+          "score": 0.0,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "3 total incidents recorded under hazard category 'Equipment Failure Risk' (2 within the trailing 12 months).",
+          "refs": [
+            "INC-0014",
+            "INC-0015",
+            "INC-0016"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 2 separate facilities: Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 1 incidents in the most recent 6 months vs. 1 in the prior 6 months -> Stable.",
+          "refs": []
+        }
+      ],
+      "related_incidents": [
+        "INC-0014",
+        "INC-0015",
+        "INC-0016"
+      ],
+      "related_hazards": [
+        "HAZ-0004",
+        "HAZ-0005"
+      ],
+      "related_controls": [
+        "CTL-0007",
+        "CTL-0035"
+      ],
+      "related_actions_overdue": [],
+      "confidence": "Low",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s)."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-008",
+      "risk_name": "Fall / Working at Height",
+      "hazard_category": "Fall / Working at Height",
+      "facility": "Rex North Plant",
+      "facilities": [
+        "Rex North Plant"
+      ],
+      "risk_signal_score": 36.1,
+      "risk_band": "Medium",
+      "signal": "Increasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 1,
+          "score": 0.12,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 2,
+          "score": 0.5,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 1,
+          "score": 0.33,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Increasing",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Effective",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "0/1",
+          "score": 0.0,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "1 total incidents recorded under hazard category 'Fall / Working at Height' (1 within the trailing 12 months).",
+          "refs": [
+            "INC-0041"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 1 incidents in the most recent 6 months vs. 0 in the prior 6 months -> Increasing.",
+          "refs": []
+        }
+      ],
+      "related_incidents": [
+        "INC-0041"
+      ],
+      "related_hazards": [
+        "HAZ-0076",
+        "HAZ-0077"
+      ],
+      "related_controls": [
+        "CTL-0051"
+      ],
+      "related_actions_overdue": [],
+      "confidence": "Low",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests no single dominant contributing factor stands out yet from the available evidence. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the assigned Safety Manager should review this cluster's incidents and the related control(s)."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-001",
+      "risk_name": "Caught-In / Caught-Between",
+      "hazard_category": "Caught-In / Caught-Between",
+      "facility": "Rex Central Plant",
+      "facilities": [
+        "Rex Central Plant"
+      ],
+      "risk_signal_score": 36.0,
+      "risk_band": "Medium",
+      "signal": "Decreasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 2,
+          "score": 0.25,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 2.14,
+          "score": 0.54,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 1,
+          "score": 0.33,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Decreasing",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Partially Effective",
+          "score": 0.6,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "1/5",
+          "score": 0.2,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "7 total incidents recorded under hazard category 'Caught-In / Caught-Between' (2 within the trailing 12 months).",
+          "refs": [
+            "INC-0029",
+            "INC-0054",
+            "INC-0055",
+            "INC-0056",
+            "INC-0075",
+            "INC-0078",
+            "INC-0100"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "4 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0029",
+            "INC-0054",
+            "INC-0055",
+            "INC-0075"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 0 incidents in the most recent 6 months vs. 2 in the prior 6 months -> Decreasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Partially Effective'.",
+          "refs": [
+            "CTL-0009",
+            "CTL-0042"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "1 of 5 related corrective/preventive actions are currently Overdue.",
+          "refs": [
+            "ACT-0076"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Design Deficiency' recorded on 2 of 7 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0029",
+            "INC-0075"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0029",
+        "INC-0054",
+        "INC-0055",
+        "INC-0056",
+        "INC-0075",
+        "INC-0078",
+        "INC-0100"
+      ],
+      "related_hazards": [
+        "HAZ-0049",
+        "HAZ-0050",
+        "HAZ-0063"
+      ],
+      "related_controls": [
+        "CTL-0009",
+        "CTL-0042"
+      ],
+      "related_actions_overdue": [
+        "ACT-0076"
+      ],
+      "confidence": "Low",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Caught-In / Caught-Between' may not be functioning as designed; and a recurring 'design deficiency' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the assigned Safety Manager should review this cluster's incidents and the related control(s) and confirm whether the 1 overdue action(s) address the root cause."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-005",
+      "risk_name": "Environmental Spill / Release",
+      "hazard_category": "Environmental Spill / Release",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 30.6,
+      "risk_band": "Medium",
+      "signal": "Decreasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 2,
+          "score": 0.25,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1.67,
+          "score": 0.42,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 2,
+          "score": 0.67,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Decreasing",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Effective",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "0/1",
+          "score": 0.0,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "3 total incidents recorded under hazard category 'Environmental Spill / Release' (2 within the trailing 12 months).",
+          "refs": [
+            "INC-0053",
+            "INC-0066",
+            "INC-0069"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 2 separate facilities: Rex North Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 0 incidents in the most recent 6 months vs. 2 in the prior 6 months -> Decreasing.",
+          "refs": []
+        }
+      ],
+      "related_incidents": [
+        "INC-0053",
+        "INC-0066",
+        "INC-0069"
+      ],
+      "related_hazards": [
+        "HAZ-0008",
+        "HAZ-0038",
+        "HAZ-0047",
+        "HAZ-0051"
+      ],
+      "related_controls": [
+        "CTL-0008",
+        "CTL-0024",
+        "CTL-0038"
+      ],
+      "related_actions_overdue": [],
+      "confidence": "Low",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s)."
+      },
+      "human_review_status": "Pending"
+    }
+  ],
+  "emerging_risks_top5": [
+    {
+      "risk_id": "ERISK-012",
+      "risk_name": "Heat Stress",
+      "hazard_category": "Heat Stress",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 83.8,
+      "risk_band": "Critical",
+      "signal": "Increasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 9,
+          "score": 1.0,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1.91,
+          "score": 0.48,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 3,
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Increasing",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Ineffective",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "3/7",
+          "score": 0.43,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "11 total incidents recorded under hazard category 'Heat Stress' (9 within the trailing 12 months).",
+          "refs": [
+            "INC-0031",
+            "INC-0035",
+            "INC-0037",
+            "INC-0042",
+            "INC-0044",
+            "INC-0045",
+            "INC-0059",
+            "INC-0063",
+            "INC-0064",
+            "INC-0077",
+            "INC-0080"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 3 separate facilities: Rex North Plant, Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 5 incidents in the most recent 6 months vs. 4 in the prior 6 months -> Increasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Ineffective'.",
+          "refs": [
+            "CTL-0006",
+            "CTL-0011",
+            "CTL-0017",
+            "CTL-0021",
+            "CTL-0026",
+            "CTL-0046"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "3 of 7 related corrective/preventive actions are currently Overdue (1 rescheduled 2+ times).",
+          "refs": [
+            "ACT-0009",
+            "ACT-0027",
+            "ACT-0077"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Inadequate Training' recorded on 3 of 8 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0035",
+            "INC-0045",
+            "INC-0059"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0031",
+        "INC-0035",
+        "INC-0037",
+        "INC-0042",
+        "INC-0044",
+        "INC-0045",
+        "INC-0059",
+        "INC-0063",
+        "INC-0064",
+        "INC-0077",
+        "INC-0080"
+      ],
+      "related_hazards": [
+        "HAZ-0016",
+        "HAZ-0025",
+        "HAZ-0031",
+        "HAZ-0039",
+        "HAZ-0042",
+        "HAZ-0043",
+        "HAZ-0056",
+        "HAZ-0066",
+        "HAZ-0070"
+      ],
+      "related_controls": [
+        "CTL-0006",
+        "CTL-0011",
+        "CTL-0017",
+        "CTL-0021",
+        "CTL-0026",
+        "CTL-0046"
+      ],
+      "related_actions_overdue": [
+        "ACT-0009",
+        "ACT-0027",
+        "ACT-0077"
+      ],
+      "confidence": "High",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Heat Stress' may not be functioning as designed; and the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one; and a recurring 'inadequate training' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 3 overdue action(s) address the root cause."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-015",
+      "risk_name": "Machine Guarding Failure (Point-of-Operation)",
+      "hazard_category": "Machine Guarding Failure",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 77.5,
+      "risk_band": "High",
+      "signal": "Stable",
+      "score_breakdown": {
+        "frequency": {
+          "value": 10,
+          "score": 1.0,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1.92,
+          "score": 0.48,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 3,
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Stable",
+          "score": 0.5,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Ineffective",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "7/13",
+          "score": 0.54,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "12 total incidents recorded under hazard category 'Machine Guarding Failure' (10 within the trailing 12 months).",
+          "refs": [
+            "INC-0008",
+            "INC-0009",
+            "INC-0010",
+            "INC-0011",
+            "INC-0012",
+            "INC-0013",
+            "INC-0024",
+            "INC-0074",
+            "INC-0087",
+            "INC-0095",
+            "INC-0097",
+            "INC-0098"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "2 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0008",
+            "INC-0087"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 3 separate facilities: Rex North Plant, Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 5 incidents in the most recent 6 months vs. 5 in the prior 6 months -> Stable.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Ineffective'.",
+          "refs": [
+            "CTL-0001",
+            "CTL-0028",
+            "CTL-0029",
+            "CTL-0045"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "7 of 13 related corrective/preventive actions are currently Overdue (5 rescheduled 2+ times).",
+          "refs": [
+            "ACT-0001",
+            "ACT-0002",
+            "ACT-0003",
+            "ACT-0004",
+            "ACT-0007",
+            "ACT-0030",
+            "ACT-0075"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Communication Breakdown' recorded on 3 of 12 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0010",
+            "INC-0087",
+            "INC-0098"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0008",
+        "INC-0009",
+        "INC-0010",
+        "INC-0011",
+        "INC-0012",
+        "INC-0013",
+        "INC-0024",
+        "INC-0074",
+        "INC-0087",
+        "INC-0095",
+        "INC-0097",
+        "INC-0098"
+      ],
+      "related_hazards": [
+        "HAZ-0003",
+        "HAZ-0022",
+        "HAZ-0054",
+        "HAZ-0068",
+        "HAZ-0075"
+      ],
+      "related_controls": [
+        "CTL-0001",
+        "CTL-0028",
+        "CTL-0029",
+        "CTL-0045"
+      ],
+      "related_actions_overdue": [
+        "ACT-0001",
+        "ACT-0002",
+        "ACT-0003",
+        "ACT-0004",
+        "ACT-0007",
+        "ACT-0030",
+        "ACT-0075"
+      ],
+      "confidence": "High",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Machine Guarding Failure' may not be functioning as designed; and the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one; and a recurring 'communication breakdown' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 7 overdue action(s) address the root cause."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-011",
+      "risk_name": "Forklift/Pedestrian Interaction",
+      "hazard_category": "Forklift / Vehicle Incident",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 60.5,
+      "risk_band": "High",
+      "signal": "Decreasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 7,
+          "score": 0.88,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1.92,
+          "score": 0.48,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 3,
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Decreasing",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Partially Effective",
+          "score": 0.6,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "2/10",
+          "score": 0.2,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "12 total incidents recorded under hazard category 'Forklift / Vehicle Incident' (7 within the trailing 12 months).",
+          "refs": [
+            "INC-0001",
+            "INC-0002",
+            "INC-0003",
+            "INC-0004",
+            "INC-0005",
+            "INC-0006",
+            "INC-0007",
+            "INC-0043",
+            "INC-0048",
+            "INC-0084",
+            "INC-0085",
+            "INC-0090"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "10 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0001",
+            "INC-0002",
+            "INC-0003",
+            "INC-0004",
+            "INC-0005",
+            "INC-0006",
+            "INC-0007",
+            "INC-0043",
+            "INC-0085",
+            "INC-0090"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 3 separate facilities: Rex North Plant, Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 3 incidents in the most recent 6 months vs. 4 in the prior 6 months -> Decreasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Partially Effective'.",
+          "refs": [
+            "CTL-0002",
+            "CTL-0003",
+            "CTL-0023",
+            "CTL-0039"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "2 of 10 related corrective/preventive actions are currently Overdue.",
+          "refs": [
+            "ACT-0036",
+            "ACT-0052"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Procedural Non-Compliance' recorded on 3 of 10 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0002",
+            "INC-0003",
+            "INC-0005"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0001",
+        "INC-0002",
+        "INC-0003",
+        "INC-0004",
+        "INC-0005",
+        "INC-0006",
+        "INC-0007",
+        "INC-0043",
+        "INC-0048",
+        "INC-0084",
+        "INC-0085",
+        "INC-0090"
+      ],
+      "related_hazards": [
+        "HAZ-0001",
+        "HAZ-0002",
+        "HAZ-0011",
+        "HAZ-0035",
+        "HAZ-0053"
+      ],
+      "related_controls": [
+        "CTL-0002",
+        "CTL-0003",
+        "CTL-0023",
+        "CTL-0039"
+      ],
+      "related_actions_overdue": [
+        "ACT-0036",
+        "ACT-0052"
+      ],
+      "confidence": "High",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Forklift / Vehicle Incident' may not be functioning as designed; and the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one; and a recurring 'procedural non-compliance' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 2 overdue action(s) address the root cause."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-014",
+      "risk_name": "Lockout/Tagout (LOTO) Non-Compliance",
+      "hazard_category": "Lockout/Tagout Violation",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 57.0,
+      "risk_band": "High",
+      "signal": "Decreasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 6,
+          "score": 0.75,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 1.75,
+          "score": 0.44,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 3,
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Decreasing",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Partially Effective",
+          "score": 0.6,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "1/4",
+          "score": 0.25,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "8 total incidents recorded under hazard category 'Lockout/Tagout Violation' (6 within the trailing 12 months).",
+          "refs": [
+            "INC-0017",
+            "INC-0018",
+            "INC-0022",
+            "INC-0027",
+            "INC-0028",
+            "INC-0050",
+            "INC-0089",
+            "INC-0091"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "5 of these were near misses (no injury/damage occurred).",
+          "refs": [
+            "INC-0017",
+            "INC-0027",
+            "INC-0028",
+            "INC-0050",
+            "INC-0091"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 3 separate facilities: Rex North Plant, Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 2 incidents in the most recent 6 months vs. 4 in the prior 6 months -> Decreasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Partially Effective'.",
+          "refs": [
+            "CTL-0004",
+            "CTL-0022",
+            "CTL-0030"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "1 of 4 related corrective/preventive actions are currently Overdue.",
+          "refs": [
+            "ACT-0028"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Root-cause category 'Procedural Non-Compliance' recorded on 3 of 8 investigated incidents in this cluster.",
+          "refs": [
+            "INC-0017",
+            "INC-0027",
+            "INC-0050"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0017",
+        "INC-0018",
+        "INC-0022",
+        "INC-0027",
+        "INC-0028",
+        "INC-0050",
+        "INC-0089",
+        "INC-0091"
+      ],
+      "related_hazards": [
+        "HAZ-0006",
+        "HAZ-0045",
+        "HAZ-0065",
+        "HAZ-0071",
+        "HAZ-0073"
+      ],
+      "related_controls": [
+        "CTL-0004",
+        "CTL-0022",
+        "CTL-0030"
+      ],
+      "related_actions_overdue": [
+        "ACT-0028"
+      ],
+      "confidence": "High",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Lockout/Tagout Violation' may not be functioning as designed; and the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one; and a recurring 'procedural non-compliance' factor may be a common thread across these incidents. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 1 overdue action(s) address the root cause."
+      },
+      "human_review_status": "Pending"
+    },
+    {
+      "risk_id": "ERISK-016",
+      "risk_name": "Noise Exposure",
+      "hazard_category": "Noise Exposure",
+      "facility": "Multiple",
+      "facilities": [
+        "Rex North Plant",
+        "Rex Central Plant",
+        "Rex South Plant"
+      ],
+      "risk_signal_score": 55.7,
+      "risk_band": "High",
+      "signal": "Decreasing",
+      "score_breakdown": {
+        "frequency": {
+          "value": 3,
+          "score": 0.38,
+          "weight": 0.25
+        },
+        "severity": {
+          "value": 2.67,
+          "score": 0.67,
+          "weight": 0.2
+        },
+        "recurrence": {
+          "value": 3,
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "trend": {
+          "value": "Decreasing",
+          "score": 0.2,
+          "weight": 0.15
+        },
+        "control_gap": {
+          "value": "Ineffective",
+          "score": 1.0,
+          "weight": 0.15
+        },
+        "action_overdue": {
+          "value": "0/2",
+          "score": 0.0,
+          "weight": 0.1
+        }
+      },
+      "evidence": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "3 total incidents recorded under hazard category 'Noise Exposure' (3 within the trailing 12 months).",
+          "refs": [
+            "INC-0033",
+            "INC-0058",
+            "INC-0071"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Incidents recorded at 3 separate facilities: Rex North Plant, Rex Central Plant, Rex South Plant.",
+          "refs": [
+            "FAC-001",
+            "FAC-002",
+            "FAC-003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Trend signal: 1 incidents in the most recent 6 months vs. 2 in the prior 6 months -> Decreasing.",
+          "refs": []
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Most recent control assessment for the related control(s) rated effectiveness as 'Ineffective'.",
+          "refs": [
+            "CTL-0005",
+            "CTL-0015",
+            "CTL-0020",
+            "CTL-0027",
+            "CTL-0040",
+            "CTL-0041"
+          ]
+        }
+      ],
+      "related_incidents": [
+        "INC-0033",
+        "INC-0058",
+        "INC-0071"
+      ],
+      "related_hazards": [
+        "HAZ-0010",
+        "HAZ-0013",
+        "HAZ-0014",
+        "HAZ-0034",
+        "HAZ-0060",
+        "HAZ-0061"
+      ],
+      "related_controls": [
+        "CTL-0005",
+        "CTL-0015",
+        "CTL-0020",
+        "CTL-0027",
+        "CTL-0040",
+        "CTL-0041"
+      ],
+      "related_actions_overdue": [],
+      "confidence": "Medium",
+      "possible_systemic_issue": {
+        "type": "AI_HYPOTHESIS",
+        "statement": "Pattern suggests the control(s) intended to mitigate 'Noise Exposure' may not be functioning as designed; and the issue may not be site-specific, which would point toward a shared procedural or design gap rather than a local one. Further investigation recommended before drawing a conclusion."
+      },
+      "recommended_investigation": {
+        "type": "RECOMMENDATION",
+        "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s)."
+      },
+      "human_review_status": "Pending"
+    }
+  ],
+  "qa": {
+    "q1_top_emerging_risks": {
+      "question": "What are the top 5 emerging risks?",
+      "findings": [
+        {
+          "type": "STATISTICAL_PATTERN",
+          "risk_id": "ERISK-012",
+          "risk_name": "Heat Stress",
+          "statement": "Risk signal score 83.8 (Critical), signal: Increasing, across 3 facilities.",
+          "risk_id_ref": "ERISK-012"
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "risk_id": "ERISK-015",
+          "risk_name": "Machine Guarding Failure (Point-of-Operation)",
+          "statement": "Risk signal score 77.5 (High), signal: Stable, across 3 facilities.",
+          "risk_id_ref": "ERISK-015"
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "risk_id": "ERISK-011",
+          "risk_name": "Forklift/Pedestrian Interaction",
+          "statement": "Risk signal score 60.5 (High), signal: Decreasing, across 3 facilities.",
+          "risk_id_ref": "ERISK-011"
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "risk_id": "ERISK-014",
+          "risk_name": "Lockout/Tagout (LOTO) Non-Compliance",
+          "statement": "Risk signal score 57.0 (High), signal: Decreasing, across 3 facilities.",
+          "risk_id_ref": "ERISK-014"
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "risk_id": "ERISK-016",
+          "risk_name": "Noise Exposure",
+          "statement": "Risk signal score 55.7 (High), signal: Decreasing, across 3 facilities.",
+          "risk_id_ref": "ERISK-016"
+        }
+      ]
+    },
+    "q2_increasing_risks": {
+      "question": "Which risks are increasing?",
+      "findings": [
+        {
+          "type": "STATISTICAL_PATTERN",
+          "risk_id": "ERISK-012",
+          "risk_name": "Heat Stress",
+          "statement": "More incidents in the trailing 6 months than the 6 months before (signal score 83.8, Critical).",
+          "risk_id_ref": "ERISK-012"
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "risk_id": "ERISK-003",
+          "risk_name": "Confined Space Hazard",
+          "statement": "More incidents in the trailing 6 months than the 6 months before (signal score 53.4, Medium).",
+          "risk_id_ref": "ERISK-003"
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "risk_id": "ERISK-007",
+          "risk_name": "Ergonomic Strain",
+          "statement": "More incidents in the trailing 6 months than the 6 months before (signal score 51.4, Medium).",
+          "risk_id_ref": "ERISK-007"
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "risk_id": "ERISK-019",
+          "risk_name": "Slip/Trip/Fall",
+          "statement": "More incidents in the trailing 6 months than the 6 months before (signal score 51.2, Medium).",
+          "risk_id_ref": "ERISK-019"
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "risk_id": "ERISK-002",
+          "risk_name": "Chemical Exposure",
+          "statement": "More incidents in the trailing 6 months than the 6 months before (signal score 50.9, Medium).",
+          "risk_id_ref": "ERISK-002"
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "risk_id": "ERISK-018",
+          "risk_name": "Pressure System Failure",
+          "statement": "More incidents in the trailing 6 months than the 6 months before (signal score 50.6, Medium).",
+          "risk_id_ref": "ERISK-018"
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "risk_id": "ERISK-010",
+          "risk_name": "Fire / Explosion Risk",
+          "statement": "More incidents in the trailing 6 months than the 6 months before (signal score 37.1, Medium).",
+          "risk_id_ref": "ERISK-010"
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "risk_id": "ERISK-008",
+          "risk_name": "Fall / Working at Height",
+          "statement": "More incidents in the trailing 6 months than the 6 months before (signal score 36.1, Medium).",
+          "risk_id_ref": "ERISK-008"
+        }
+      ]
+    },
+    "q3_recurring_risks": {
+      "question": "Which risks are recurring?",
+      "findings": [
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-012",
+          "risk_name": "Heat Stress",
+          "statement": "9 incidents in the trailing 12 months, spanning 3 facilities.",
+          "risk_id_ref": "ERISK-012"
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-015",
+          "risk_name": "Machine Guarding Failure (Point-of-Operation)",
+          "statement": "10 incidents in the trailing 12 months, spanning 3 facilities.",
+          "risk_id_ref": "ERISK-015"
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-011",
+          "risk_name": "Forklift/Pedestrian Interaction",
+          "statement": "7 incidents in the trailing 12 months, spanning 3 facilities.",
+          "risk_id_ref": "ERISK-011"
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-014",
+          "risk_name": "Lockout/Tagout (LOTO) Non-Compliance",
+          "statement": "6 incidents in the trailing 12 months, spanning 3 facilities.",
+          "risk_id_ref": "ERISK-014"
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-016",
+          "risk_name": "Noise Exposure",
+          "statement": "3 incidents in the trailing 12 months, spanning 3 facilities.",
+          "risk_id_ref": "ERISK-016"
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-003",
+          "risk_name": "Confined Space Hazard",
+          "statement": "3 incidents in the trailing 12 months, spanning 3 facilities.",
+          "risk_id_ref": "ERISK-003"
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-004",
+          "risk_name": "Electrical Hazard / Arc Flash",
+          "statement": "4 incidents in the trailing 12 months, spanning 2 facilities.",
+          "risk_id_ref": "ERISK-004"
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-007",
+          "risk_name": "Ergonomic Strain",
+          "statement": "3 incidents in the trailing 12 months.",
+          "risk_id_ref": "ERISK-007"
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-002",
+          "risk_name": "Chemical Exposure",
+          "statement": "3 incidents in the trailing 12 months, spanning 2 facilities.",
+          "risk_id_ref": "ERISK-002"
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-009",
+          "risk_name": "Falling Object / Struck-By",
+          "statement": "6 incidents in the trailing 12 months, spanning 2 facilities.",
+          "risk_id_ref": "ERISK-009"
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-017",
+          "risk_name": "Overhead Crane / Rigging Hazard",
+          "statement": "3 incidents in the trailing 12 months, spanning 2 facilities.",
+          "risk_id_ref": "ERISK-017"
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-013",
+          "risk_name": "Housekeeping / Walkway Obstruction",
+          "statement": "3 incidents in the trailing 12 months, spanning 3 facilities.",
+          "risk_id_ref": "ERISK-013"
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-006",
+          "risk_name": "Equipment Failure Following Deferred Maintenance",
+          "statement": "2 incidents in the trailing 12 months, spanning 2 facilities.",
+          "risk_id_ref": "ERISK-006"
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "risk_id": "ERISK-005",
+          "risk_name": "Environmental Spill / Release",
+          "statement": "2 incidents in the trailing 12 months, spanning 2 facilities.",
+          "risk_id_ref": "ERISK-005"
+        }
+      ]
+    },
+    "q4_unusual_facility_patterns": {
+      "question": "Which facilities have unusual risk patterns?",
+      "findings": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Rex North Plant: 4 open incidents, 5 overdue actions (3 rescheduled 2+ times), 2 open High/Critical risks."
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Rex North Plant's open High/Critical risk count (2) exceeds the cross-facility average (1)."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Rex Central Plant: 4 open incidents, 21 overdue actions (11 rescheduled 2+ times), 1 open High/Critical risks."
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "Rex Central Plant's overdue-action count (21) is 2.1x the cross-facility average (10) -- concentration signal."
+        },
+        {
+          "type": "AI_HYPOTHESIS",
+          "statement": "Pattern suggests corrective-action follow-through at Rex Central Plant may not be keeping pace with the rest of the company; this could reflect resourcing, ownership, or process gaps specific to that site. Further investigation recommended."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "Rex South Plant: 3 open incidents, 4 overdue actions (0 rescheduled 2+ times), 0 open High/Critical risks."
+        }
+      ],
+      "facility_profiles": {
+        "FAC-001": {
+          "facility": "Rex North Plant",
+          "open_incidents": 4,
+          "overdue_actions": 5,
+          "repeat_overdue_actions": 3,
+          "open_high_critical_risks": 2,
+          "total_actions": 34
+        },
+        "FAC-002": {
+          "facility": "Rex Central Plant",
+          "open_incidents": 4,
+          "overdue_actions": 21,
+          "repeat_overdue_actions": 11,
+          "open_high_critical_risks": 1,
+          "total_actions": 48
+        },
+        "FAC-003": {
+          "facility": "Rex South Plant",
+          "open_incidents": 3,
+          "overdue_actions": 4,
+          "repeat_overdue_actions": 0,
+          "open_high_critical_risks": 0,
+          "total_actions": 18
+        }
+      }
+    },
+    "q5_repeatedly_overdue_actions": {
+      "question": "Which corrective actions are repeatedly overdue?",
+      "findings": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "14 of 100 actions have been rescheduled 2 or more times (currently 14 still Overdue).",
+          "refs": [
+            "ACT-0001",
+            "ACT-0002",
+            "ACT-0003",
+            "ACT-0004",
+            "ACT-0005",
+            "ACT-0006",
+            "ACT-0007",
+            "ACT-0008",
+            "ACT-0009",
+            "ACT-0010",
+            "ACT-0011",
+            "ACT-0012",
+            "ACT-0013",
+            "ACT-0014"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "4 repeatedly-overdue actions target the same control: 'Fixed Machine Guard Interlock Program' (CTL-0001).",
+          "refs": [
+            "ACT-0001",
+            "ACT-0002",
+            "ACT-0003",
+            "ACT-0004"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "11 repeatedly-overdue actions are concentrated at Rex Central Plant.",
+          "refs": [
+            "ACT-0004",
+            "ACT-0005",
+            "ACT-0006",
+            "ACT-0007",
+            "ACT-0008",
+            "ACT-0009",
+            "ACT-0010",
+            "ACT-0011",
+            "ACT-0012",
+            "ACT-0013",
+            "ACT-0014"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "3 repeatedly-overdue actions are concentrated at Rex North Plant.",
+          "refs": [
+            "ACT-0001",
+            "ACT-0002",
+            "ACT-0003"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "7 repeatedly-overdue actions share the same owner (EMP-0025).",
+          "refs": [
+            "ACT-0001",
+            "ACT-0003",
+            "ACT-0005",
+            "ACT-0006",
+            "ACT-0007",
+            "ACT-0008",
+            "ACT-0009"
+          ]
+        },
+        {
+          "type": "STATISTICAL_PATTERN",
+          "statement": "3 repeatedly-overdue actions share the same owner (EMP-0023).",
+          "refs": [
+            "ACT-0011",
+            "ACT-0013",
+            "ACT-0014"
+          ]
+        }
+      ]
+    },
+    "q6_ineffective_controls": {
+      "question": "Which controls appear ineffective?",
+      "findings": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Fixed Machine Guard Interlock Program' (CTL-0001): latest assessment (2026-08-17) rated 'Ineffective'.",
+          "refs": [
+            "CTLA-0001",
+            "CTLA-0002",
+            "CTLA-0003",
+            "CTLA-0004",
+            "CTLA-0005"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Contractor LOTO Verification Gate' (CTL-0004): latest assessment (2026-03-01) rated 'Partially Effective', never rated Effective across 3 assessments.",
+          "refs": [
+            "CTLA-0013",
+            "CTLA-0014",
+            "CTLA-0012"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Noise Exposure Control \u2014 HAZ-0014' (CTL-0005): latest assessment (2025-01-18) rated 'Ineffective'.",
+          "refs": [
+            "CTLA-0053"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Heat Stress Control \u2014 HAZ-0025' (CTL-0011): latest assessment (2026-07-01) rated 'Ineffective'.",
+          "refs": [
+            "CTLA-0042"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Pressure System Failure Control \u2014 HAZ-0058' (CTL-0012): latest assessment (2026-03-01) rated 'Ineffective'.",
+          "refs": [
+            "CTLA-0054"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Electrical Hazard / Arc Flash Control \u2014 HAZ-0028' (CTL-0025): latest assessment (2025-07-21) rated 'Ineffective'.",
+          "refs": [
+            "CTLA-0048"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Slip/Trip/Fall Control \u2014 HAZ-0059' (CTL-0049): latest assessment (2026-04-02) rated 'Ineffective'.",
+          "refs": [
+            "CTLA-0025"
+          ]
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Overhead Crane / Rigging Hazard Control \u2014 HAZ-0074' (CTL-0050): latest assessment (2026-03-16) rated 'Ineffective'.",
+          "refs": [
+            "CTLA-0056"
+          ]
+        }
+      ]
+    },
+    "q7_cross_facility_hazards": {
+      "question": "Which hazards are appearing across multiple facilities?",
+      "findings": [
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Forklift / Vehicle Incident' has recorded incidents at 3 facilities: Rex North Plant, Rex Central Plant, Rex South Plant."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Machine Guarding Failure' has recorded incidents at 3 facilities: Rex North Plant, Rex Central Plant, Rex South Plant."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Lockout/Tagout Violation' has recorded incidents at 3 facilities: Rex North Plant, Rex Central Plant, Rex South Plant."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Confined Space Hazard' has recorded incidents at 3 facilities: Rex North Plant, Rex Central Plant, Rex South Plant."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Housekeeping / Walkway Obstruction' has recorded incidents at 3 facilities: Rex North Plant, Rex Central Plant, Rex South Plant."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Heat Stress' has recorded incidents at 3 facilities: Rex North Plant, Rex Central Plant, Rex South Plant."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Noise Exposure' has recorded incidents at 3 facilities: Rex North Plant, Rex Central Plant, Rex South Plant."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Equipment Failure Risk' has recorded incidents at 2 facilities: Rex Central Plant, Rex South Plant."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Chemical Exposure' has recorded incidents at 2 facilities: Rex Central Plant, Rex South Plant."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Overhead Crane / Rigging Hazard' has recorded incidents at 2 facilities: Rex North Plant, Rex South Plant."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Electrical Hazard / Arc Flash' has recorded incidents at 2 facilities: Rex North Plant, Rex South Plant."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Falling Object / Struck-By' has recorded incidents at 2 facilities: Rex Central Plant, Rex South Plant."
+        },
+        {
+          "type": "OBSERVED_FACT",
+          "statement": "'Environmental Spill / Release' has recorded incidents at 2 facilities: Rex North Plant, Rex South Plant."
+        }
+      ]
+    },
+    "q8_systemic_problem_incidents": {
+      "question": "Which incidents may indicate a systemic problem?",
+      "findings": [
+        {
+          "type": "AI_HYPOTHESIS",
+          "statement": "Incidents under 'Heat Stress' (11 incidents) belong to a Critical-band signal cluster (83.8); pattern suggests these may not be independent, isolated events. Further investigation recommended before concluding a systemic cause.",
+          "refs": [
+            "INC-0031",
+            "INC-0035",
+            "INC-0037",
+            "INC-0042",
+            "INC-0044",
+            "INC-0045",
+            "INC-0059",
+            "INC-0063",
+            "INC-0064",
+            "INC-0077",
+            "INC-0080"
+          ]
+        },
+        {
+          "type": "AI_HYPOTHESIS",
+          "statement": "Incidents under 'Machine Guarding Failure (Point-of-Operation)' (12 incidents) belong to a High-band signal cluster (77.5); pattern suggests these may not be independent, isolated events. Further investigation recommended before concluding a systemic cause.",
+          "refs": [
+            "INC-0008",
+            "INC-0009",
+            "INC-0010",
+            "INC-0011",
+            "INC-0012",
+            "INC-0013",
+            "INC-0024",
+            "INC-0074",
+            "INC-0087",
+            "INC-0095",
+            "INC-0097",
+            "INC-0098"
+          ]
+        },
+        {
+          "type": "AI_HYPOTHESIS",
+          "statement": "Incidents under 'Forklift/Pedestrian Interaction' (12 incidents) belong to a High-band signal cluster (60.5); pattern suggests these may not be independent, isolated events. Further investigation recommended before concluding a systemic cause.",
+          "refs": [
+            "INC-0001",
+            "INC-0002",
+            "INC-0003",
+            "INC-0004",
+            "INC-0005",
+            "INC-0006",
+            "INC-0007",
+            "INC-0043",
+            "INC-0048",
+            "INC-0084",
+            "INC-0085",
+            "INC-0090"
+          ]
+        },
+        {
+          "type": "AI_HYPOTHESIS",
+          "statement": "Incidents under 'Lockout/Tagout (LOTO) Non-Compliance' (8 incidents) belong to a High-band signal cluster (57.0); pattern suggests these may not be independent, isolated events. Further investigation recommended before concluding a systemic cause.",
+          "refs": [
+            "INC-0017",
+            "INC-0018",
+            "INC-0022",
+            "INC-0027",
+            "INC-0028",
+            "INC-0050",
+            "INC-0089",
+            "INC-0091"
+          ]
+        },
+        {
+          "type": "AI_HYPOTHESIS",
+          "statement": "Incidents under 'Noise Exposure' (3 incidents) belong to a High-band signal cluster (55.7); pattern suggests these may not be independent, isolated events. Further investigation recommended before concluding a systemic cause.",
+          "refs": [
+            "INC-0033",
+            "INC-0058",
+            "INC-0071"
+          ]
+        }
+      ]
+    },
+    "q10_recommended_investigations": {
+      "question": "What actions should management investigate?",
+      "findings": [
+        {
+          "type": "RECOMMENDATION",
+          "risk_id": "ERISK-012",
+          "risk_name": "Heat Stress",
+          "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 3 overdue action(s) address the root cause."
+        },
+        {
+          "type": "RECOMMENDATION",
+          "risk_id": "ERISK-015",
+          "risk_name": "Machine Guarding Failure (Point-of-Operation)",
+          "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 7 overdue action(s) address the root cause."
+        },
+        {
+          "type": "RECOMMENDATION",
+          "risk_id": "ERISK-011",
+          "risk_name": "Forklift/Pedestrian Interaction",
+          "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 2 overdue action(s) address the root cause."
+        },
+        {
+          "type": "RECOMMENDATION",
+          "risk_id": "ERISK-014",
+          "risk_name": "Lockout/Tagout (LOTO) Non-Compliance",
+          "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s) and confirm whether the 1 overdue action(s) address the root cause."
+        },
+        {
+          "type": "RECOMMENDATION",
+          "risk_id": "ERISK-016",
+          "risk_name": "Noise Exposure",
+          "statement": "Recommended next step: the HSE/Safety Manager function across the affected facilities should review this cluster's incidents and the related control(s)."
+        },
+        {
+          "type": "RECOMMENDATION",
+          "risk_id": null,
+          "risk_name": "Overdue action follow-through",
+          "statement": "Recommended next step: EHS leadership should review the repeatedly-rescheduled corrective actions identified in Q5 as a standing agenda item, independent of any single incident."
+        }
+      ]
+    }
+  }
+}

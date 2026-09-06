@@ -1,0 +1,21 @@
+contractor_id,contracting_firm,trade,primary_facility_id,assigned_date,safety_orientation_completed,safety_orientation_date,status
+CTR-0001,Vantage Industrial Coatings,Painting/Coatings,FAC-002,2026-05-05,1,2026-04-30,Active
+CTR-0002,Ironclad Electrical Services,Electrical,FAC-003,2026-04-11,1,2026-04-03,Active
+CTR-0003,Redline Welding & Fabrication,Welding/Fabrication,FAC-003,2025-04-15,0,,Active
+CTR-0004,Redline Welding & Fabrication,Welding/Fabrication,FAC-002,2025-07-13,1,2025-07-10,Active
+CTR-0005,Summit Mechanical Contractors,Mechanical/HVAC,FAC-003,2025-10-28,1,2025-10-19,Active
+CTR-0006,Ironclad Electrical Services,Electrical,FAC-003,2025-09-26,1,2025-09-24,Active
+CTR-0007,Redline Welding & Fabrication,Welding/Fabrication,FAC-001,2026-07-24,0,,Active
+CTR-0008,Vantage Industrial Coatings,Painting/Coatings,FAC-003,2026-04-27,1,2026-04-23,Active
+CTR-0009,Ironclad Electrical Services,Electrical,FAC-001,2026-01-11,1,2026-01-10,Active
+CTR-0010,Bridgeway Crane & Rigging,Crane/Rigging,FAC-003,2026-04-26,1,2026-04-23,Active
+CTR-0011,Vantage Industrial Coatings,Painting/Coatings,FAC-002,2026-07-07,0,,Active
+CTR-0012,ClearPath Facilities Group,Janitorial/Facilities,FAC-002,2025-01-24,1,2025-01-18,Active
+CTR-0013,ClearPath Facilities Group,Janitorial/Facilities,FAC-001,2025-07-25,1,2025-07-22,Active
+CTR-0014,Vantage Industrial Coatings,Painting/Coatings,FAC-002,2025-09-29,0,,Active
+CTR-0015,Ironclad Electrical Services,Electrical,FAC-003,2025-09-03,1,2025-08-28,Active
+CTR-0016,Vantage Industrial Coatings,Painting/Coatings,FAC-001,2026-04-21,1,2026-04-12,Active
+CTR-0017,Vantage Industrial Coatings,Painting/Coatings,FAC-001,2026-04-23,1,2026-04-22,Active
+CTR-0018,ClearPath Facilities Group,Janitorial/Facilities,FAC-001,2025-03-01,1,2025-02-21,Active
+CTR-0019,ClearPath Facilities Group,Janitorial/Facilities,FAC-001,2026-03-31,1,2026-03-24,Active
+CTR-0020,Summit Mechanical Contractors,Mechanical/HVAC,FAC-002,2025-09-22,1,2025-09-14,Active

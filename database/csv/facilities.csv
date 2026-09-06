@@ -1,0 +1,4 @@
+facility_id,company_id,name,facility_type,city,state,address,square_footage,year_established,employee_capacity
+FAC-001,CO-001,Rex North Plant,Heavy Manufacturing,Canton,OH,"4820 Blue Ridge Industrial Pkwy, Canton, OH 44706",285000,1978,340
+FAC-002,CO-001,Rex Central Plant,Assembly & Fabrication,Baytown,TX,"1150 Gulf Freight Rd, Baytown, TX 77520",190000,1996,260
+FAC-003,CO-001,Rex South Plant,Distribution & Light Fabrication,Savannah,GA,"770 Peachtree Logistics Dr, Savannah, GA 31408",150000,2008,180

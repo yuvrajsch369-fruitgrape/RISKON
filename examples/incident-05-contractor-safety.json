@@ -1,0 +1,402 @@
+{
+  "incident_id": "INC-2105",
+  "schema_version": "1.0.0",
+  "pipeline_run_id": "RUN-INC-2105-A5",
+  "generated_at": "2026-09-03T14:32:00Z",
+  "model": "claude-sonnet-5",
+  "stage_1_ingestion": {
+    "incident_id": "INC-2105",
+    "facility_id": "FAC-002",
+    "reporter_employee_id": "EMP-0006",
+    "raw_report_text": "A contractor from an outside electrical firm was performing panel work in the main distribution room and was found by a shift supervisor working on an energized panel without a visible LOTO tag or permit on file at the facility. The contractor stated their company 'has its own safety process.' Work was stopped immediately and the contractor was escorted from the panel area. No injury occurred. Facility EHS was notified.",
+    "date_submitted": "2026-08-30T09:50:00Z",
+    "attachments_present": false,
+    "ingestion_status": "complete"
+  },
+  "stage_2_information_extraction": {
+    "who_involved": {
+      "value": "Outside electrical contractor (unnamed, firm unnamed); shift supervisor (reporter, EMP-0006)",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.85,
+      "reasoning": "Report identifies roles but not the contractor's name or firm name.",
+      "requires_human_approval": false
+    },
+    "what_happened": {
+      "value": "Contractor found working on an energized electrical panel without a visible LOTO tag or an on-file permit; work stopped and contractor escorted from area; no injury; EHS notified.",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.95,
+      "reasoning": "Directly stated.",
+      "requires_human_approval": false
+    },
+    "when_occurred": {
+      "value": "2026-08-30, exact time not given",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.6,
+      "reasoning": "Report submitted same-day; specific time of observation not stated.",
+      "requires_human_approval": false
+    },
+    "where_location": {
+      "value": "Main electrical distribution room",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.9,
+      "reasoning": "Directly stated.",
+      "requires_human_approval": false
+    },
+    "equipment_involved": {
+      "value": "Energized electrical distribution panel",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.75,
+      "reasoning": "Directly referenced; specific panel ID not given.",
+      "requires_human_approval": false
+    },
+    "injuries_reported": {
+      "value": "None",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.95,
+      "reasoning": "Directly stated.",
+      "requires_human_approval": false
+    },
+    "witnesses": {
+      "value": "Shift supervisor (reporter) directly observed the condition",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.8,
+      "reasoning": "Reporter is the observing witness.",
+      "requires_human_approval": false
+    },
+    "environmental_conditions": {
+      "value": null,
+      "insufficient_information": true,
+      "source": "extracted_from_report",
+      "confidence": null,
+      "reasoning": "Panel energization details (voltage, PPE worn by contractor) are not described.",
+      "requires_human_approval": false
+    }
+  },
+  "stage_3_classification": {
+    "incident_category": {
+      "value": "Contractor Safety Incident",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.9,
+      "reasoning": "Event involves a third-party contractor's non-compliance with facility safety requirements, not a facility employee.",
+      "requires_human_approval": true
+    },
+    "incident_type": {
+      "value": "Near Miss",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.85,
+      "reasoning": "No injury occurred, but exposure to an energized panel without LOTO is a significant averted-harm event.",
+      "requires_human_approval": true
+    },
+    "hazard_taxonomy_code": {
+      "value": "CTR-LOTO-01",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.8,
+      "reasoning": "Maps to contractor LOTO/permit non-compliance subcategory.",
+      "requires_human_approval": true
+    }
+  },
+  "stage_4_hazard_identification": {
+    "hazards": [
+      {
+        "id": "HAZ-1",
+        "confidence": 0.9,
+        "source": "ai_inference",
+        "evidence": "Report explicitly states no visible LOTO tag was in place while the contractor worked on an energized panel.",
+        "requires_human_approval": true,
+        "hazard_type": "Electrical Hazard / Arc Flash",
+        "description": "Work performed on an energized electrical panel without lockout/tagout, creating shock/arc-flash exposure."
+      },
+      {
+        "id": "HAZ-2",
+        "confidence": 0.75,
+        "source": "ai_inference",
+        "evidence": "No permit was on file at the facility for this work, indicating the facility's contractor authorization/oversight process was bypassed.",
+        "requires_human_approval": true,
+        "hazard_type": "Contractor Safety Incident",
+        "description": "Contractor performed high-risk electrical work without a facility-issued work permit on file."
+      }
+    ],
+    "coverage_note": "Both the immediate electrical hazard and the underlying contractor-management control failure are identified."
+  },
+  "stage_5_potential_consequences": {
+    "consequences": [
+      {
+        "id": "CONS-1",
+        "confidence": 0.85,
+        "source": "ai_inference",
+        "evidence": "Energized panel work without LOTO is a well-established arc-flash/electrocution hazard pattern.",
+        "requires_human_approval": true,
+        "description": "Severe electrical shock, arc flash burn, or fatality to the contractor.",
+        "plausible_worst_case_severity": "Critical"
+      }
+    ],
+    "coverage_note": "Reflects the hazard the facility's intervention averted, not an outcome that occurred."
+  },
+  "stage_6_preliminary_severity_assessment": {
+    "ai_suggested_severity": {
+      "value": "High",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.75,
+      "reasoning": "No injury occurred because the condition was caught and stopped, but exposure to an energized panel without LOTO represents a high-severity control failure with critical potential consequence (Stage 5), compounded by a bypassed permit process.",
+      "requires_human_approval": true
+    },
+    "ai_suggested_recurrence_likelihood": {
+      "value": "Possible",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.5,
+      "reasoning": "Contractor's stated belief that their firm 'has its own safety process' suggests a process/expectations gap that could recur with this or other contractors absent a facility-side control change.",
+      "requires_human_approval": true
+    },
+    "status": "pending_human_confirmation",
+    "requires_human_approval": true
+  },
+  "stage_7_contributing_factors": {
+    "factors": [
+      {
+        "id": "CF-1",
+        "confidence": 0.85,
+        "source": "ai_inference",
+        "evidence": "Report directly quotes the contractor's rationale for not following facility LOTO/permit requirements.",
+        "requires_human_approval": true,
+        "category": "Organizational",
+        "description": "Contractor believed their own company safety process superseded facility requirements."
+      },
+      {
+        "id": "CF-2",
+        "confidence": 0.6,
+        "source": "ai_inference",
+        "evidence": "Work was discovered in progress, not pre-authorized, indicating the facility's contractor check-in/permit process did not catch this work before it began.",
+        "requires_human_approval": true,
+        "category": "Procedural",
+        "description": "Facility contractor-authorization/permit process did not intercept this work before it started."
+      },
+      {
+        "id": "CF-3",
+        "confidence": 0.35,
+        "source": "ai_inference",
+        "evidence": "Common associated factor in similar contractor incidents; not separately evidenced here.",
+        "requires_human_approval": true,
+        "category": "Organizational",
+        "description": "Possible gap in facility's pre-work safety orientation/briefing for outside contractors (unconfirmed)."
+      }
+    ],
+    "coverage_note": "CF-1 is directly evidenced by the quoted statement; CF-2 is inferred from the sequence of events; CF-3 is a lower-confidence hypothesis."
+  },
+  "stage_8_root_cause_hypotheses": {
+    "hypotheses": [
+      {
+        "id": "RC-1",
+        "confidence": 0.75,
+        "source": "ai_inference",
+        "evidence": "Directly supported by CF-1 and CF-2 together: the contractor operated under their own standards because the facility's permit/orientation process did not establish and enforce its own requirements before work began.",
+        "requires_human_approval": true,
+        "rank": 1,
+        "statement": "The facility's contractor safety management process (permit issuance and pre-work verification) did not confirm the contractor's compliance with facility LOTO requirements before energized panel work began.",
+        "label": "hypothesis_not_confirmed",
+        "supporting_evidence": "No permit was on file and the contractor proceeded under their own company's process, indicating no facility gate-check occurred."
+      },
+      {
+        "id": "RC-2",
+        "confidence": 0.4,
+        "source": "ai_inference",
+        "evidence": "Plausible contributor but not directly evidenced.",
+        "requires_human_approval": true,
+        "rank": 2,
+        "statement": "Facility contractor safety orientation may not have clearly communicated that facility LOTO/permit rules apply regardless of the contractor's own internal safety program.",
+        "label": "hypothesis_not_confirmed",
+        "supporting_evidence": "Contractor's stated belief implies a possible expectations gap.",
+        "contradicting_evidence": "Whether this contractor received facility orientation at all is not stated in the report."
+      }
+    ],
+    "coverage_note": "Both hypotheses center on the facility's contractor-management control rather than contractor intent; confirming RC-2 requires checking orientation/sign-in records for this contractor visit."
+  },
+  "stage_9_existing_controls": {
+    "controls": [
+      {
+        "id": "CTRL-1",
+        "confidence": 0.85,
+        "source": "system_reference",
+        "evidence": "SOP-0025 (Contractor Safety Management Program) is Active for this facility.",
+        "requires_human_approval": false,
+        "control_description": "Contractor Safety Management Program, including permit-to-work requirements.",
+        "control_type": "Administrative",
+        "status": "present",
+        "related_sop_id": "SOP-0025"
+      },
+      {
+        "id": "CTRL-2",
+        "confidence": 0.85,
+        "source": "system_reference",
+        "evidence": "SOP-0001 (Lockout/Tagout Procedure) is Active and applies facility-wide, including to contractors per SOP-0025.",
+        "requires_human_approval": false,
+        "control_description": "Facility LOTO requirement applicable to all persons working on energized equipment.",
+        "control_type": "Procedural",
+        "status": "present",
+        "related_sop_id": "SOP-0001"
+      },
+      {
+        "id": "CTRL-3",
+        "confidence": 0.85,
+        "source": "extracted_from_report",
+        "evidence": "Report explicitly states no permit was on file.",
+        "requires_human_approval": false,
+        "control_description": "Work permit for this specific contractor task.",
+        "control_type": "Administrative",
+        "status": "absent",
+        "related_sop_id": "SOP-0025"
+      }
+    ],
+    "coverage_note": "The governing SOPs exist and are active; the permit and LOTO controls they require were confirmed absent in this specific instance."
+  },
+  "stage_10_control_gaps": {
+    "gaps": [
+      {
+        "id": "GAP-1",
+        "confidence": 0.8,
+        "source": "ai_inference",
+        "evidence": "Work permit was required under SOP-0025 and was confirmed absent, meaning the facility's pre-work gate-check did not occur or was bypassed.",
+        "requires_human_approval": true,
+        "related_control_id": "CTRL-3",
+        "gap_description": "Contractor began energized electrical work without a facility-issued permit on file, indicating a gap in pre-work authorization enforcement.",
+        "required_by_sop_id": "SOP-0025"
+      },
+      {
+        "id": "GAP-2",
+        "confidence": 0.7,
+        "source": "ai_inference",
+        "evidence": "Contractor's own statement indicates they were not operating under facility LOTO requirements at the time of discovery.",
+        "requires_human_approval": true,
+        "related_control_id": "CTRL-2",
+        "gap_description": "Facility LOTO requirement (applicable to contractors per SOP-0025) was not followed for this energized panel work.",
+        "required_by_sop_id": "SOP-0001"
+      }
+    ],
+    "coverage_note": "Both gaps point to the same underlying issue: contractor entry/authorization was not gated on confirmed facility safety-rule acceptance before high-risk work began."
+  },
+  "stage_11_recommended_actions": {
+    "actions": [
+      {
+        "id": "ACT-1",
+        "confidence": 0.75,
+        "source": "ai_inference",
+        "evidence": "Directly addresses GAP-1; a hard gate (no permit, no access to energized equipment) prevents this specific sequence from recurring.",
+        "requires_human_approval": true,
+        "action_type": "Corrective",
+        "description": "Reinforce and audit the permit-to-work gate in SOP-0025 so contractors cannot access energized equipment areas without a verified, on-file permit.",
+        "priority": "High",
+        "suggested_owner_role": "Safety Manager",
+        "suggested_timeframe_days": 21,
+        "addresses_gap_ids": [
+          "GAP-1"
+        ]
+      },
+      {
+        "id": "ACT-2",
+        "confidence": 0.65,
+        "source": "ai_inference",
+        "evidence": "Directly addresses GAP-2 and CF-1; explicit communication that facility rules govern regardless of contractor's own program closes the stated expectations gap.",
+        "requires_human_approval": true,
+        "action_type": "Preventive",
+        "description": "Update contractor pre-work orientation to explicitly state that facility LOTO/permit requirements apply regardless of the contractor's own company safety program, with signed acknowledgment required before work authorization.",
+        "priority": "High",
+        "suggested_owner_role": "EHS Coordinator",
+        "suggested_timeframe_days": 30,
+        "addresses_gap_ids": [
+          "GAP-1",
+          "GAP-2"
+        ]
+      },
+      {
+        "id": "ACT-3",
+        "confidence": 0.5,
+        "source": "ai_inference",
+        "evidence": "Addresses the specific contracting firm involved in this event; a firm-level review is a reasonable containment step given the severity of the exposure.",
+        "requires_human_approval": true,
+        "action_type": "Corrective",
+        "description": "Review this contracting firm's safety qualification status with procurement/EHS before authorizing further work at any facility.",
+        "priority": "Medium",
+        "suggested_owner_role": "Safety Manager",
+        "suggested_timeframe_days": 14,
+        "addresses_gap_ids": [
+          "GAP-1"
+        ]
+      }
+    ],
+    "coverage_note": "Actions target the facility-side control gate (ACT-1, ACT-2) and the specific contractor firm (ACT-3) separately."
+  },
+  "stage_12_risk_register_impact": {
+    "proposed_action": "create_new_risk",
+    "hazard_category": "Contractor Safety Incident",
+    "likelihood": {
+      "value": 3,
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.55,
+      "reasoning": "Rated Possible: this is the first documented instance for this contractor, but the underlying permit-gate gap (GAP-1) could affect any contractor until fixed.",
+      "requires_human_approval": true
+    },
+    "impact": {
+      "value": 5,
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.8,
+      "reasoning": "Stage 5 worst case is severe shock/arc-flash/fatality to the contractor; impact rated at the top of the scale.",
+      "requires_human_approval": true
+    },
+    "risk_score": {
+      "value": 15,
+      "insufficient_information": false,
+      "source": "derived_from_prior_stage",
+      "confidence": null,
+      "reasoning": "likelihood (3) x impact (5) = 15.",
+      "requires_human_approval": true
+    },
+    "risk_level": {
+      "value": "High",
+      "insufficient_information": false,
+      "source": "derived_from_prior_stage",
+      "confidence": null,
+      "reasoning": "Score of 15 falls in the High band (12-19) per facility risk matrix.",
+      "requires_human_approval": true
+    },
+    "existing_risk_assessment_id": null,
+    "reasoning": "No existing risk register entry covers contractor permit/LOTO gate failures at this facility; proposing a new entry given the severity of the averted exposure.",
+    "requires_human_approval": true,
+    "write_status": "not_written_pending_approval"
+  },
+  "stage_13_human_review_package": {
+    "package_id": "RVW-34e6099d",
+    "incident_id": "INC-2105",
+    "summary_for_reviewer": "An outside electrical contractor was found working on an energized panel with no LOTO tag and no on-file work permit; work was stopped before injury occurred. AI attributes this to a gap in the facility's contractor permit-to-work gate rather than treating it as an isolated contractor error, and recommends tightening that gate plus a High risk-register entry.",
+    "stages_requiring_approval": [
+      "stage_3_classification",
+      "stage_4_hazard_identification",
+      "stage_5_potential_consequences",
+      "stage_6_preliminary_severity_assessment",
+      "stage_7_contributing_factors",
+      "stage_8_root_cause_hypotheses",
+      "stage_10_control_gaps",
+      "stage_11_recommended_actions",
+      "stage_12_risk_register_impact"
+    ],
+    "approval": {
+      "decision": "pending",
+      "reviewer_employee_id": null,
+      "reviewed_at": null,
+      "comments": null,
+      "edited_fields": []
+    }
+  }
+}

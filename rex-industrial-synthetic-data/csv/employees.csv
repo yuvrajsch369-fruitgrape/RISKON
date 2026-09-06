@@ -1,0 +1,31 @@
+employee_id,first_name,last_name,email,role,department,facility_id,hire_date,is_active
+EMP-0001,Christine,Flores,christine.flores@reximanufacturing.com,Plant Manager,Operations,FAC-001,2024-11-10,True
+EMP-0002,Larry,Gonzalez,larry.gonzalez@reximanufacturing.com,Plant Manager,EHS,FAC-002,2020-10-20,True
+EMP-0003,Brandon,Anderson,brandon.anderson@reximanufacturing.com,Safety Manager,Warehouse,FAC-002,2022-05-04,True
+EMP-0004,Patricia,Anderson,patricia.anderson@reximanufacturing.com,CNC Operator,Production,FAC-001,2024-06-08,True
+EMP-0005,Nancy,Robinson,nancy.robinson@reximanufacturing.com,Quality Manager,Quality,FAC-002,2019-04-05,True
+EMP-0006,Carlos,White,carlos.white@reximanufacturing.com,Plant Manager,Operations,FAC-003,2012-12-20,True
+EMP-0007,Nancy,Jones,nancy.jones@reximanufacturing.com,Quality Inspector,Quality,FAC-001,2018-08-31,True
+EMP-0008,Jose,Thomas,jose.thomas@reximanufacturing.com,Production Supervisor,Operations,FAC-002,2008-08-31,True
+EMP-0009,Nancy,Scott,nancy.scott@reximanufacturing.com,Forklift Operator,Warehouse,FAC-003,2009-12-05,True
+EMP-0010,Christine,Brown,christine.brown@reximanufacturing.com,Logistics Coordinator,Warehouse,FAC-001,2010-02-20,True
+EMP-0011,Rachel,Lee,rachel.lee@reximanufacturing.com,Process Engineer,Engineering,FAC-002,2013-12-31,True
+EMP-0012,Lisa,Torres,lisa.torres@reximanufacturing.com,Quality Manager,Quality,FAC-003,2024-08-28,True
+EMP-0013,Lisa,Young,lisa.young@reximanufacturing.com,CNC Operator,Production,FAC-001,2013-11-16,True
+EMP-0014,Amanda,Robinson,amanda.robinson@reximanufacturing.com,Maintenance Technician,Maintenance,FAC-002,2008-03-16,True
+EMP-0015,Karen,Scott,karen.scott@reximanufacturing.com,Machine Operator,Production,FAC-003,2017-02-02,True
+EMP-0016,Sharon,Ramirez,sharon.ramirez@reximanufacturing.com,Process Engineer,Engineering,FAC-001,2025-02-19,True
+EMP-0017,Ashley,Anderson,ashley.anderson@reximanufacturing.com,Environmental Compliance Officer,EHS,FAC-002,2008-02-08,True
+EMP-0018,Patricia,Brown,patricia.brown@reximanufacturing.com,Safety Manager,EHS,FAC-003,2024-04-25,True
+EMP-0019,Scott,Hernandez,scott.hernandez@reximanufacturing.com,Machine Operator,Production,FAC-001,2022-10-07,True
+EMP-0020,Justin,Jones,justin.jones@reximanufacturing.com,Shift Supervisor,Operations,FAC-002,2013-08-19,True
+EMP-0021,Michelle,King,michelle.king@reximanufacturing.com,Process Engineer,Engineering,FAC-003,2010-08-22,True
+EMP-0022,Tiffany,Smith,tiffany.smith@reximanufacturing.com,Machine Operator,Production,FAC-001,2020-04-04,True
+EMP-0023,Melissa,Wright,melissa.wright@reximanufacturing.com,Logistics Coordinator,Warehouse,FAC-002,2021-11-04,True
+EMP-0024,Amanda,Perez,amanda.perez@reximanufacturing.com,EHS Coordinator,EHS,FAC-003,2007-07-03,True
+EMP-0025,Carlos,Robinson,carlos.robinson@reximanufacturing.com,Safety Manager,EHS,FAC-001,2005-01-27,True
+EMP-0026,Gregory,Taylor,gregory.taylor@reximanufacturing.com,Shift Supervisor,Operations,FAC-002,2016-03-24,True
+EMP-0027,Timothy,Miller,timothy.miller@reximanufacturing.com,Plant Manager,Operations,FAC-003,2024-07-11,True
+EMP-0028,Christine,Allen,christine.allen@reximanufacturing.com,Shift Supervisor,Operations,FAC-001,2018-08-29,True
+EMP-0029,Ashley,Hernandez,ashley.hernandez@reximanufacturing.com,Maintenance Technician,Maintenance,FAC-002,2017-02-05,True
+EMP-0030,Carol,Smith,carol.smith@reximanufacturing.com,Welder,Production,FAC-003,2018-06-08,True

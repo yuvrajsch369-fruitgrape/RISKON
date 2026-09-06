@@ -1,0 +1,51 @@
+equipment_id,equipment_type,category,manufacturer,model_number,serial_number,facility_id,install_date,last_maintenance_date,status,criticality
+EQ-0001,CNC Machining Center,Production,Haas,MX-849S,SN955662,FAC-001,2011-04-14,2025-11-11,Operational,Low
+EQ-0002,Overhead Bridge Crane,Material Handling,Konecranes,TX-640S,SN322086,FAC-003,2000-08-22,2025-05-12,Operational,High
+EQ-0003,Paint Booth / Coating Line,Production,Global Finishing Solutions,RX-629S,SN226882,FAC-003,2004-01-09,2025-11-16,Operational,Medium
+EQ-0004,Industrial Boiler,Utilities,Cleaver-Brooks,MX-172,SN340062,FAC-001,1997-11-15,2025-12-13,Operational,Medium
+EQ-0005,Overhead Bridge Crane,Material Handling,Demag,GX-652A,SN858490,FAC-001,2009-10-27,2025-03-14,Operational,Low
+EQ-0006,Automated Guided Vehicle (AGV),Material Handling,JBT,TX-533S,SN589710,FAC-001,2016-03-20,2026-02-21,Operational,Low
+EQ-0007,Hydraulic Press,Production,Schuler,GX-296A,SN662336,FAC-003,2024-04-24,2025-04-11,Operational,Medium
+EQ-0008,Standby Generator,Utilities,Cummins,RX-927,SN153045,FAC-001,2013-12-04,2025-07-07,Operational,Low
+EQ-0009,Paint Booth / Coating Line,Production,Global Finishing Solutions,RX-160A,SN497382,FAC-001,1999-03-09,2025-08-31,Operational,Medium
+EQ-0010,CNC Machining Center,Production,Okuma,GX-294B,SN328275,FAC-002,2006-11-24,2026-04-11,Operational,Medium
+EQ-0011,Hydraulic Press,Production,Verson,RX-614A,SN159642,FAC-003,2019-04-28,2025-03-04,Operational,Low
+EQ-0012,Punch Press,Production,Amada,RX-222A,SN707040,FAC-001,2003-05-03,2025-03-12,Operational,Medium
+EQ-0013,Hydraulic Press,Production,Minster,TX-309B,SN350280,FAC-003,1998-09-05,2026-03-06,Operational,Medium
+EQ-0014,Robotic Welding Arm,Production,FANUC,MX-569,SN176819,FAC-002,2000-11-14,2025-11-04,Operational,High
+EQ-0015,Paint Booth / Coating Line,Production,Global Finishing Solutions,GX-478B,SN265409,FAC-001,2017-09-10,2025-09-29,Operational,Medium
+EQ-0016,Standby Generator,Utilities,Generac,MX-999A,SN377312,FAC-003,2008-07-27,2026-06-26,Operational,High
+EQ-0017,Conveyor System,Material Handling,FlexLink,TX-308B,SN629959,FAC-001,2019-10-26,2025-06-09,Operational,Medium
+EQ-0018,Automated Guided Vehicle (AGV),Material Handling,Dematic,MX-441A,SN768061,FAC-002,1997-04-12,2025-04-05,Operational,High
+EQ-0019,Robotic Welding Arm,Production,FANUC,MX-807A,SN672092,FAC-001,2014-10-27,2026-07-19,Operational,Medium
+EQ-0020,Hydraulic Press,Production,Minster,TX-915,SN475190,FAC-002,2021-02-16,2026-07-20,Operational,Low
+EQ-0021,Air Compressor,Utilities,Ingersoll Rand,PX-867A,SN348237,FAC-003,2006-03-12,2025-04-16,Operational,Medium
+EQ-0022,Forklift (Propane),Material Handling,Yale,GX-373A,SN925622,FAC-001,2013-06-30,2025-01-26,Operational,High
+EQ-0023,Conveyor System,Material Handling,Dematic,TX-412A,SN333752,FAC-002,1996-09-26,2026-04-27,Operational,High
+EQ-0024,CNC Machining Center,Production,DMG Mori,TX-756S,SN812526,FAC-003,2003-08-31,2026-02-13,Operational,High
+EQ-0025,Paint Booth / Coating Line,Production,Global Finishing Solutions,MX-211S,SN462479,FAC-002,1996-03-28,2025-04-29,Operational,Low
+EQ-0026,Cooling Tower,Utilities,BAC,TX-145S,SN101773,FAC-002,2022-03-12,2026-06-08,Operational,High
+EQ-0027,Punch Press,Production,Trumpf,PX-421,SN854717,FAC-003,2003-11-03,2026-01-08,Operational,High
+EQ-0028,Packaging Line,Production,Bosch Packaging,GX-530S,SN810219,FAC-003,2008-11-15,2026-02-23,Operational,Medium
+EQ-0029,Forklift (Propane),Material Handling,Yale,TX-315S,SN923927,FAC-003,2020-07-12,2025-11-05,Operational,High
+EQ-0030,Cooling Tower,Utilities,BAC,MX-390B,SN197923,FAC-002,2014-10-26,2026-03-29,Operational,Medium
+EQ-0031,Industrial Boiler,Utilities,Cleaver-Brooks,GX-586,SN577538,FAC-003,2008-12-03,2025-08-19,Operational,Low
+EQ-0032,Electrical Distribution Panel,Utilities,Eaton,GX-251,SN887443,FAC-003,2020-10-27,2025-07-19,Operational,Medium
+EQ-0033,Conveyor System,Material Handling,Dematic,MX-670A,SN989545,FAC-002,2004-10-25,2025-06-30,Operational,Medium
+EQ-0034,Conveyor System,Material Handling,FlexLink,TX-873S,SN742412,FAC-002,2000-12-24,2026-04-21,Operational,High
+EQ-0035,Punch Press,Production,Trumpf,RX-365A,SN980660,FAC-002,2019-07-30,2026-04-02,Operational,Medium
+EQ-0036,Robotic Welding Arm,Production,ABB,GX-378B,SN435239,FAC-003,2016-09-26,2025-09-02,Operational,Low
+EQ-0037,Paint Booth / Coating Line,Production,Global Finishing Solutions,MX-524S,SN446954,FAC-001,2001-03-17,2025-06-04,Operational,Medium
+EQ-0038,Paint Booth / Coating Line,Production,Global Finishing Solutions,PX-489S,SN106182,FAC-002,2013-08-26,2025-03-05,Operational,Medium
+EQ-0039,Pressure Vessel / Tank,Utilities,Manchester Tank,RX-324B,SN557007,FAC-002,2012-06-29,2026-03-06,Operational,Medium
+EQ-0040,Automated Guided Vehicle (AGV),Material Handling,Dematic,RX-230,SN513160,FAC-001,2012-06-11,2025-12-11,Operational,High
+EQ-0041,CNC Machining Center,Production,Haas,TX-488B,SN321941,FAC-001,2023-10-31,2026-03-15,Operational,Medium
+EQ-0042,Standby Generator,Utilities,Generac,TX-954,SN593152,FAC-002,2010-02-20,2026-01-24,Operational,High
+EQ-0043,CNC Machining Center,Production,Haas,MX-872,SN359295,FAC-003,2019-03-13,2025-02-23,Decommissioned,Medium
+EQ-0044,Air Compressor,Utilities,Atlas Copco,PX-323S,SN833442,FAC-001,2022-11-14,2025-06-06,Operational,Medium
+EQ-0045,Robotic Welding Arm,Production,ABB,MX-692,SN427110,FAC-002,2002-07-12,2025-04-28,Operational,Low
+EQ-0046,Ventilation / Dust Collection System,Utilities,Camfil,MX-813B,SN991597,FAC-002,2003-11-24,2025-03-19,Operational,High
+EQ-0047,Conveyor System,Material Handling,Hytrol,PX-763B,SN113266,FAC-003,1996-11-03,2025-12-22,Operational,Medium
+EQ-0048,Electrical Distribution Panel,Utilities,Eaton,GX-545A,SN869440,FAC-002,1999-09-26,2026-03-20,Under Maintenance,Medium
+EQ-0049,Punch Press,Production,Trumpf,TX-972A,SN971084,FAC-003,2007-02-12,2026-07-06,Operational,Medium
+EQ-0050,Overhead Bridge Crane,Material Handling,Gorbel,RX-444,SN618317,FAC-002,2015-03-22,2025-09-07,Operational,Medium

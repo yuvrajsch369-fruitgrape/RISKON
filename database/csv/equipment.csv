@@ -1,0 +1,31 @@
+equipment_id,facility_id,equipment_type,category,manufacturer,model_number,serial_number,install_date,last_maintenance_date,next_maintenance_due,status,criticality
+EQ-0001,FAC-001,Punch Press,Production,Amada,PX-512,SN654968,2002-03-19,2025-09-10,2026-03-09,Operational,High
+EQ-0002,FAC-002,Punch Press,Production,Trumpf,TX-337,SN680182,2002-07-25,2025-07-13,2026-01-09,Operational,High
+EQ-0003,FAC-001,Forklift (Electric),Material Handling,Toyota,GX-407,SN151508,2024-02-15,2025-03-14,2025-06-12,Operational,Medium
+EQ-0004,FAC-003,Forklift (Propane),Material Handling,Hyster,MX-140,SN585720,2001-04-07,2026-06-06,2026-10-04,Operational,Medium
+EQ-0005,FAC-002,Air Compressor,Utilities,Ingersoll Rand,PX-431,SN160734,1998-06-16,2026-05-11,2026-08-09,Operational,High
+EQ-0006,FAC-003,Conveyor System,Material Handling,Hytrol,MX-795,SN725120,2014-12-19,2026-01-14,2026-07-13,Operational,Medium
+EQ-0007,FAC-001,Packaging Line,Production,Bosch Packaging,GX-379,SN940331,2005-02-21,2026-05-19,2026-09-16,Operational,Medium
+EQ-0008,FAC-001,Paint Booth / Coating Line,Production,Global Finishing Solutions,PX-179,SN596294,2020-09-27,2026-03-23,2026-09-19,Operational,Medium
+EQ-0009,FAC-002,Electrical Distribution Panel,Utilities,Square D,TX-526,SN166348,2001-07-05,2026-06-20,2026-10-18,Operational,High
+EQ-0010,FAC-001,Ventilation / Dust Collection System,Utilities,Camfil,PX-617,SN725236,2004-06-10,2025-09-21,2026-01-19,Operational,Medium
+EQ-0011,FAC-002,Conveyor System,Material Handling,Hytrol,GX-607,SN835114,2022-04-12,2026-01-12,2026-07-11,Operational,Medium
+EQ-0012,FAC-002,Forklift (Electric),Material Handling,Hyster,TX-706,SN508416,2021-04-17,2026-05-30,2026-11-26,Operational,Medium
+EQ-0013,FAC-001,Ventilation / Dust Collection System,Utilities,Camfil,MX-181,SN902974,2015-05-19,2025-12-09,2026-04-08,Operational,High
+EQ-0014,FAC-003,Hydraulic Press,Production,Schuler,RX-719,SN739987,2003-06-25,2025-10-04,2026-04-02,Operational,Medium
+EQ-0015,FAC-001,Industrial Boiler,Utilities,Fulton,GX-147,SN775186,2016-07-26,2025-01-13,2025-07-12,Operational,High
+EQ-0016,FAC-002,Ventilation / Dust Collection System,Utilities,Camfil,GX-645,SN404235,2001-04-23,2025-08-28,2026-02-24,Operational,Medium
+EQ-0017,FAC-003,Standby Generator,Utilities,Caterpillar,RX-185,SN304327,2021-03-13,2026-03-28,2026-09-24,Operational,High
+EQ-0018,FAC-002,Robotic Welding Arm,Production,ABB,RX-188,SN327981,2024-02-10,2026-06-24,2026-07-03,Operational,Medium
+EQ-0019,FAC-001,Hydraulic Press,Production,Minster,GX-246,SN922533,2006-05-27,2026-05-11,2026-09-08,Operational,Medium
+EQ-0020,FAC-002,Robotic Welding Arm,Production,ABB,MX-645,SN810229,2004-11-22,2026-07-31,2025-04-26,Operational,Medium
+EQ-0021,FAC-001,Standby Generator,Utilities,Generac,TX-682,SN487438,2015-05-06,2026-02-02,2026-08-01,Operational,High
+EQ-0022,FAC-001,Overhead Bridge Crane,Material Handling,Demag,RX-560,SN897295,2009-11-06,2026-03-20,2026-09-16,Operational,Medium
+EQ-0023,FAC-001,Pressure Vessel / Tank,Utilities,Manchester Tank,TX-670,SN718852,2012-09-18,2025-05-13,2026-07-12,Operational,High
+EQ-0024,FAC-003,Overhead Bridge Crane,Material Handling,Gorbel,PX-684,SN332813,2013-12-13,2026-06-29,2025-01-31,Operational,High
+EQ-0025,FAC-001,Pressure Vessel / Tank,Utilities,Trinity,RX-443,SN743553,2015-01-13,2025-11-21,2026-03-21,Operational,Medium
+EQ-0026,FAC-001,Ventilation / Dust Collection System,Utilities,Camfil,MX-328,SN208969,2023-05-25,2025-05-03,2025-08-31,Operational,Medium
+EQ-0027,FAC-002,Electrical Distribution Panel,Utilities,Siemens,RX-454,SN663138,2006-01-12,2025-09-29,2025-05-14,Operational,High
+EQ-0028,FAC-001,Robotic Welding Arm,Production,FANUC,GX-823,SN309172,2023-02-18,2026-02-04,2026-08-03,Operational,High
+EQ-0029,FAC-001,Industrial Boiler,Utilities,Cleaver-Brooks,RX-282,SN219459,2015-10-15,2026-06-17,2026-05-03,Operational,Medium
+EQ-0030,FAC-003,CNC Machining Center,Production,Okuma,RX-738,SN839642,2020-07-24,2025-07-20,2025-10-18,Operational,High

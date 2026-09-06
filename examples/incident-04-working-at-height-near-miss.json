@@ -1,0 +1,380 @@
+{
+  "incident_id": "INC-2104",
+  "schema_version": "1.0.0",
+  "pipeline_run_id": "RUN-INC-2104-A4",
+  "generated_at": "2026-09-03T14:32:00Z",
+  "model": "claude-sonnet-5",
+  "stage_1_ingestion": {
+    "incident_id": "INC-2104",
+    "facility_id": "FAC-001",
+    "reporter_employee_id": "EMP-0009",
+    "raw_report_text": "Maintenance tech was on a rolling ladder replacing an air filter on the ventilation unit above the paint booth, approximately 10 feet up. The ladder shifted when the tech reached to the side, but they were able to grab the adjacent structural beam and climb down safely. No fall occurred. Tech was not using fall protection at the time, stating the job 'usually takes a few minutes.' Reported same day, afternoon.",
+    "date_submitted": "2026-06-27T16:20:00Z",
+    "attachments_present": false,
+    "ingestion_status": "complete"
+  },
+  "stage_2_information_extraction": {
+    "who_involved": {
+      "value": "Maintenance technician (reporter)",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.9,
+      "reasoning": "Reporter is the technician involved.",
+      "requires_human_approval": false
+    },
+    "what_happened": {
+      "value": "Rolling ladder shifted while tech reached to the side at ~10 ft height; tech grabbed an adjacent structural beam and climbed down safely; no fall occurred; fall protection was not in use.",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.95,
+      "reasoning": "Directly stated.",
+      "requires_human_approval": false
+    },
+    "when_occurred": {
+      "value": "Afternoon, same day as report (2026-06-27)",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.7,
+      "reasoning": "Only 'afternoon' given, no exact time.",
+      "requires_human_approval": false
+    },
+    "where_location": {
+      "value": "Above the paint booth, ventilation unit access point",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.85,
+      "reasoning": "Directly stated.",
+      "requires_human_approval": false
+    },
+    "equipment_involved": {
+      "value": "Rolling ladder; ventilation unit above paint booth (EQ-0044)",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.7,
+      "reasoning": "Ladder and ventilation unit both named; ventilation unit matched to facility equipment log.",
+      "requires_human_approval": false
+    },
+    "injuries_reported": {
+      "value": "None",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.95,
+      "reasoning": "Directly stated no fall occurred.",
+      "requires_human_approval": false
+    },
+    "witnesses": {
+      "value": null,
+      "insufficient_information": true,
+      "source": "extracted_from_report",
+      "confidence": null,
+      "reasoning": "No witnesses mentioned in report.",
+      "requires_human_approval": false
+    },
+    "environmental_conditions": {
+      "value": "Height approx. 10 feet; work performed on a rolling (mobile) ladder",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.8,
+      "reasoning": "Directly stated.",
+      "requires_human_approval": false
+    }
+  },
+  "stage_3_classification": {
+    "incident_category": {
+      "value": "Fall / Working at Height",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.9,
+      "reasoning": "Event involves elevated work on a mobile ladder with an unstable-ladder near-fall event.",
+      "requires_human_approval": true
+    },
+    "incident_type": {
+      "value": "Near Miss",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.95,
+      "reasoning": "No fall occurred; tech self-recovered.",
+      "requires_human_approval": true
+    },
+    "hazard_taxonomy_code": {
+      "value": "HT-LADR-01",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.85,
+      "reasoning": "Maps to unsecured mobile ladder / height-work subcategory.",
+      "requires_human_approval": true
+    }
+  },
+  "stage_4_hazard_identification": {
+    "hazards": [
+      {
+        "id": "HAZ-1",
+        "confidence": 0.9,
+        "source": "ai_inference",
+        "evidence": "Report explicitly states the ladder shifted at height and the tech had to grab a beam to avoid falling.",
+        "requires_human_approval": true,
+        "hazard_type": "Fall / Working at Height",
+        "description": "Unstable/unsecured rolling ladder shifting during elevated work, creating fall risk."
+      },
+      {
+        "id": "HAZ-2",
+        "confidence": 0.85,
+        "source": "ai_inference",
+        "evidence": "Report explicitly states fall protection was not in use at ~10 feet.",
+        "requires_human_approval": true,
+        "hazard_type": "Fall / Working at Height",
+        "description": "Elevated work performed without fall protection at a height where it would typically be required."
+      }
+    ],
+    "coverage_note": "Both the equipment-stability hazard and the missing-fall-protection hazard are directly evidenced."
+  },
+  "stage_5_potential_consequences": {
+    "consequences": [
+      {
+        "id": "CONS-1",
+        "confidence": 0.85,
+        "source": "ai_inference",
+        "evidence": "A fall from ~10 feet without fall protection is a well-established severe-injury/fatality hazard pattern.",
+        "requires_human_approval": true,
+        "description": "Fall from height resulting in serious injury or fatality.",
+        "plausible_worst_case_severity": "Critical"
+      }
+    ],
+    "coverage_note": "Reflects the worst-case outcome the near-miss narrowly avoided."
+  },
+  "stage_6_preliminary_severity_assessment": {
+    "ai_suggested_severity": {
+      "value": "High",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.8,
+      "reasoning": "No injury occurred, but the combination of an actual ladder-instability event at height with no fall protection in use represents a high-severity near miss with narrowly avoided critical outcome (Stage 5).",
+      "requires_human_approval": true
+    },
+    "ai_suggested_recurrence_likelihood": {
+      "value": "Likely",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.7,
+      "reasoning": "Tech's stated reasoning ('usually takes a few minutes') suggests this is a routine practice for short-duration height tasks, not a one-off lapse, implying high recurrence risk absent a control change.",
+      "requires_human_approval": true
+    },
+    "status": "pending_human_confirmation",
+    "requires_human_approval": true
+  },
+  "stage_7_contributing_factors": {
+    "factors": [
+      {
+        "id": "CF-1",
+        "confidence": 0.85,
+        "source": "ai_inference",
+        "evidence": "Report states the ladder shifted when the tech reached to the side, a known instability mode for rolling ladders under lateral load.",
+        "requires_human_approval": true,
+        "category": "Equipment",
+        "description": "Rolling ladder instability under lateral reaching load."
+      },
+      {
+        "id": "CF-2",
+        "confidence": 0.9,
+        "source": "ai_inference",
+        "evidence": "Report directly quotes the tech's rationale for skipping fall protection.",
+        "requires_human_approval": true,
+        "category": "Human",
+        "description": "Tech's own stated risk-normalization ('usually takes a few minutes') for a short-duration task."
+      },
+      {
+        "id": "CF-3",
+        "confidence": 0.4,
+        "source": "ai_inference",
+        "evidence": "Short-duration height tasks are a commonly cited driver of fall-protection non-compliance in industry data; consistent with but not separately evidenced here.",
+        "requires_human_approval": true,
+        "category": "Organizational",
+        "description": "Possible gap in enforcement of fall-protection requirements for short-duration tasks (unconfirmed)."
+      }
+    ],
+    "coverage_note": "CF-1 and CF-2 are directly evidenced by the report; CF-3 is an inferred organizational pattern requiring confirmation."
+  },
+  "stage_8_root_cause_hypotheses": {
+    "hypotheses": [
+      {
+        "id": "RC-1",
+        "confidence": 0.75,
+        "source": "ai_inference",
+        "evidence": "Directly supported by CF-2, the tech's own quoted rationale.",
+        "requires_human_approval": true,
+        "rank": 1,
+        "statement": "Fall protection is being routinely skipped for tasks perceived as short-duration, indicating a gap between the written fall-protection requirement and actual practice for quick maintenance tasks.",
+        "label": "hypothesis_not_confirmed",
+        "supporting_evidence": "Tech directly attributes the omission to task duration expectation, not to unavailability of equipment."
+      },
+      {
+        "id": "RC-2",
+        "confidence": 0.35,
+        "source": "ai_inference",
+        "evidence": "Plausible equipment condition contributor but not directly evidenced.",
+        "requires_human_approval": true,
+        "rank": 2,
+        "statement": "The rolling ladder's wheels/locks may not have been properly engaged or inspected before use.",
+        "label": "hypothesis_not_confirmed",
+        "supporting_evidence": "Ladder shifted during use.",
+        "contradicting_evidence": "Report does not describe the ladder's lock/wheel state before or after the shift."
+      }
+    ],
+    "coverage_note": "RC-1 is well-supported by the tech's own statement; RC-2 would require inspecting the specific ladder used."
+  },
+  "stage_9_existing_controls": {
+    "controls": [
+      {
+        "id": "CTRL-1",
+        "confidence": 0.85,
+        "source": "system_reference",
+        "evidence": "SOP-0011 (Fall Protection Program) is Active for this facility.",
+        "requires_human_approval": false,
+        "control_description": "Fall Protection Program covering elevated work.",
+        "control_type": "Procedural",
+        "status": "present",
+        "related_sop_id": "SOP-0011"
+      },
+      {
+        "id": "CTRL-2",
+        "confidence": 0.9,
+        "source": "extracted_from_report",
+        "evidence": "Report explicitly states fall protection was not in use.",
+        "requires_human_approval": false,
+        "control_description": "Personal fall arrest/restraint system for ladder work at height.",
+        "control_type": "PPE",
+        "status": "absent",
+        "related_sop_id": "SOP-0011"
+      }
+    ],
+    "coverage_note": "The governing SOP exists and is active; the PPE control it requires was confirmed absent in this specific instance."
+  },
+  "stage_10_control_gaps": {
+    "gaps": [
+      {
+        "id": "GAP-1",
+        "confidence": 0.85,
+        "source": "ai_inference",
+        "evidence": "SOP-0011 requires fall protection for elevated work; this instance shows non-compliance, and the tech's stated reasoning suggests it may not be an isolated case.",
+        "requires_human_approval": true,
+        "related_control_id": "CTRL-2",
+        "gap_description": "Fall protection requirement in SOP-0011 not followed for short-duration ladder tasks; possible broader practice gap, not a single lapse.",
+        "required_by_sop_id": "SOP-0011"
+      }
+    ],
+    "coverage_note": "Single, well-evidenced gap: PPE requirement not applied in practice for this task type."
+  },
+  "stage_11_recommended_actions": {
+    "actions": [
+      {
+        "id": "ACT-1",
+        "confidence": 0.75,
+        "source": "ai_inference",
+        "evidence": "Directly addresses GAP-1; reinforces the existing SOP-0011 requirement with no duration exception.",
+        "requires_human_approval": true,
+        "action_type": "Corrective",
+        "description": "Retrain maintenance staff that SOP-0011 fall-protection requirements apply regardless of task duration; obtain signed acknowledgment.",
+        "priority": "High",
+        "suggested_owner_role": "Safety Manager",
+        "suggested_timeframe_days": 14,
+        "addresses_gap_ids": [
+          "GAP-1"
+        ]
+      },
+      {
+        "id": "ACT-2",
+        "confidence": 0.55,
+        "source": "ai_inference",
+        "evidence": "Addresses CF-1/RC-2 equipment-condition hypothesis; a targeted inspection is low-cost and directly relevant.",
+        "requires_human_approval": true,
+        "action_type": "Preventive",
+        "description": "Inspect the specific rolling ladder used (wheel locks, stability) and include in routine ladder inspection program if not already covered.",
+        "priority": "Medium",
+        "suggested_owner_role": "Maintenance Technician",
+        "suggested_timeframe_days": 14,
+        "addresses_gap_ids": [
+          "GAP-1"
+        ]
+      },
+      {
+        "id": "ACT-3",
+        "confidence": 0.5,
+        "source": "ai_inference",
+        "evidence": "Addresses the recurrence risk implied by CF-2/RC-1 by evaluating whether a faster-to-deploy fall protection option exists for brief tasks, reducing the incentive to skip it.",
+        "requires_human_approval": true,
+        "action_type": "Preventive",
+        "description": "Evaluate providing quicker-to-don fall protection (e.g. pre-rigged anchor points near the paint booth ventilation unit) to reduce time-pressure incentive to skip PPE.",
+        "priority": "Medium",
+        "suggested_owner_role": "Mechanical Engineer",
+        "suggested_timeframe_days": 60,
+        "addresses_gap_ids": [
+          "GAP-1"
+        ]
+      }
+    ],
+    "coverage_note": "Actions address both immediate compliance (ACT-1) and the underlying time-pressure driver behind the gap (ACT-3)."
+  },
+  "stage_12_risk_register_impact": {
+    "proposed_action": "create_new_risk",
+    "hazard_category": "Fall / Working at Height",
+    "likelihood": {
+      "value": 4,
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.7,
+      "reasoning": "Tech's own statement suggests this is routine practice for short tasks, not isolated; rated Likely per Stage 6.",
+      "requires_human_approval": true
+    },
+    "impact": {
+      "value": 5,
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.85,
+      "reasoning": "Stage 5 worst case is a fall from height resulting in fatality; impact rated at the top of the scale.",
+      "requires_human_approval": true
+    },
+    "risk_score": {
+      "value": 20,
+      "insufficient_information": false,
+      "source": "derived_from_prior_stage",
+      "confidence": null,
+      "reasoning": "likelihood (4) x impact (5) = 20.",
+      "requires_human_approval": true
+    },
+    "risk_level": {
+      "value": "Critical",
+      "insufficient_information": false,
+      "source": "derived_from_prior_stage",
+      "confidence": null,
+      "reasoning": "Score of 20 falls in the Critical band (20-25) per facility risk matrix.",
+      "requires_human_approval": true
+    },
+    "existing_risk_assessment_id": null,
+    "reasoning": "No existing risk register entry covers fall-protection non-compliance for short-duration elevated maintenance tasks; proposing a new Critical-band entry given the severity and apparent routineness of the practice gap.",
+    "requires_human_approval": true,
+    "write_status": "not_written_pending_approval"
+  },
+  "stage_13_human_review_package": {
+    "package_id": "RVW-2bf40e38",
+    "incident_id": "INC-2104",
+    "summary_for_reviewer": "Maintenance tech avoided a fall from ~10 ft when a rolling ladder shifted; fall protection was not in use, and the tech's own statement suggests this is routine for short tasks. AI proposes a Critical risk-register entry and three actions, prioritizing reinforcement of the existing fall-protection SOP.",
+    "stages_requiring_approval": [
+      "stage_3_classification",
+      "stage_4_hazard_identification",
+      "stage_5_potential_consequences",
+      "stage_6_preliminary_severity_assessment",
+      "stage_7_contributing_factors",
+      "stage_8_root_cause_hypotheses",
+      "stage_10_control_gaps",
+      "stage_11_recommended_actions",
+      "stage_12_risk_register_impact"
+    ],
+    "approval": {
+      "decision": "pending",
+      "reviewer_employee_id": null,
+      "reviewed_at": null,
+      "comments": null,
+      "edited_fields": []
+    }
+  }
+}

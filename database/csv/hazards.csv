@@ -1,0 +1,78 @@
+hazard_id,hazard_category,description,facility_id,equipment_id,typical_consequence,identified_date,identified_by_employee_id,status
+HAZ-0001,Forklift / Vehicle Incident,Pedestrian and forklift traffic share aisles without segregated walkways in the North Plant warehouse.,FAC-001,EQ-0003,Struck-by injury to pedestrian,2025-11-03,EMP-0004,Active
+HAZ-0002,Forklift / Vehicle Incident,Blind corners near the South Plant loading dock create forklift/pedestrian conflict points.,FAC-003,EQ-0004,Struck-by injury to pedestrian,2026-07-22,EMP-0013,Active
+HAZ-0003,Machine Guarding Failure,Punch press point-of-operation guarding is prone to being propped open during jam-clearing.,,,Amputation or crush injury to hand/fingers,2025-04-11,EMP-0002,Active
+HAZ-0004,Equipment Failure Risk,"Air compressor condition degrades without timely preventive maintenance, risking uncontrolled failure.",FAC-002,EQ-0005,"Equipment failure, possible injury",2026-02-25,EMP-0002,Active
+HAZ-0005,Equipment Failure Risk,"Conveyor drive components wear without timely preventive maintenance, risking jams and belt failure.",FAC-003,EQ-0006,"Equipment failure, possible injury",2025-05-20,EMP-0013,Active
+HAZ-0006,Lockout/Tagout Violation,Contractors performing energized/mechanical work without confirmed facility LOTO training or permit sign-off.,,,Severe injury to contractor,2025-09-08,EMP-0002,Active
+HAZ-0007,Ergonomic Strain,Manual material handling at ergonomic strain requires repetitive lifting.,,,Musculoskeletal injury,2026-06-28,EMP-0013,Active
+HAZ-0008,Environmental Spill / Release,Ventilation / Dust Collection System drain/containment path is not fully protected against spill migration.,FAC-001,EQ-0010,Environmental contamination,2025-07-27,EMP-0004,Active
+HAZ-0009,Housekeeping / Walkway Obstruction,Storage near housekeeping / walkway obstruction intrudes on the marked egress path.,,,"Slip, trip, or fall injury",2026-06-16,EMP-0004,Active
+HAZ-0010,Noise Exposure,Sustained noise levels near Pressure Vessel / Tank exceed the facility action level.,FAC-001,EQ-0025,Hearing loss,2026-05-15,EMP-0013,Active
+HAZ-0011,Forklift / Vehicle Incident,Vehicle traffic near forklift / vehicle incident shares a path with pedestrians.,,,Struck-by injury or property damage,2026-01-29,EMP-0002,Active
+HAZ-0012,Falling Object / Struck-By,Overhead storage near falling object / struck-by is not secured against shifting.,,,Head or upper body injury,2025-06-05,EMP-0003,Active
+HAZ-0013,Noise Exposure,Sustained noise levels near Ventilation / Dust Collection System exceed the facility action level.,FAC-001,EQ-0013,Hearing loss,2026-05-21,EMP-0003,Active
+HAZ-0014,Noise Exposure,Sustained noise levels near Electrical Distribution Panel exceed the facility action level.,FAC-002,EQ-0027,Hearing loss,2026-05-27,EMP-0002,Active
+HAZ-0015,Overhead Crane / Rigging Hazard,Rigging inspection cadence for loads near Packaging Line is inconsistent.,FAC-001,EQ-0007,Struck-by or crush injury,2026-05-01,EMP-0002,Active
+HAZ-0016,Heat Stress,Ambient temperature near Electrical Distribution Panel rises significantly during summer shifts.,FAC-002,EQ-0009,Heat exhaustion or heat stroke,2026-06-03,EMP-0004,Active
+HAZ-0017,Falling Object / Struck-By,Overhead storage near Robotic Welding Arm is not secured against shifting.,FAC-002,EQ-0018,Head or upper body injury,2025-12-16,EMP-0002,Active
+HAZ-0018,Slip/Trip/Fall,Walkway near Air Compressor is prone to fluid leaks and debris accumulation.,FAC-002,EQ-0005,"Sprain, fracture, or laceration",2025-08-30,EMP-0002,Active
+HAZ-0019,Electrical Hazard / Arc Flash,Electrical panel servicing electrical hazard / arc flash lacks current arc-flash labeling.,,,Electrical shock or arc flash burn,2025-12-09,EMP-0002,Active
+HAZ-0020,Chemical Exposure,Chemical transfer/handling near Conveyor System lacks secondary containment.,FAC-002,EQ-0011,Skin/respiratory irritation or burn,2026-03-22,EMP-0002,Active
+HAZ-0021,Confined Space Hazard,Confined space adjacent to Forklift (Propane) lacks continuous atmospheric monitoring.,FAC-003,EQ-0004,Asphyxiation or severe injury,2025-08-20,EMP-0002,Active
+HAZ-0022,Machine Guarding Failure,Guarding on Industrial Boiler can be bypassed during jam-clearing or changeover.,FAC-001,EQ-0015,Amputation or crush injury,2025-11-13,EMP-0002,Active
+HAZ-0023,Pressure System Failure,Pressure relief devices on CNC Machining Center are due for recertification.,FAC-003,EQ-0030,Blast injury or equipment damage,2026-02-20,EMP-0004,Active
+HAZ-0024,Confined Space Hazard,Confined space adjacent to confined space hazard lacks continuous atmospheric monitoring.,,,Asphyxiation or severe injury,2025-03-21,EMP-0013,Active
+HAZ-0025,Heat Stress,Ambient temperature near heat stress rises significantly during summer shifts.,,,Heat exhaustion or heat stroke,2026-01-10,EMP-0002,Active
+HAZ-0026,Chemical Exposure,Chemical transfer/handling near Electrical Distribution Panel lacks secondary containment.,FAC-002,EQ-0009,Skin/respiratory irritation or burn,2026-04-11,EMP-0003,Active
+HAZ-0027,Falling Object / Struck-By,Overhead storage near Forklift (Propane) is not secured against shifting.,FAC-003,EQ-0004,Head or upper body injury,2026-06-26,EMP-0003,Active
+HAZ-0028,Electrical Hazard / Arc Flash,Electrical panel servicing Punch Press lacks current arc-flash labeling.,FAC-001,EQ-0001,Electrical shock or arc flash burn,2025-12-18,EMP-0004,Active
+HAZ-0029,Ergonomic Strain,Manual material handling at ergonomic strain requires repetitive lifting.,,,Musculoskeletal injury,2026-06-04,EMP-0004,Active
+HAZ-0030,Housekeeping / Walkway Obstruction,Storage near housekeeping / walkway obstruction intrudes on the marked egress path.,,,"Slip, trip, or fall injury",2025-12-24,EMP-0002,Active
+HAZ-0031,Heat Stress,Ambient temperature near heat stress rises significantly during summer shifts.,,,Heat exhaustion or heat stroke,2026-07-05,EMP-0003,Active
+HAZ-0032,Electrical Hazard / Arc Flash,Electrical panel servicing Conveyor System lacks current arc-flash labeling.,FAC-003,EQ-0006,Electrical shock or arc flash burn,2025-05-04,EMP-0003,Active
+HAZ-0033,Falling Object / Struck-By,Overhead storage near falling object / struck-by is not secured against shifting.,,,Head or upper body injury,2026-05-19,EMP-0002,Active
+HAZ-0034,Noise Exposure,Sustained noise levels near noise exposure exceed the facility action level.,,,Hearing loss,2025-11-11,EMP-0003,Active
+HAZ-0035,Forklift / Vehicle Incident,Vehicle traffic near forklift / vehicle incident shares a path with pedestrians.,,,Struck-by injury or property damage,2025-03-10,EMP-0002,Active
+HAZ-0036,Confined Space Hazard,Confined space adjacent to Electrical Distribution Panel lacks continuous atmospheric monitoring.,FAC-002,EQ-0027,Asphyxiation or severe injury,2025-06-02,EMP-0002,Active
+HAZ-0037,Overhead Crane / Rigging Hazard,Rigging inspection cadence for loads near overhead crane / rigging hazard is inconsistent.,,,Struck-by or crush injury,2026-07-25,EMP-0013,Active
+HAZ-0038,Environmental Spill / Release,Forklift (Electric) drain/containment path is not fully protected against spill migration.,FAC-002,EQ-0012,Environmental contamination,2025-07-27,EMP-0003,Active
+HAZ-0039,Heat Stress,Ambient temperature near Forklift (Propane) rises significantly during summer shifts.,FAC-003,EQ-0004,Heat exhaustion or heat stroke,2025-07-03,EMP-0013,Active
+HAZ-0040,Fire / Explosion Risk,Hot work performed near Electrical Distribution Panel without consistent permit controls.,FAC-002,EQ-0027,Burn injury or facility damage,2025-06-08,EMP-0003,Active
+HAZ-0041,Overhead Crane / Rigging Hazard,Rigging inspection cadence for loads near Punch Press is inconsistent.,FAC-001,EQ-0001,Struck-by or crush injury,2025-03-12,EMP-0003,Active
+HAZ-0042,Heat Stress,Ambient temperature near Conveyor System rises significantly during summer shifts.,FAC-003,EQ-0006,Heat exhaustion or heat stroke,2025-04-27,EMP-0003,Active
+HAZ-0043,Heat Stress,Ambient temperature near Hydraulic Press rises significantly during summer shifts.,FAC-001,EQ-0019,Heat exhaustion or heat stroke,2025-12-25,EMP-0003,Active
+HAZ-0044,Housekeeping / Walkway Obstruction,Storage near Ventilation / Dust Collection System intrudes on the marked egress path.,FAC-001,EQ-0010,"Slip, trip, or fall injury",2025-01-11,EMP-0002,Active
+HAZ-0045,Lockout/Tagout Violation,Energy isolation points on Conveyor System are not consistently verified before service.,FAC-002,EQ-0011,Severe injury during equipment servicing,2026-03-22,EMP-0002,Active
+HAZ-0046,Slip/Trip/Fall,Walkway near slip/trip/fall is prone to fluid leaks and debris accumulation.,,,"Sprain, fracture, or laceration",2026-07-05,EMP-0002,Active
+HAZ-0047,Environmental Spill / Release,environmental spill / release drain/containment path is not fully protected against spill migration.,,,Environmental contamination,2026-05-31,EMP-0004,Active
+HAZ-0048,Slip/Trip/Fall,Walkway near Ventilation / Dust Collection System is prone to fluid leaks and debris accumulation.,FAC-001,EQ-0013,"Sprain, fracture, or laceration",2026-03-26,EMP-0004,Active
+HAZ-0049,Caught-In / Caught-Between,Nip points on Ventilation / Dust Collection System are accessible during normal operation.,FAC-002,EQ-0016,Crush injury or amputation,2025-08-25,EMP-0003,Active
+HAZ-0050,Caught-In / Caught-Between,Nip points on Electrical Distribution Panel are accessible during normal operation.,FAC-002,EQ-0027,Crush injury or amputation,2026-03-03,EMP-0002,Active
+HAZ-0051,Environmental Spill / Release,Conveyor System drain/containment path is not fully protected against spill migration.,FAC-003,EQ-0006,Environmental contamination,2026-08-05,EMP-0004,Active
+HAZ-0052,Pressure System Failure,Pressure relief devices on Robotic Welding Arm are due for recertification.,FAC-002,EQ-0020,Blast injury or equipment damage,2026-04-06,EMP-0002,Active
+HAZ-0053,Forklift / Vehicle Incident,Vehicle traffic near Ventilation / Dust Collection System shares a path with pedestrians.,FAC-001,EQ-0013,Struck-by injury or property damage,2025-05-06,EMP-0004,Active
+HAZ-0054,Machine Guarding Failure,Guarding on machine guarding failure can be bypassed during jam-clearing or changeover.,,,Amputation or crush injury,2025-01-22,EMP-0003,Active
+HAZ-0055,Overhead Crane / Rigging Hazard,Rigging inspection cadence for loads near Electrical Distribution Panel is inconsistent.,FAC-002,EQ-0009,Struck-by or crush injury,2025-06-13,EMP-0013,Active
+HAZ-0056,Heat Stress,Ambient temperature near Robotic Welding Arm rises significantly during summer shifts.,FAC-002,EQ-0018,Heat exhaustion or heat stroke,2025-05-23,EMP-0004,Active
+HAZ-0057,Housekeeping / Walkway Obstruction,Storage near Forklift (Electric) intrudes on the marked egress path.,FAC-002,EQ-0012,"Slip, trip, or fall injury",2025-11-11,EMP-0013,Active
+HAZ-0058,Pressure System Failure,Pressure relief devices on pressure system failure are due for recertification.,,,Blast injury or equipment damage,2025-10-19,EMP-0002,Active
+HAZ-0059,Slip/Trip/Fall,Walkway near Robotic Welding Arm is prone to fluid leaks and debris accumulation.,FAC-002,EQ-0018,"Sprain, fracture, or laceration",2025-09-16,EMP-0003,Active
+HAZ-0060,Noise Exposure,Sustained noise levels near noise exposure exceed the facility action level.,,,Hearing loss,2025-12-06,EMP-0003,Active
+HAZ-0061,Noise Exposure,Sustained noise levels near CNC Machining Center exceed the facility action level.,FAC-003,EQ-0030,Hearing loss,2026-01-28,EMP-0013,Active
+HAZ-0062,Ergonomic Strain,Manual material handling at Electrical Distribution Panel requires repetitive lifting.,FAC-002,EQ-0027,Musculoskeletal injury,2025-09-14,EMP-0003,Active
+HAZ-0063,Caught-In / Caught-Between,Nip points on Ventilation / Dust Collection System are accessible during normal operation.,FAC-002,EQ-0016,Crush injury or amputation,2025-04-24,EMP-0003,Active
+HAZ-0064,Confined Space Hazard,Confined space adjacent to Overhead Bridge Crane lacks continuous atmospheric monitoring.,FAC-003,EQ-0024,Asphyxiation or severe injury,2026-04-10,EMP-0013,Active
+HAZ-0065,Lockout/Tagout Violation,Energy isolation points on lockout/tagout violation are not consistently verified before service.,,,Severe injury during equipment servicing,2025-02-17,EMP-0004,Active
+HAZ-0066,Heat Stress,Ambient temperature near Forklift (Propane) rises significantly during summer shifts.,FAC-003,EQ-0004,Heat exhaustion or heat stroke,2026-07-31,EMP-0002,Active
+HAZ-0067,Chemical Exposure,Chemical transfer/handling near chemical exposure lacks secondary containment.,,,Skin/respiratory irritation or burn,2025-08-21,EMP-0013,Active
+HAZ-0068,Machine Guarding Failure,Guarding on Ventilation / Dust Collection System can be bypassed during jam-clearing or changeover.,FAC-001,EQ-0013,Amputation or crush injury,2025-10-07,EMP-0004,Active
+HAZ-0069,Electrical Hazard / Arc Flash,Electrical panel servicing Ventilation / Dust Collection System lacks current arc-flash labeling.,FAC-002,EQ-0016,Electrical shock or arc flash burn,2026-07-28,EMP-0002,Active
+HAZ-0070,Heat Stress,Ambient temperature near Punch Press rises significantly during summer shifts.,FAC-001,EQ-0001,Heat exhaustion or heat stroke,2025-04-19,EMP-0002,Active
+HAZ-0071,Lockout/Tagout Violation,Energy isolation points on lockout/tagout violation are not consistently verified before service.,,,Severe injury during equipment servicing,2025-06-29,EMP-0013,Active
+HAZ-0072,Ergonomic Strain,Manual material handling at ergonomic strain requires repetitive lifting.,,,Musculoskeletal injury,2026-07-12,EMP-0002,Active
+HAZ-0073,Lockout/Tagout Violation,Energy isolation points on Forklift (Electric) are not consistently verified before service.,FAC-002,EQ-0012,Severe injury during equipment servicing,2026-06-11,EMP-0013,Active
+HAZ-0074,Overhead Crane / Rigging Hazard,Rigging inspection cadence for loads near Forklift (Electric) is inconsistent.,FAC-001,EQ-0003,Struck-by or crush injury,2025-04-12,EMP-0002,Active
+HAZ-0075,Machine Guarding Failure,Guarding on machine guarding failure can be bypassed during jam-clearing or changeover.,,,Amputation or crush injury,2026-07-01,EMP-0004,Active
+HAZ-0076,Fall / Working at Height,Rooftop and elevated ventilation-unit maintenance is performed on rolling ladders without consistent fall protection.,FAC-001,,Fall injury or fatality,2025-02-07,EMP-0003,Active
+HAZ-0077,Fall / Working at Height,Elevated racking access at the South Plant distribution area lacks a fixed platform.,FAC-003,,Fall injury or fatality,2025-11-10,EMP-0002,Active

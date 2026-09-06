@@ -1,0 +1,14 @@
+.git
+.gitignore
+.env
+.env.local
+__pycache__
+*.pyc
+.pytest_cache
+.venv
+venv
+node_modules
+*.md
+.claude
+rex-industrial-synthetic-data
+rex-industrial-synthetic-data.zip

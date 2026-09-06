@@ -1,0 +1,356 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://riskon.dev/schemas/ai-reasoning-output.schema.json",
+  "title": "RISKON AI Reasoning Engine Output",
+  "description": "Full structured output of the 13-stage AI reasoning pipeline for a single incident. Every AI-derived value is wrapped in a provenance envelope (source, confidence, reasoning, requires_human_approval) so the UI can visually distinguish extracted facts from AI hypotheses/recommendations, and so nothing here can be mistaken for a final decision. This document is a DRAFT PACKAGE for human review — it is never written to the risk register on its own.",
+  "type": "object",
+  "required": [
+    "incident_id", "schema_version", "pipeline_run_id", "generated_at", "model",
+    "stage_1_ingestion", "stage_2_information_extraction", "stage_3_classification",
+    "stage_4_hazard_identification", "stage_5_potential_consequences",
+    "stage_6_preliminary_severity_assessment", "stage_7_contributing_factors",
+    "stage_8_root_cause_hypotheses", "stage_9_existing_controls",
+    "stage_10_control_gaps", "stage_11_recommended_actions",
+    "stage_12_risk_register_impact", "stage_13_human_review_package"
+  ],
+  "properties": {
+    "incident_id": { "type": "string", "description": "FK to incidents.incident_id" },
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "pipeline_run_id": { "type": "string", "description": "Unique id for this pipeline execution, used for re-run/audit history" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "model": { "type": "string", "description": "Model identifier used to generate this run, e.g. claude-sonnet-5" },
+
+    "stage_1_ingestion": { "$ref": "#/$defs/stage1Ingestion" },
+    "stage_2_information_extraction": { "$ref": "#/$defs/stage2Extraction" },
+    "stage_3_classification": { "$ref": "#/$defs/stage3Classification" },
+    "stage_4_hazard_identification": { "$ref": "#/$defs/stage4Hazards" },
+    "stage_5_potential_consequences": { "$ref": "#/$defs/stage5Consequences" },
+    "stage_6_preliminary_severity_assessment": { "$ref": "#/$defs/stage6Severity" },
+    "stage_7_contributing_factors": { "$ref": "#/$defs/stage7ContributingFactors" },
+    "stage_8_root_cause_hypotheses": { "$ref": "#/$defs/stage8RootCause" },
+    "stage_9_existing_controls": { "$ref": "#/$defs/stage9ExistingControls" },
+    "stage_10_control_gaps": { "$ref": "#/$defs/stage10ControlGaps" },
+    "stage_11_recommended_actions": { "$ref": "#/$defs/stage11Actions" },
+    "stage_12_risk_register_impact": { "$ref": "#/$defs/stage12RiskImpact" },
+    "stage_13_human_review_package": { "$ref": "#/$defs/stage13ReviewPackage" }
+  },
+  "additionalProperties": false,
+
+  "$defs": {
+    "sourceEnum": {
+      "type": "string",
+      "enum": ["extracted_from_report", "ai_inference", "derived_from_prior_stage", "human_input", "system_reference"],
+      "description": "extracted_from_report = pulled verbatim/paraphrased from the submitted incident text with no inference. ai_inference = a model-generated hypothesis, classification, or recommendation. derived_from_prior_stage = computed/aggregated from earlier pipeline stages (e.g. risk score from likelihood x impact). human_input = supplied by a person (reporter or reviewer), not the model. system_reference = looked up from existing RISKON records (SOPs, equipment, prior risk register), not invented."
+    },
+
+    "scalarField": {
+      "description": "Envelope for a single expected fact or judgment. If the model cannot determine the value from the available input, value MUST be null and insufficient_information MUST be true -- inventing a plausible-sounding value is prohibited.",
+      "type": "object",
+      "required": ["value", "insufficient_information", "source", "confidence", "reasoning", "requires_human_approval"],
+      "properties": {
+        "value": { "description": "The extracted/inferred value, or null if insufficient_information is true." },
+        "insufficient_information": { "type": "boolean" },
+        "source": { "$ref": "#/$defs/sourceEnum" },
+        "confidence": {
+          "description": "0-1 for ai_inference/extracted_from_report fields. null for human_input, system_reference, or when insufficient_information is true.",
+          "type": ["number", "null"], "minimum": 0, "maximum": 1
+        },
+        "reasoning": { "type": "string", "description": "Evidence/justification. For extracted facts: what text supports it. For inferences: the logical chain. For insufficient_information: what specifically is missing." },
+        "requires_human_approval": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+
+    "listItemBase": {
+      "type": "object",
+      "required": ["id", "confidence", "source", "evidence", "requires_human_approval"],
+      "properties": {
+        "id": { "type": "string" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "source": { "$ref": "#/$defs/sourceEnum" },
+        "evidence": { "type": "string", "description": "Specific reasoning/evidence tying this item back to extracted facts or prior-stage outputs. Must not cite information not present upstream." },
+        "requires_human_approval": { "type": "boolean" }
+      }
+    },
+
+    "stage1Ingestion": {
+      "type": "object",
+      "description": "Normalizes the raw submission. No inference happens here -- this is a faithful restatement, so requires_human_approval is false throughout.",
+      "required": ["incident_id", "facility_id", "reporter_employee_id", "raw_report_text", "date_submitted", "attachments_present", "ingestion_status"],
+      "properties": {
+        "incident_id": { "type": "string" },
+        "facility_id": { "type": "string" },
+        "reporter_employee_id": { "type": "string" },
+        "raw_report_text": { "type": "string", "description": "Verbatim text as submitted by the reporter." },
+        "date_submitted": { "type": "string", "format": "date-time" },
+        "attachments_present": { "type": "boolean" },
+        "ingestion_status": { "type": "string", "enum": ["complete", "incomplete_missing_required_fields"] }
+      },
+      "additionalProperties": false
+    },
+
+    "stage2Extraction": {
+      "type": "object",
+      "description": "Deterministic-style extraction of discrete facts from the raw report text. Every field is source=extracted_from_report or human_input; nothing here is a hypothesis.",
+      "required": ["who_involved", "what_happened", "when_occurred", "where_location", "equipment_involved", "injuries_reported", "witnesses", "environmental_conditions"],
+      "properties": {
+        "who_involved": { "$ref": "#/$defs/scalarField" },
+        "what_happened": { "$ref": "#/$defs/scalarField" },
+        "when_occurred": { "$ref": "#/$defs/scalarField" },
+        "where_location": { "$ref": "#/$defs/scalarField" },
+        "equipment_involved": { "$ref": "#/$defs/scalarField" },
+        "injuries_reported": { "$ref": "#/$defs/scalarField" },
+        "witnesses": { "$ref": "#/$defs/scalarField" },
+        "environmental_conditions": { "$ref": "#/$defs/scalarField" }
+      },
+      "additionalProperties": false
+    },
+
+    "stage3Classification": {
+      "type": "object",
+      "description": "AI-assigned category from a fixed taxonomy (never a free-invented category). Always requires human approval before it drives downstream register updates.",
+      "required": ["incident_category", "incident_type", "hazard_taxonomy_code"],
+      "properties": {
+        "incident_category": { "$ref": "#/$defs/scalarField" },
+        "incident_type": {
+          "allOf": [{ "$ref": "#/$defs/scalarField" }],
+          "description": "value should be one of: Injury, Near Miss, Property Damage, Environmental, Process Safety"
+        },
+        "hazard_taxonomy_code": { "$ref": "#/$defs/scalarField" }
+      },
+      "additionalProperties": false
+    },
+
+    "stage4Hazards": {
+      "type": "object",
+      "required": ["hazards", "coverage_note"],
+      "properties": {
+        "hazards": {
+          "type": "array",
+          "items": {
+            "allOf": [{ "$ref": "#/$defs/listItemBase" }],
+            "type": "object",
+            "required": ["hazard_type", "description"],
+            "properties": {
+              "hazard_type": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "coverage_note": { "type": "string", "description": "e.g. 'no additional hazards identified beyond the reported event' or notes on what could not be assessed." }
+      },
+      "additionalProperties": false
+    },
+
+    "stage5Consequences": {
+      "type": "object",
+      "required": ["consequences", "coverage_note"],
+      "properties": {
+        "consequences": {
+          "type": "array",
+          "description": "Reasonable worst-case outcomes that could have resulted -- explicitly hypothetical, distinct from what actually happened.",
+          "items": {
+            "allOf": [{ "$ref": "#/$defs/listItemBase" }],
+            "type": "object",
+            "required": ["description", "plausible_worst_case_severity"],
+            "properties": {
+              "description": { "type": "string" },
+              "plausible_worst_case_severity": { "type": "string", "enum": ["Low", "Medium", "High", "Critical"] }
+            }
+          }
+        },
+        "coverage_note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "stage6Severity": {
+      "type": "object",
+      "description": "AI-suggested severity. This is a recommendation only -- status is always pending_human_confirmation and requires_human_approval is always true, enforced by const below.",
+      "required": ["ai_suggested_severity", "ai_suggested_recurrence_likelihood", "status", "requires_human_approval"],
+      "properties": {
+        "ai_suggested_severity": { "$ref": "#/$defs/scalarField" },
+        "ai_suggested_recurrence_likelihood": { "$ref": "#/$defs/scalarField" },
+        "status": { "type": "string", "const": "pending_human_confirmation" },
+        "requires_human_approval": { "type": "boolean", "const": true }
+      },
+      "additionalProperties": false
+    },
+
+    "stage7ContributingFactors": {
+      "type": "object",
+      "required": ["factors", "coverage_note"],
+      "properties": {
+        "factors": {
+          "type": "array",
+          "items": {
+            "allOf": [{ "$ref": "#/$defs/listItemBase" }],
+            "type": "object",
+            "required": ["category", "description"],
+            "properties": {
+              "category": { "type": "string", "enum": ["Human", "Procedural", "Equipment", "Environmental", "Organizational"] },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "coverage_note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "stage8RootCause": {
+      "type": "object",
+      "description": "Ranked hypotheses, never a single asserted 'root cause'. Each is explicitly labeled unconfirmed.",
+      "required": ["hypotheses", "coverage_note"],
+      "properties": {
+        "hypotheses": {
+          "type": "array",
+          "items": {
+            "allOf": [{ "$ref": "#/$defs/listItemBase" }],
+            "type": "object",
+            "required": ["rank", "statement", "label", "supporting_evidence"],
+            "properties": {
+              "rank": { "type": "integer", "minimum": 1 },
+              "statement": { "type": "string" },
+              "label": { "type": "string", "const": "hypothesis_not_confirmed" },
+              "supporting_evidence": { "type": "string" },
+              "contradicting_evidence": { "type": "string" }
+            }
+          }
+        },
+        "coverage_note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "stage9ExistingControls": {
+      "type": "object",
+      "required": ["controls", "coverage_note"],
+      "properties": {
+        "controls": {
+          "type": "array",
+          "items": {
+            "allOf": [{ "$ref": "#/$defs/listItemBase" }],
+            "type": "object",
+            "required": ["control_description", "control_type", "status"],
+            "properties": {
+              "control_description": { "type": "string" },
+              "control_type": { "type": "string", "enum": ["Engineering", "Administrative", "PPE", "Procedural"] },
+              "status": { "type": "string", "enum": ["present", "absent", "unknown_insufficient_information"] },
+              "related_sop_id": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "coverage_note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "stage10ControlGaps": {
+      "type": "object",
+      "required": ["gaps", "coverage_note"],
+      "properties": {
+        "gaps": {
+          "type": "array",
+          "items": {
+            "allOf": [{ "$ref": "#/$defs/listItemBase" }],
+            "type": "object",
+            "required": ["gap_description"],
+            "properties": {
+              "related_control_id": { "type": ["string", "null"] },
+              "gap_description": { "type": "string" },
+              "required_by_sop_id": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "coverage_note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "stage11Actions": {
+      "type": "object",
+      "required": ["actions", "coverage_note"],
+      "properties": {
+        "actions": {
+          "type": "array",
+          "items": {
+            "allOf": [{ "$ref": "#/$defs/listItemBase" }],
+            "type": "object",
+            "required": ["action_type", "description", "priority", "suggested_owner_role", "suggested_timeframe_days", "addresses_gap_ids"],
+            "properties": {
+              "action_type": { "type": "string", "enum": ["Corrective", "Preventive"] },
+              "description": { "type": "string" },
+              "priority": { "type": "string", "enum": ["Low", "Medium", "High", "Critical"] },
+              "suggested_owner_role": { "type": "string" },
+              "suggested_timeframe_days": { "type": "integer" },
+              "addresses_gap_ids": { "type": "array", "items": { "type": "string" } },
+              "requires_human_approval": { "type": "boolean", "const": true }
+            }
+          }
+        },
+        "coverage_note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "stage12RiskImpact": {
+      "type": "object",
+      "description": "A PROPOSED risk-register diff only. write_status is always not_written_pending_approval -- the pipeline never writes to the risk register itself.",
+      "required": ["proposed_action", "hazard_category", "likelihood", "impact", "risk_score", "risk_level", "existing_risk_assessment_id", "reasoning", "requires_human_approval", "write_status"],
+      "properties": {
+        "proposed_action": { "type": "string", "enum": ["create_new_risk", "update_existing_risk"] },
+        "hazard_category": { "type": "string" },
+        "likelihood": { "$ref": "#/$defs/scalarField" },
+        "impact": { "$ref": "#/$defs/scalarField" },
+        "risk_score": { "$ref": "#/$defs/scalarField" },
+        "risk_level": { "$ref": "#/$defs/scalarField" },
+        "existing_risk_assessment_id": { "type": ["string", "null"] },
+        "reasoning": { "type": "string" },
+        "requires_human_approval": { "type": "boolean", "const": true },
+        "write_status": { "type": "string", "const": "not_written_pending_approval" }
+      },
+      "additionalProperties": false
+    },
+
+    "stage13ReviewPackage": {
+      "type": "object",
+      "description": "The compiled artifact rendered on the Incident Review screen. approval starts pending and is only ever set by a human action via the review API -- never by the pipeline.",
+      "required": ["package_id", "incident_id", "summary_for_reviewer", "stages_requiring_approval", "approval"],
+      "properties": {
+        "package_id": { "type": "string" },
+        "incident_id": { "type": "string" },
+        "summary_for_reviewer": { "type": "string", "description": "Plain-language summary of what the AI found/proposed, for the manager to skim before opening full detail." },
+        "stages_requiring_approval": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of stage keys whose output requires_human_approval=true, e.g. ['stage_6_preliminary_severity_assessment', 'stage_11_recommended_actions', 'stage_12_risk_register_impact']"
+        },
+        "approval": {
+          "type": "object",
+          "required": ["decision", "reviewer_employee_id", "reviewed_at", "comments", "edited_fields"],
+          "properties": {
+            "decision": { "type": "string", "enum": ["pending", "approved", "approved_with_edits", "rejected"] },
+            "reviewer_employee_id": { "type": ["string", "null"] },
+            "reviewed_at": { "type": ["string", "null"], "format": "date-time" },
+            "comments": { "type": ["string", "null"] },
+            "edited_fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["field_path", "ai_value", "human_value"],
+                "properties": {
+                  "field_path": { "type": "string" },
+                  "ai_value": {},
+                  "human_value": {}
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

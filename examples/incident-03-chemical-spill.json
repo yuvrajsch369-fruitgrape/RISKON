@@ -1,0 +1,410 @@
+{
+  "incident_id": "INC-2103",
+  "schema_version": "1.0.0",
+  "pipeline_run_id": "RUN-INC-2103-A3",
+  "generated_at": "2026-09-03T14:32:00Z",
+  "model": "claude-sonnet-5",
+  "stage_1_ingestion": {
+    "incident_id": "INC-2103",
+    "facility_id": "FAC-003",
+    "reporter_employee_id": "EMP-0027",
+    "raw_report_text": "A 5-gallon container of degreasing solvent was being transferred at the parts-cleaning station when the hose connector failed, spilling an estimated 2-3 gallons onto the floor. The spill reached a nearby floor drain before the area could be contained. Two employees in the area evacuated per procedure; no injuries or skin contact reported. Spill kit was used to contain the remainder. EHS was notified. Occurred on day shift.",
+    "date_submitted": "2026-05-19T10:12:00Z",
+    "attachments_present": false,
+    "ingestion_status": "complete"
+  },
+  "stage_2_information_extraction": {
+    "who_involved": {
+      "value": "Two employees in the parts-cleaning area at time of spill (not individually named)",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.8,
+      "reasoning": "Report references 'two employees' without names.",
+      "requires_human_approval": false
+    },
+    "what_happened": {
+      "value": "Hose connector failure during solvent transfer released an estimated 2-3 gallons of degreasing solvent; spill reached a floor drain before containment; spill kit used; EHS notified.",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.92,
+      "reasoning": "Directly stated.",
+      "requires_human_approval": false
+    },
+    "when_occurred": {
+      "value": "Day shift, 2026-05-19 (exact time not given)",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.6,
+      "reasoning": "Only shift is specified, not a clock time.",
+      "requires_human_approval": false
+    },
+    "where_location": {
+      "value": "Parts-cleaning station",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.9,
+      "reasoning": "Directly stated.",
+      "requires_human_approval": false
+    },
+    "equipment_involved": {
+      "value": "Solvent transfer hose/connector at parts-cleaning station",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.65,
+      "reasoning": "Report identifies the hose connector as the failure point; not matched to a specific facility equipment ID.",
+      "requires_human_approval": false
+    },
+    "injuries_reported": {
+      "value": "None; no skin contact reported",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.9,
+      "reasoning": "Directly stated.",
+      "requires_human_approval": false
+    },
+    "witnesses": {
+      "value": "Two employees present in the area (unnamed)",
+      "insufficient_information": false,
+      "source": "extracted_from_report",
+      "confidence": 0.5,
+      "reasoning": "Referenced generically, not individually identified.",
+      "requires_human_approval": false
+    },
+    "environmental_conditions": {
+      "value": null,
+      "insufficient_information": true,
+      "source": "extracted_from_report",
+      "confidence": null,
+      "reasoning": "Ventilation status and containment/berm condition at the station are not described.",
+      "requires_human_approval": false
+    }
+  },
+  "stage_3_classification": {
+    "incident_category": {
+      "value": "Environmental Spill / Release",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.9,
+      "reasoning": "Event is a chemical release reaching a floor drain, matching this category.",
+      "requires_human_approval": true
+    },
+    "incident_type": {
+      "value": "Environmental",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.85,
+      "reasoning": "No injury occurred; primary exposure is environmental release risk via the floor drain.",
+      "requires_human_approval": true
+    },
+    "hazard_taxonomy_code": {
+      "value": "ENV-SPILL-03",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.85,
+      "reasoning": "Maps to chemical spill with potential drain/waterway pathway.",
+      "requires_human_approval": true
+    }
+  },
+  "stage_4_hazard_identification": {
+    "hazards": [
+      {
+        "id": "HAZ-1",
+        "confidence": 0.9,
+        "source": "ai_inference",
+        "evidence": "Spill explicitly reached a floor drain before containment, per report.",
+        "requires_human_approval": true,
+        "hazard_type": "Environmental Spill / Release",
+        "description": "Solvent release reaching a floor drain with potential discharge to the sewer/environment."
+      },
+      {
+        "id": "HAZ-2",
+        "confidence": 0.5,
+        "source": "ai_inference",
+        "evidence": "Solvent spills of this volume in an enclosed area commonly carry inhalation exposure risk; not directly evidenced but a standard associated hazard for this chemical/quantity.",
+        "requires_human_approval": true,
+        "hazard_type": "Chemical Exposure",
+        "description": "Potential inhalation exposure to solvent vapors during the spill/evacuation window."
+      }
+    ],
+    "coverage_note": "Primary hazard (drain pathway) is directly evidenced; secondary vapor-exposure hazard is inferred from chemical/volume, not confirmed by air monitoring data in the report."
+  },
+  "stage_5_potential_consequences": {
+    "consequences": [
+      {
+        "id": "CONS-1",
+        "confidence": 0.75,
+        "source": "ai_inference",
+        "evidence": "Uncontained solvent reaching a floor drain is a recognized pathway to reportable environmental discharge.",
+        "requires_human_approval": true,
+        "description": "Environmental discharge requiring regulatory notification if drain connects to sewer/waterway.",
+        "plausible_worst_case_severity": "High"
+      },
+      {
+        "id": "CONS-2",
+        "confidence": 0.4,
+        "source": "ai_inference",
+        "evidence": "If ventilation was inadequate, prolonged exposure before evacuation could plausibly cause respiratory irritation.",
+        "requires_human_approval": true,
+        "description": "Respiratory irritation or exposure symptoms in employees present before evacuation.",
+        "plausible_worst_case_severity": "Medium"
+      }
+    ],
+    "coverage_note": "CONS-1 reflects the directly evidenced drain pathway; CONS-2 is a lower-confidence secondary hypothesis."
+  },
+  "stage_6_preliminary_severity_assessment": {
+    "ai_suggested_severity": {
+      "value": "Medium",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.65,
+      "reasoning": "No injury or confirmed environmental discharge occurred and evacuation/containment procedure was followed, but the drain pathway (Stage 5, CONS-1) creates meaningful regulatory/environmental exposure pending confirmation of where the drain leads.",
+      "requires_human_approval": true
+    },
+    "ai_suggested_recurrence_likelihood": {
+      "value": "Possible",
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.5,
+      "reasoning": "Hose connector failure is an equipment-condition issue; recurrence likelihood depends on whether this connector/hose type is used at other stations (unconfirmed).",
+      "requires_human_approval": true
+    },
+    "status": "pending_human_confirmation",
+    "requires_human_approval": true
+  },
+  "stage_7_contributing_factors": {
+    "factors": [
+      {
+        "id": "CF-1",
+        "confidence": 0.85,
+        "source": "ai_inference",
+        "evidence": "Report directly attributes the spill to hose connector failure.",
+        "requires_human_approval": true,
+        "category": "Equipment",
+        "description": "Hose connector failure during solvent transfer."
+      },
+      {
+        "id": "CF-2",
+        "confidence": 0.55,
+        "source": "ai_inference",
+        "evidence": "Spill reaching the drain before containment suggests either no secondary containment (berm/drain cover) was in place, or containment response time exceeded the spill spread rate.",
+        "requires_human_approval": true,
+        "category": "Procedural",
+        "description": "Insufficient secondary containment or delayed spill response relative to spread to the drain."
+      },
+      {
+        "id": "CF-3",
+        "confidence": 0.3,
+        "source": "ai_inference",
+        "evidence": "Connector failures can stem from wear/inspection gaps; plausible but not evidenced in this report.",
+        "requires_human_approval": true,
+        "category": "Equipment",
+        "description": "Possible inadequate inspection/replacement interval for transfer hose connectors (unconfirmed)."
+      }
+    ],
+    "coverage_note": "CF-1 is directly evidenced; CF-2 and CF-3 are inferred from the outcome and should be confirmed by inspecting the failed connector and station layout."
+  },
+  "stage_8_root_cause_hypotheses": {
+    "hypotheses": [
+      {
+        "id": "RC-1",
+        "confidence": 0.6,
+        "source": "ai_inference",
+        "evidence": "Consistent with CF-1 and CF-3; equipment failures at a transfer point often trace to wear not caught by inspection.",
+        "requires_human_approval": true,
+        "rank": 1,
+        "statement": "The hose connector failed due to wear or damage that was not identified in a preventive inspection cycle.",
+        "label": "hypothesis_not_confirmed",
+        "supporting_evidence": "Connector is confirmed as the failure point in the report.",
+        "contradicting_evidence": "No maintenance/inspection record for this connector was available to this analysis."
+      },
+      {
+        "id": "RC-2",
+        "confidence": 0.45,
+        "source": "ai_inference",
+        "evidence": "Consistent with CF-2; absence of a drain cover or containment berm at a solvent transfer point is a common design gap.",
+        "requires_human_approval": true,
+        "rank": 2,
+        "statement": "The parts-cleaning station lacks secondary containment (e.g. drain cover, spill berm) sufficient to prevent a moderate-volume spill from reaching the floor drain.",
+        "label": "hypothesis_not_confirmed",
+        "supporting_evidence": "Spill reached the drain despite spill kit response, suggesting the drain was not pre-protected."
+      }
+    ],
+    "coverage_note": "Both hypotheses require facility walk-down/maintenance-record confirmation; report text does not directly address inspection history or containment design."
+  },
+  "stage_9_existing_controls": {
+    "controls": [
+      {
+        "id": "CTRL-1",
+        "confidence": 0.85,
+        "source": "system_reference",
+        "evidence": "SOP-0015 (Spill Prevention & Response Plan) is Active for this facility.",
+        "requires_human_approval": false,
+        "control_description": "Spill Prevention & Response Plan, including evacuation and spill-kit use.",
+        "control_type": "Procedural",
+        "status": "present",
+        "related_sop_id": "SOP-0015"
+      },
+      {
+        "id": "CTRL-2",
+        "confidence": 0.85,
+        "source": "extracted_from_report",
+        "evidence": "Report confirms a spill kit was used to contain the remainder of the spill.",
+        "requires_human_approval": false,
+        "control_description": "On-site spill kit at/near parts-cleaning station.",
+        "control_type": "Engineering",
+        "status": "present",
+        "related_sop_id": null
+      },
+      {
+        "id": "CTRL-3",
+        "confidence": 0.3,
+        "source": "extracted_from_report",
+        "evidence": "Report does not mention a drain cover or containment berm at the station.",
+        "requires_human_approval": false,
+        "control_description": "Drain cover or secondary containment berm at parts-cleaning station.",
+        "control_type": "Engineering",
+        "status": "unknown_insufficient_information",
+        "related_sop_id": null
+      }
+    ],
+    "coverage_note": "Evacuation and spill-kit response controls functioned as intended; drain-specific containment control status is unconfirmed."
+  },
+  "stage_10_control_gaps": {
+    "gaps": [
+      {
+        "id": "GAP-1",
+        "confidence": 0.6,
+        "source": "ai_inference",
+        "evidence": "Spill reached the drain despite response controls functioning, indicating a missing preventive (not just reactive) control at the drain itself.",
+        "requires_human_approval": true,
+        "related_control_id": "CTRL-3",
+        "gap_description": "No confirmed drain cover/containment berm to prevent spills from reaching the floor drain before manual response.",
+        "required_by_sop_id": "SOP-0015"
+      },
+      {
+        "id": "GAP-2",
+        "confidence": 0.5,
+        "source": "ai_inference",
+        "evidence": "Connector failure suggests inspection/replacement interval for transfer equipment may not be catching wear before failure.",
+        "requires_human_approval": true,
+        "related_control_id": null,
+        "gap_description": "No confirmed preventive inspection/replacement schedule for solvent transfer hose connectors.",
+        "required_by_sop_id": null
+      }
+    ],
+    "coverage_note": "Both gaps target prevention of recurrence rather than response, since the response itself (evacuation, spill kit, EHS notification) worked as intended."
+  },
+  "stage_11_recommended_actions": {
+    "actions": [
+      {
+        "id": "ACT-1",
+        "confidence": 0.65,
+        "source": "ai_inference",
+        "evidence": "Directly addresses GAP-1; drain covers/berms are the standard engineering control for this exact failure pathway.",
+        "requires_human_approval": true,
+        "action_type": "Preventive",
+        "description": "Install a drain cover or spill berm at the parts-cleaning station floor drain.",
+        "priority": "High",
+        "suggested_owner_role": "Maintenance Technician",
+        "suggested_timeframe_days": 21,
+        "addresses_gap_ids": [
+          "GAP-1"
+        ]
+      },
+      {
+        "id": "ACT-2",
+        "confidence": 0.55,
+        "source": "ai_inference",
+        "evidence": "Directly addresses GAP-2; a defined inspection interval reduces recurrence of connector-failure-type spills.",
+        "requires_human_approval": true,
+        "action_type": "Preventive",
+        "description": "Establish and document a periodic inspection/replacement schedule for solvent transfer hoses and connectors facility-wide.",
+        "priority": "Medium",
+        "suggested_owner_role": "Maintenance Technician",
+        "suggested_timeframe_days": 45,
+        "addresses_gap_ids": [
+          "GAP-2"
+        ]
+      },
+      {
+        "id": "ACT-3",
+        "confidence": 0.5,
+        "source": "ai_inference",
+        "evidence": "Confirms whether Stage 5 CONS-1 (environmental discharge) materialized, which determines if regulatory notification is required.",
+        "requires_human_approval": true,
+        "action_type": "Corrective",
+        "description": "Confirm floor drain destination (sewer vs. contained system) with facility engineering and determine if regulatory notification is required for this event.",
+        "priority": "High",
+        "suggested_owner_role": "Environmental Compliance Officer",
+        "suggested_timeframe_days": 5,
+        "addresses_gap_ids": [
+          "GAP-1"
+        ]
+      }
+    ],
+    "coverage_note": "ACT-3 is a fact-finding action, not a physical fix -- included because the report does not state where the drain leads, and this determines regulatory obligations the AI cannot assess on its own."
+  },
+  "stage_12_risk_register_impact": {
+    "proposed_action": "create_new_risk",
+    "hazard_category": "Environmental Spill / Release",
+    "likelihood": {
+      "value": 3,
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.5,
+      "reasoning": "Equipment-wear-driven connector failures are Possible without a confirmed inspection interval (Stage 10, GAP-2).",
+      "requires_human_approval": true
+    },
+    "impact": {
+      "value": 4,
+      "insufficient_information": false,
+      "source": "ai_inference",
+      "confidence": 0.65,
+      "reasoning": "Stage 5 worst case includes potential reportable environmental discharge, rated High impact pending drain-destination confirmation (ACT-3).",
+      "requires_human_approval": true
+    },
+    "risk_score": {
+      "value": 12,
+      "insufficient_information": false,
+      "source": "derived_from_prior_stage",
+      "confidence": null,
+      "reasoning": "likelihood (3) x impact (4) = 12.",
+      "requires_human_approval": true
+    },
+    "risk_level": {
+      "value": "High",
+      "insufficient_information": false,
+      "source": "derived_from_prior_stage",
+      "confidence": null,
+      "reasoning": "Score of 12 falls at the lower bound of the High band (12-19) per facility risk matrix.",
+      "requires_human_approval": true
+    },
+    "existing_risk_assessment_id": null,
+    "reasoning": "No existing risk register entry covers solvent transfer spill/drain pathway at this station; proposing a new entry.",
+    "requires_human_approval": true,
+    "write_status": "not_written_pending_approval"
+  },
+  "stage_13_human_review_package": {
+    "package_id": "RVW-bd7b181d",
+    "incident_id": "INC-2103",
+    "summary_for_reviewer": "Solvent spill (est. 2-3 gal) from a failed hose connector at the parts-cleaning station reached a floor drain before containment. No injuries; evacuation and spill-kit response followed procedure. AI flags an unconfirmed drain-containment gap and recommends confirming whether this constitutes a reportable environmental discharge.",
+    "stages_requiring_approval": [
+      "stage_3_classification",
+      "stage_4_hazard_identification",
+      "stage_5_potential_consequences",
+      "stage_6_preliminary_severity_assessment",
+      "stage_7_contributing_factors",
+      "stage_8_root_cause_hypotheses",
+      "stage_10_control_gaps",
+      "stage_11_recommended_actions",
+      "stage_12_risk_register_impact"
+    ],
+    "approval": {
+      "decision": "pending",
+      "reviewer_employee_id": null,
+      "reviewed_at": null,
+      "comments": null,
+      "edited_fields": []
+    }
+  }
+}

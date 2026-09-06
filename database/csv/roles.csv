@@ -1,0 +1,19 @@
+role_id,title,department,description,is_safety_critical
+ROLE-01,Plant Manager,Operations,Plant Manager within the Operations function.,1
+ROLE-02,Safety Manager,EHS,Safety Manager within the EHS function.,1
+ROLE-03,EHS Coordinator,EHS,EHS Coordinator within the EHS function.,1
+ROLE-04,Environmental Compliance Officer,EHS,Environmental Compliance Officer within the EHS function.,1
+ROLE-05,Shift Supervisor,Operations,Shift Supervisor within the Operations function.,1
+ROLE-06,Maintenance Technician,Maintenance,Maintenance Technician within the Maintenance function.,1
+ROLE-07,Senior Maintenance Technician,Maintenance,Senior Maintenance Technician within the Maintenance function.,1
+ROLE-08,Electrician,Maintenance,Electrician within the Maintenance function.,1
+ROLE-09,Mechanical Engineer,Engineering,Mechanical Engineer within the Engineering function.,0
+ROLE-10,Process Engineer,Engineering,Process Engineer within the Engineering function.,0
+ROLE-11,Machine Operator,Production,Machine Operator within the Production function.,1
+ROLE-12,CNC Operator,Production,CNC Operator within the Production function.,1
+ROLE-13,Welder,Production,Welder within the Production function.,1
+ROLE-14,Forklift Operator,Warehouse,Forklift Operator within the Warehouse function.,1
+ROLE-15,Warehouse Associate,Warehouse,Warehouse Associate within the Warehouse function.,0
+ROLE-16,Quality Inspector,Quality,Quality Inspector within the Quality function.,0
+ROLE-17,Quality Manager,Quality,Quality Manager within the Quality function.,0
+ROLE-18,HR Generalist,Human Resources,HR Generalist within the Human Resources function.,0

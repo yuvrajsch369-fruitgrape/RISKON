@@ -1,0 +1,140 @@
+[
+  {
+    "scenario_id": "TS-01",
+    "name": "Forklift/Pedestrian Emerging Risk",
+    "description": "Multiple forklift/pedestrian near misses recur at two separate facilities (Rex North Plant and Rex South Plant) involving different forklift units, with no injuries yet recorded.",
+    "expected_finding": "The engine should surface this as an emerging cross-facility pattern (not isolated one-off events) tied to hazard category 'Forklift / Vehicle Incident', and flag it as higher-priority than its individual near-miss severities would suggest given the repeat count and multi-site spread.",
+    "ground_truth": {
+      "hazard_ids": [
+        "HAZ-0001",
+        "HAZ-0002"
+      ],
+      "incident_ids": [
+        "INC-0001",
+        "INC-0002",
+        "INC-0003",
+        "INC-0004",
+        "INC-0005",
+        "INC-0006",
+        "INC-0007"
+      ],
+      "equipment_ids": [
+        "EQ-0003",
+        "EQ-0004"
+      ],
+      "facility_ids": [
+        "FAC-001",
+        "FAC-003"
+      ]
+    }
+  },
+  {
+    "scenario_id": "TS-02",
+    "name": "Repeated Machine-Guarding Failures",
+    "description": "The same machine type (Punch Press) produces repeated guarding-related incidents on two separate units at two facilities, and the control meant to prevent it (CTL-0001) has been reassessed 5 times, oscillating between 'Partially Effective' and 'Ineffective' without ever sustaining 'Effective'.",
+    "expected_finding": "The engine should link the incident cluster, the equipment type, and the repeatedly failing control together as one systemic pattern, rather than treating each incident or each control assessment independently.",
+    "ground_truth": {
+      "hazard_id": "HAZ-0003",
+      "incident_ids": [
+        "INC-0008",
+        "INC-0009",
+        "INC-0010",
+        "INC-0011",
+        "INC-0012",
+        "INC-0013"
+      ],
+      "equipment_ids": [
+        "EQ-0001",
+        "EQ-0002"
+      ],
+      "control_id": "CTL-0001",
+      "control_assessment_ids": [
+        "CTLA-0001",
+        "CTLA-0002",
+        "CTLA-0003",
+        "CTLA-0004",
+        "CTLA-0005"
+      ],
+      "related_audit_finding_id": "AUD-0001"
+    }
+  },
+  {
+    "scenario_id": "TS-03",
+    "name": "Overdue Corrective-Action Pattern",
+    "description": "A cluster of corrective/preventive actions repeatedly slip past their due date (reschedule_count >= 2, status = Overdue), visible from three angles: actions tied to the punch-press guard control (CTL-0001), actions owned by one recurring employee (EMP-0025), and a facility-wide cluster at Rex Central Plant.",
+    "expected_finding": "The engine should detect that overdue-ness is concentrated (by control, by owner, and by facility) rather than randomly distributed across the 100 actions, and should be able to name at least one of these three concentration angles.",
+    "ground_truth": {
+      "action_ids": [
+        "ACT-0001",
+        "ACT-0002",
+        "ACT-0003",
+        "ACT-0004",
+        "ACT-0005",
+        "ACT-0006",
+        "ACT-0007",
+        "ACT-0008",
+        "ACT-0009",
+        "ACT-0010",
+        "ACT-0011",
+        "ACT-0012",
+        "ACT-0013",
+        "ACT-0014"
+      ],
+      "overloaded_owner_employee_id": "EMP-0025",
+      "concentrated_facility_id": "FAC-002",
+      "concentrated_control_id": "CTL-0001"
+    }
+  },
+  {
+    "scenario_id": "TS-04",
+    "name": "Contractor Training Risk",
+    "description": "Several incidents involving contractors trace back to contractors whose training_records show 'Not Completed' or 'Expired' status on a directly relevant safety topic (LOTO, Confined Space Entry, or Contractor Safety Orientation) at the time of the incident.",
+    "expected_finding": "The engine should connect the incident -> contractor -> training_records chain and identify that these are not independent contractor errors but a training-verification gap in the contractor onboarding/authorization process.",
+    "ground_truth": {
+      "contractor_ids": [
+        "CTR-0003",
+        "CTR-0007",
+        "CTR-0011",
+        "CTR-0014"
+      ],
+      "incident_ids": [
+        "INC-0017",
+        "INC-0018",
+        "INC-0019",
+        "INC-0020",
+        "INC-0021",
+        "INC-0022"
+      ],
+      "training_gap_topics": {
+        "CTR-0003": "Lockout/Tagout (LOTO)",
+        "CTR-0007": "Confined Space Entry",
+        "CTR-0011": "Contractor Safety Orientation",
+        "CTR-0014": "Lockout/Tagout (LOTO)"
+      },
+      "related_control_id": "CTL-0004",
+      "related_audit_finding_id": "AUD-0002"
+    }
+  },
+  {
+    "scenario_id": "TS-05",
+    "name": "Maintenance-Related Risk",
+    "description": "Equipment failure incidents follow shortly (6-15 days) after preventive maintenance was delayed on the same equipment unit, across three separate delay events on two equipment ids.",
+    "expected_finding": "The engine should surface the temporal link between maintenance_records.status='Delayed' and a subsequent incidents.incident_type='Equipment Failure' on the SAME equipment_id, rather than treating the incidents as unrelated equipment failures.",
+    "ground_truth": {
+      "equipment_ids": [
+        "EQ-0005",
+        "EQ-0006"
+      ],
+      "maintenance_record_ids": [
+        "MNT-0001",
+        "MNT-0002",
+        "MNT-0051"
+      ],
+      "incident_ids": [
+        "INC-0014",
+        "INC-0015",
+        "INC-0016"
+      ]
+    }
+  }
+]
