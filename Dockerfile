@@ -5,7 +5,7 @@
 # Works unmodified on any Docker-capable host (Railway, Render, Fly.io,
 # generic VPS). Platforms that build via Nixpacks/buildpacks instead of a
 # Dockerfile (e.g. Railway's default) can ignore this file entirely and use
-# the same two commands directly — see RISKON_DEPLOYMENT_RUNBOOK.md Phase 5.
+# the same two commands directly.
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -17,9 +17,8 @@ COPY . .
 
 # The synthetic demo database (database/riskon.db) and the pre-built
 # frontend (frontend/riskon.html) are committed to git and copied in above —
-# no build step regenerates them at deploy time (see RISKON_DEPLOYMENT_RUNBOOK.md
-# Phase 1 for why: reproducibility, and not silently reshuffling the demo
-# dataset on every deploy).
+# no build step regenerates them at deploy time, for reproducibility, and to
+# avoid silently reshuffling the demo dataset on every deploy.
 
 ENV PYTHONUNBUFFERED=1
 EXPOSE 8743

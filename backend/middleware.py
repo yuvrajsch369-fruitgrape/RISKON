@@ -3,9 +3,7 @@ A single, optional shared-password gate for a public demo deployment — NOT
 real authentication (there is still no concept of an individual user account
 anywhere in the backend; see backend/routes/users.py's module docstring).
 This exists purely to keep a demo URL from being wide open to the entire
-internet before real per-client accounts are built — see
-RISKON_DEPLOYMENT_RUNBOOK.md Phase 9 for the full reasoning and the
-Option A/B/C discussion it's part of.
+internet before real per-client accounts are built.
 
 Disabled by default (empty DEMO_ACCESS_PASSWORD) so local development and
 the existing test suite are completely unaffected. When enabled, it protects

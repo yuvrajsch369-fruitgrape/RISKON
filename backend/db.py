@@ -20,8 +20,7 @@ from backend.config import ROOT, settings
 # The database this repo ships with, seeded once by database/generate_database.py
 # + learning_engine/generate_learning_data.py and committed to git (it's the
 # synthetic Rex Industrial Manufacturing demo dataset, not real or sensitive
-# data — see RISKON_DEPLOYMENT_RUNBOOK.md Phase 3 for why committing it is
-# the right call here). On a host with a persistent volume mounted at a
+# data). On a host with a persistent volume mounted at a
 # DIFFERENT path than the git checkout (Railway/Fly/Render volumes all work
 # this way), the volume starts out empty on first deploy — ensure_database_
 # seeded() copies this repo copy there once, so first boot doesn't require

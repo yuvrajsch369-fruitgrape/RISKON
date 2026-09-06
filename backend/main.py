@@ -113,8 +113,7 @@ if __name__ == "__main__":
     # that actually exercises settings.host/settings.port -- the Procfile and
     # Dockerfile's `uvicorn backend.main:app --port ${PORT:-8743}` both set the
     # port at the shell level instead and are the recommended way to run this
-    # in production (see RISKON_DEPLOYMENT_RUNBOOK.md Phase 5); this path
-    # exists so the same PORT-then-RISKON_PORT-then-8743 fallback in
+    # in production; this path exists so the same PORT-then-RISKON_PORT-then-8743 fallback in
     # backend/config.py is honored no matter how the process gets started.
     import uvicorn
     uvicorn.run(app, host=settings.host, port=settings.port)

@@ -50,12 +50,11 @@ class Settings:
     # port at runtime via the plain `PORT` env var and expect the app to bind
     # to exactly that — not a fixed number. `PORT` wins when present;
     # `RISKON_PORT` remains for explicit local overrides; 8743 is the
-    # long-standing local-dev default. See RISKON_DEPLOYMENT_RUNBOOK.md Phase 5.
+    # long-standing local-dev default.
     port: int = int(os.environ.get("PORT") or os.environ.get("RISKON_PORT", "8743"))
     cors_origins: list = [o.strip() for o in os.environ.get("CORS_ORIGINS", "*").split(",") if o.strip()]
 
-    # --- Demo access gate (NOT real authentication — see
-    # RISKON_DEPLOYMENT_RUNBOOK.md Phase 9) ------------------------------------
+    # --- Demo access gate (NOT real authentication) ----------------------------
     # Empty by default, which disables the gate entirely -- local dev and the
     # existing test suite are completely unaffected. Set both to protect a
     # public demo deployment behind a single shared username/password using

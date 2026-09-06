@@ -1,6 +1,6 @@
 """ensure_database_seeded() is what makes a fresh, empty persistent volume
 usable on first deploy without an extra manual step — see its docstring in
-backend/db.py and RISKON_DEPLOYMENT_RUNBOOK.md Phase 3."""
+backend/db.py."""
 from backend.config import settings
 from backend.db import ensure_database_seeded
 
