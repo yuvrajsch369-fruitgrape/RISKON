@@ -229,9 +229,9 @@ check("maintenance_records.related_incident_id points to a real incident (where 
 # -----------------------------------------------------------------------
 # 10. Row-count sanity vs. the spec's approximate volumes
 # -----------------------------------------------------------------------
-EXPECTED = {"facilities":3,"equipment":30,"employees":30,"contractors":20,"incidents":100,
-            "risk_assessments":50,"hazards":75,"actions":100,"controls":50,"sops":30,
-            "inspections":75,"maintenance_records":50,"training_records":50,"audit_findings":30}
+EXPECTED = {"facilities":7,"equipment":66,"employees":70,"contractors":20,"incidents":192,
+            "risk_assessments":97,"hazards":149,"actions":172,"controls":95,"sops":30,
+            "inspections":135,"maintenance_records":91,"training_records":90,"audit_findings":54}
 volume_report = []
 for table, expected in EXPECTED.items():
     actual = conn.execute(f"SELECT COUNT(*) c FROM {table}").fetchone()["c"]

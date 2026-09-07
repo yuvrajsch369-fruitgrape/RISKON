@@ -1,4 +1,8 @@
-facility_id,company_id,name,facility_type,city,state,address,square_footage,year_established,employee_capacity
-FAC-001,CO-001,Rex North Plant,Heavy Manufacturing,Canton,OH,"4820 Blue Ridge Industrial Pkwy, Canton, OH 44706",285000,1978,340
-FAC-002,CO-001,Rex Central Plant,Assembly & Fabrication,Baytown,TX,"1150 Gulf Freight Rd, Baytown, TX 77520",190000,1996,260
-FAC-003,CO-001,Rex South Plant,Distribution & Light Fabrication,Savannah,GA,"770 Peachtree Logistics Dr, Savannah, GA 31408",150000,2008,180
+facility_id,company_id,name,facility_type,city,state,country,address,square_footage,year_established,employee_capacity
+FAC-001,CO-001,Rex North Plant,Heavy Manufacturing,Canton,OH,United States,"4820 Blue Ridge Industrial Pkwy, Canton, OH 44706",285000,1978,340
+FAC-002,CO-001,Rex Central Plant,Assembly & Fabrication,Baytown,TX,United States,"1150 Gulf Freight Rd, Baytown, TX 77520",190000,1996,260
+FAC-003,CO-001,Rex South Plant,Distribution & Light Fabrication,Savannah,GA,United States,"770 Peachtree Logistics Dr, Savannah, GA 31408",150000,2008,180
+FAC-004,CO-001,Rex UK Plant,Precision Fabrication,Manchester,England,United Kingdom,"14 Trafford Park Road, Manchester, M17 1EH, United Kingdom",210000,1989,260
+FAC-005,CO-001,Rex Germany Plant,Precision Engineering & Machining,Stuttgart,Baden-Württemberg,Germany,"Industriestraße 42, 70565 Stuttgart, Germany",225000,1992,280
+FAC-006,CO-001,Rex India Plant,Component Manufacturing & Assembly,Pune,Maharashtra,India,"Plot 27, MIDC Industrial Area, Pune, Maharashtra 411019, India",195000,2003,320
+FAC-007,CO-001,Rex Australia Plant,Distribution & Light Fabrication,Melbourne,Victoria,Australia,"88 Ricketts Road, Mount Waverley, VIC 3149, Australia",155000,1998,200

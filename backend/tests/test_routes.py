@@ -28,7 +28,7 @@ def test_bootstrap_matches_static_export_shape(app_client):
     for key in ("facilities", "incidents", "riskIntelligence", "executiveDashboard",
                 "continuousLearning", "auditTrail"):
         assert key in body
-    assert len(body["facilities"]) == 3
+    assert len(body["facilities"]) == 7
 
 
 def test_list_and_get_incident(app_client):

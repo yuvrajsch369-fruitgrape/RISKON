@@ -42,20 +42,20 @@ Run against `database/riskon.db`. 31/31 checks passed.
 
 | Table | Spec target | Actual | Within tolerance |
 |---|---|---|---|
-| facilities | ~3 | 3 | yes |
-| equipment | ~30 | 30 | yes |
-| employees | ~30 | 30 | yes |
+| facilities | ~7 | 7 | yes |
+| equipment | ~66 | 66 | yes |
+| employees | ~70 | 70 | yes |
 | contractors | ~20 | 20 | yes |
-| incidents | ~100 | 100 | yes |
-| risk_assessments | ~50 | 50 | yes |
-| hazards | ~75 | 77 | yes |
-| actions | ~100 | 100 | yes |
-| controls | ~50 | 51 | yes |
+| incidents | ~192 | 192 | yes |
+| risk_assessments | ~97 | 97 | yes |
+| hazards | ~149 | 149 | yes |
+| actions | ~172 | 172 | yes |
+| controls | ~95 | 95 | yes |
 | sops | ~30 | 30 | yes |
-| inspections | ~75 | 75 | yes |
-| maintenance_records | ~50 | 51 | yes |
-| training_records | ~50 | 50 | yes |
-| audit_findings | ~30 | 30 | yes |
+| inspections | ~135 | 135 | yes |
+| maintenance_records | ~91 | 91 | yes |
+| training_records | ~90 | 90 | yes |
+| audit_findings | ~54 | 54 | yes |
 
 ## Summary
 

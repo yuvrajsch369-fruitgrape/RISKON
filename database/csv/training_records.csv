@@ -49,3 +49,43 @@ TRN-0047,EMP-0007,,Forklift Operation,2026-05-30,2028-05-29,Current,EMP-0007,Pas
 TRN-0048,,CTR-0004,Contractor Safety Orientation,2025-10-08,2026-10-08,Current,EMP-0007,Pass
 TRN-0049,EMP-0003,,Machine Guarding,2025-02-11,2027-02-11,Current,EMP-0007,Pass
 TRN-0050,EMP-0010,,Machine Guarding,2026-02-15,2028-02-15,Current,EMP-0007,Pass
+TRN-0051,EMP-0039,,Confined Space Entry,2026-06-29,2028-06-28,Current,EMP-0039,Pass
+TRN-0052,EMP-0038,,Fall Protection,2026-02-06,2028-02-06,Current,EMP-0007,Pass
+TRN-0053,EMP-0036,,PPE Requirements,2025-12-09,2027-12-09,Current,EMP-0009,Pass
+TRN-0054,EMP-0038,,Hazard Communication / Chemical Safety,2025-07-13,2027-07-13,Current,EMP-0039,Pass
+TRN-0055,EMP-0036,,Lockout/Tagout (LOTO),2026-01-24,2028-01-24,Current,EMP-0007,Pass
+TRN-0056,EMP-0039,,Emergency Response,2026-01-18,2028-01-18,Current,EMP-0009,Pass
+TRN-0057,EMP-0033,,Emergency Response,2025-05-27,2027-05-27,Current,EMP-0007,Pass
+TRN-0058,EMP-0031,,Emergency Response,2025-11-29,2027-11-29,Current,EMP-0009,Pass
+TRN-0059,EMP-0033,,Fall Protection,2025-03-09,2027-03-09,Current,EMP-0007,Pass
+TRN-0060,EMP-0038,,Lockout/Tagout (LOTO),2025-09-11,2027-09-11,Current,EMP-0007,Pass
+TRN-0061,EMP-0048,,Fall Protection,2025-01-17,2027-01-17,Current,EMP-0039,Pass
+TRN-0062,EMP-0046,,Contractor Safety Orientation,2026-04-21,2028-04-20,Current,EMP-0009,Pass
+TRN-0063,EMP-0046,,Lockout/Tagout (LOTO),2025-06-22,2027-06-22,Current,EMP-0009,Pass
+TRN-0064,EMP-0044,,Emergency Response,2025-02-12,2027-02-12,Current,EMP-0039,Pass
+TRN-0065,EMP-0046,,Lockout/Tagout (LOTO),2026-03-19,2028-03-18,Current,EMP-0007,Pass
+TRN-0066,EMP-0048,,Machine Guarding,2025-10-19,2027-10-19,Current,EMP-0009,Pass
+TRN-0067,EMP-0046,,Confined Space Entry,2026-06-23,2028-06-22,Current,EMP-0039,Pass
+TRN-0068,EMP-0043,,Emergency Response,2025-02-20,2027-02-20,Current,EMP-0007,Pass
+TRN-0069,EMP-0041,,Contractor Safety Orientation,2025-12-07,2027-12-07,Current,EMP-0007,Pass
+TRN-0070,EMP-0043,,Hazard Communication / Chemical Safety,2025-02-27,2027-02-27,Current,EMP-0039,Pass
+TRN-0071,EMP-0056,,Contractor Safety Orientation,2026-03-07,2028-03-06,Current,EMP-0007,Pass
+TRN-0072,EMP-0059,,Emergency Response,2026-03-12,2028-03-11,Current,EMP-0009,Pass
+TRN-0073,EMP-0057,,Emergency Response,2025-01-15,2027-01-15,Current,EMP-0039,Pass
+TRN-0074,EMP-0055,,Emergency Response,2026-02-07,2028-02-07,Current,EMP-0009,Pass
+TRN-0075,EMP-0052,,Emergency Response,2026-01-27,2028-01-27,Current,EMP-0039,Pass
+TRN-0076,EMP-0059,,Fall Protection,2025-08-13,2027-08-13,Current,EMP-0009,Pass
+TRN-0077,EMP-0052,,Fall Protection,2025-07-19,2027-07-19,Current,EMP-0007,Pass
+TRN-0078,EMP-0051,,Hazard Communication / Chemical Safety,2026-03-15,2028-03-14,Current,EMP-0007,Pass
+TRN-0079,EMP-0059,,Contractor Safety Orientation,2026-08-01,2028-07-31,Current,EMP-0009,Pass
+TRN-0080,EMP-0055,,Fall Protection,2025-09-30,2027-09-30,Current,EMP-0009,Pass
+TRN-0081,EMP-0068,,Contractor Safety Orientation,2025-12-17,2027-12-17,Current,EMP-0009,Pass
+TRN-0082,EMP-0067,,Hearing Conservation,2025-09-08,2027-09-08,Current,EMP-0009,Pass
+TRN-0083,EMP-0064,,Contractor Safety Orientation,2025-08-08,2027-08-08,Current,EMP-0009,Pass
+TRN-0084,EMP-0069,,Lockout/Tagout (LOTO),2025-12-20,2027-12-20,Current,EMP-0068,Pass
+TRN-0085,EMP-0069,,Fall Protection,2025-04-14,2027-04-14,Current,EMP-0068,Pass
+TRN-0086,EMP-0069,,Confined Space Entry,2025-02-16,2027-02-16,Current,EMP-0068,Pass
+TRN-0087,EMP-0067,,Fall Protection,2025-03-20,2027-03-20,Current,EMP-0009,Pass
+TRN-0088,EMP-0069,,PPE Requirements,2025-12-14,2027-12-14,Current,EMP-0007,Pass
+TRN-0089,EMP-0067,,Contractor Safety Orientation,2025-12-28,2027-12-28,Current,EMP-0009,Pass
+TRN-0090,EMP-0061,,PPE Requirements,2025-10-31,2027-10-31,Current,EMP-0007,Pass

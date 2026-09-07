@@ -1,7 +1,9 @@
 # RISKON V0.1 — Database & Synthetic Data Foundation
 
-Fictional company: **Rex Industrial Manufacturing** (Rex North Plant, Rex Central Plant, Rex South Plant).
-All data below is synthetic and fictional — no real people, no real company, no real incidents.
+Fictional company: **Rex Industrial Manufacturing**, a multinational manufacturer with 7 facilities across
+5 countries — Rex North Plant, Rex Central Plant, and Rex South Plant in the United States, plus Rex UK
+Plant (Manchester), Rex Germany Plant (Stuttgart), Rex India Plant (Pune), and Rex Australia Plant
+(Melbourne). All data below is synthetic and fictional — no real people, no real company, no real incidents.
 
 Engine: **SQLite** (`database/riskon.db`), chosen as the lightweight prototype database that migrates
 to PostgreSQL/Supabase with minimal changes (see "Migrating to PostgreSQL" at the end of this doc).
@@ -129,14 +131,14 @@ No FKs (root entity). **Example:** `{"company_id":"CO-001","name":"Rex Industria
 ### 3.2 `facilities`
 | Field | Type | Notes |
 |---|---|---|
-| facility_id **PK** | TEXT | `FAC-001/002/003` |
+| facility_id **PK** | TEXT | `FAC-001`..`FAC-007` |
 | company_id **FK→companies** | TEXT | |
-| name | TEXT | "Rex North/Central/South Plant" |
+| name | TEXT | "Rex North/Central/South Plant" (US), "Rex UK/Germany/India/Australia Plant" |
 | facility_type | TEXT | |
-| city, state, address | TEXT | |
+| city, state, country, address | TEXT | `state` holds a US state for the 3 US plants and a region/province (e.g. "Baden-Württemberg", "Maharashtra") for the 4 international ones |
 | square_footage, year_established, employee_capacity | INTEGER | |
 
-**Example:** `{"facility_id":"FAC-001","company_id":"CO-001","name":"Rex North Plant","facility_type":"Heavy Manufacturing","city":"Canton","state":"OH","address":"4820 Blue Ridge Industrial Pkwy, Canton, OH 44706","square_footage":285000,"year_established":1978,"employee_capacity":340}`
+**Example:** `{"facility_id":"FAC-001","company_id":"CO-001","name":"Rex North Plant","facility_type":"Heavy Manufacturing","city":"Canton","state":"OH","country":"United States","address":"4820 Blue Ridge Industrial Pkwy, Canton, OH 44706","square_footage":285000,"year_established":1978,"employee_capacity":340}`
 
 ### 3.3 `roles`
 | Field | Type | Notes |

@@ -113,7 +113,7 @@ def build_frontend_data(conn, db_path=DB_PATH):
         return dict(r) if r else None
 
     facilities = rows("""
-        SELECT facility_id, name, facility_type,
+        SELECT facility_id, name, facility_type, city, state, country,
                (address) AS address, square_footage, year_established, employee_capacity
         FROM facilities
     """)
@@ -139,6 +139,45 @@ def build_frontend_data(conn, db_path=DB_PATH):
     controls = rows("""
         SELECT control_id, control_name, control_type, hazard_id
         FROM controls
+    """)
+
+    # -----------------------------------------------------------------------
+    # hazards / maintenance / controlAssessments / training / inspections —
+    # raw table exports for the Global Risk Map and related facility-level UI
+    # work (previously hazards/maintenance/etc. were only ever folded into
+    # incidents/risk rows above, never exposed as their own array). Additive
+    # only: these are NEW top-level keys, nothing existing is reshaped.
+    # -----------------------------------------------------------------------
+    hazards = rows("""
+        SELECT hazard_id, hazard_category, description, facility_id, equipment_id,
+               typical_consequence, identified_date, identified_by_employee_id, status
+        FROM hazards
+    """)
+
+    maintenance = rows("""
+        SELECT maintenance_record_id, equipment_id, facility_id, maintenance_type,
+               scheduled_date, actual_date, delay_days, performed_by_employee_id,
+               description, status, related_incident_id
+        FROM maintenance_records
+    """)
+
+    control_assessments = rows("""
+        SELECT control_assessment_id, control_id, assessment_date, assessed_by_employee_id,
+               effectiveness_rating, findings, related_incident_id, related_inspection_id
+        FROM control_assessments
+    """)
+
+    training = rows("""
+        SELECT training_record_id, employee_id, contractor_id, training_topic,
+               training_date, expiry_date, status, conducted_by_employee_id, result
+        FROM training_records
+    """)
+
+    inspections = rows("""
+        SELECT inspection_id, facility_id, inspection_type, inspection_date,
+               inspector_employee_id, equipment_id, area_location, findings_summary,
+               deficiencies_found, status
+        FROM inspections
     """)
 
     # hazard_id -> hazard_category / a representative related_sop_id (best effort,
@@ -337,6 +376,11 @@ def build_frontend_data(conn, db_path=DB_PATH):
         "equipment": equipment,
         "sops": sops,
         "controls": controls,
+        "hazards": hazards,
+        "maintenance": maintenance,
+        "controlAssessments": control_assessments,
+        "training": training,
+        "inspections": inspections,
         "incidents": incidents,
         "riskAssessments": risk_assessments,
         "correctiveActions": corrective_actions,

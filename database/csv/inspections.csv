@@ -74,3 +74,63 @@ INSP-0072,FAC-003,Environmental Compliance Check,2026-05-12,EMP-0003,,Break Area
 INSP-0073,FAC-001,Environmental Compliance Check,2025-08-05,EMP-0027,,Loading Dock,1 deficiency(ies) noted during environmental compliance check in the Loading Dock; see linked corrective actions.,1,Completed
 INSP-0074,FAC-003,Fire System Inspection,2025-04-17,EMP-0003,,Warehouse,1 deficiency(ies) noted during fire system inspection in the Warehouse; see linked corrective actions.,1,Completed
 INSP-0075,FAC-003,Crane & Rigging Inspection,2025-11-05,EMP-0003,EQ-0030,CNC Machining Center area,No deficiencies noted during crane & rigging inspection.,0,Completed
+INSP-0076,FAC-004,PPE Compliance Audit,2026-03-07,EMP-0059,,Loading Dock,No deficiencies noted during ppe compliance audit.,0,Completed
+INSP-0077,FAC-004,Housekeeping Audit,2026-06-07,EMP-0031,,Production Floor,2 deficiency(ies) noted during housekeeping audit in the Production Floor; see linked corrective actions.,2,Completed
+INSP-0078,FAC-004,PPE Compliance Audit,2025-10-23,EMP-0045,EQ-0033,Standby Generator area,1 deficiency(ies) noted during ppe compliance audit in the Standby Generator area; see linked corrective actions.,1,Completed
+INSP-0079,FAC-004,Fire System Inspection,2025-03-30,EMP-0031,,Main Aisle,No deficiencies noted during fire system inspection.,0,Completed
+INSP-0080,FAC-004,Environmental Compliance Check,2025-07-04,EMP-0039,EQ-0035,Conveyor System area,No deficiencies noted during environmental compliance check.,0,Completed
+INSP-0081,FAC-004,Environmental Compliance Check,2025-05-01,EMP-0031,EQ-0033,Standby Generator area,1 deficiency(ies) noted during environmental compliance check in the Standby Generator area; see linked corrective actions.,1,Findings Open
+INSP-0082,FAC-004,Safety Walkthrough,2025-12-28,EMP-0039,EQ-0031,Pressure Vessel / Tank area,1 deficiency(ies) noted during safety walkthrough in the Pressure Vessel / Tank area; see linked corrective actions.,1,Completed
+INSP-0083,FAC-004,Equipment Inspection,2025-06-09,EMP-0031,,Warehouse,3 deficiency(ies) noted during equipment inspection in the Warehouse; see linked corrective actions.,3,Completed
+INSP-0084,FAC-004,Crane & Rigging Inspection,2025-09-07,EMP-0031,EQ-0036,Robotic Welding Arm area,No deficiencies noted during crane & rigging inspection.,0,Completed
+INSP-0085,FAC-004,Safety Walkthrough,2025-07-12,EMP-0031,,Utilities Room,No deficiencies noted during safety walkthrough.,0,Completed
+INSP-0086,FAC-004,Environmental Compliance Check,2025-09-04,EMP-0045,,Loading Dock,2 deficiency(ies) noted during environmental compliance check in the Loading Dock; see linked corrective actions.,2,Completed
+INSP-0087,FAC-004,Equipment Inspection,2025-09-03,EMP-0039,EQ-0039,Overhead Bridge Crane area,3 deficiency(ies) noted during equipment inspection in the Overhead Bridge Crane area; see linked corrective actions.,3,Completed
+INSP-0088,FAC-004,Safety Walkthrough,2026-06-13,EMP-0031,,Production Floor,2 deficiency(ies) noted during safety walkthrough in the Production Floor; see linked corrective actions.,2,Completed
+INSP-0089,FAC-004,Environmental Compliance Check,2026-02-15,EMP-0039,,Loading Dock,No deficiencies noted during environmental compliance check.,0,Completed
+INSP-0090,FAC-004,Equipment Inspection,2025-10-30,EMP-0031,,Loading Dock,2 deficiency(ies) noted during equipment inspection in the Loading Dock; see linked corrective actions.,2,Completed
+INSP-0091,FAC-005,Equipment Inspection,2025-03-10,EMP-0041,EQ-0047,Forklift (Electric) area,2 deficiency(ies) noted during equipment inspection in the Forklift (Electric) area; see linked corrective actions.,2,Findings Open
+INSP-0092,FAC-005,Fire System Inspection,2025-08-10,EMP-0068,,Break Area,No deficiencies noted during fire system inspection.,0,Completed
+INSP-0093,FAC-005,Environmental Compliance Check,2025-01-30,EMP-0039,,Utilities Room,1 deficiency(ies) noted during environmental compliance check in the Utilities Room; see linked corrective actions.,1,Findings Open
+INSP-0094,FAC-005,Fire System Inspection,2026-02-01,EMP-0045,,Utilities Room,2 deficiency(ies) noted during fire system inspection in the Utilities Room; see linked corrective actions.,2,Completed
+INSP-0095,FAC-005,Housekeeping Audit,2026-08-21,EMP-0045,,Warehouse,2 deficiency(ies) noted during housekeeping audit in the Warehouse; see linked corrective actions.,2,Completed
+INSP-0096,FAC-005,Housekeeping Audit,2025-05-22,EMP-0045,,Production Floor,No deficiencies noted during housekeeping audit.,0,Completed
+INSP-0097,FAC-005,Environmental Compliance Check,2025-02-09,EMP-0041,EQ-0044,Pressure Vessel / Tank area,No deficiencies noted during environmental compliance check.,0,Completed
+INSP-0098,FAC-005,Environmental Compliance Check,2025-03-04,EMP-0041,,Warehouse,1 deficiency(ies) noted during environmental compliance check in the Warehouse; see linked corrective actions.,1,Findings Open
+INSP-0099,FAC-005,Crane & Rigging Inspection,2026-08-01,EMP-0041,,Warehouse,1 deficiency(ies) noted during crane & rigging inspection in the Warehouse; see linked corrective actions.,1,Findings Open
+INSP-0100,FAC-005,Environmental Compliance Check,2026-07-02,EMP-0045,EQ-0048,Industrial Boiler area,No deficiencies noted during environmental compliance check.,0,Completed
+INSP-0101,FAC-005,Fire System Inspection,2026-03-09,EMP-0045,,Utilities Room,No deficiencies noted during fire system inspection.,0,Completed
+INSP-0102,FAC-005,Crane & Rigging Inspection,2026-05-05,EMP-0068,,Warehouse,2 deficiency(ies) noted during crane & rigging inspection in the Warehouse; see linked corrective actions.,2,Completed
+INSP-0103,FAC-005,PPE Compliance Audit,2026-02-16,EMP-0039,,Break Area,1 deficiency(ies) noted during ppe compliance audit in the Break Area; see linked corrective actions.,1,Completed
+INSP-0104,FAC-005,Safety Walkthrough,2025-04-24,EMP-0039,,Utilities Room,1 deficiency(ies) noted during safety walkthrough in the Utilities Room; see linked corrective actions.,1,Completed
+INSP-0105,FAC-005,Crane & Rigging Inspection,2025-06-23,EMP-0041,,Main Aisle,2 deficiency(ies) noted during crane & rigging inspection in the Main Aisle; see linked corrective actions.,2,Completed
+INSP-0106,FAC-006,Equipment Inspection,2025-10-23,EMP-0068,EQ-0056,CNC Machining Center area,1 deficiency(ies) noted during equipment inspection in the CNC Machining Center area; see linked corrective actions.,1,Findings Open
+INSP-0107,FAC-006,Equipment Inspection,2025-10-25,EMP-0059,EQ-0057,Forklift (Electric) area,1 deficiency(ies) noted during equipment inspection in the Forklift (Electric) area; see linked corrective actions.,1,Completed
+INSP-0108,FAC-006,Housekeeping Audit,2025-01-08,EMP-0059,,Main Aisle,2 deficiency(ies) noted during housekeeping audit in the Main Aisle; see linked corrective actions.,2,Findings Open
+INSP-0109,FAC-006,Fire System Inspection,2026-03-19,EMP-0068,,Main Aisle,No deficiencies noted during fire system inspection.,0,Completed
+INSP-0110,FAC-006,Crane & Rigging Inspection,2026-03-16,EMP-0056,,Utilities Room,No deficiencies noted during crane & rigging inspection.,0,Completed
+INSP-0111,FAC-006,Fire System Inspection,2026-08-05,EMP-0059,,Production Floor,No deficiencies noted during fire system inspection.,0,Completed
+INSP-0112,FAC-006,Housekeeping Audit,2026-08-24,EMP-0059,EQ-0056,CNC Machining Center area,No deficiencies noted during housekeeping audit.,0,Completed
+INSP-0113,FAC-006,PPE Compliance Audit,2025-05-02,EMP-0039,,Main Aisle,1 deficiency(ies) noted during ppe compliance audit in the Main Aisle; see linked corrective actions.,1,Completed
+INSP-0114,FAC-006,Safety Walkthrough,2025-01-18,EMP-0068,EQ-0056,CNC Machining Center area,No deficiencies noted during safety walkthrough.,0,Completed
+INSP-0115,FAC-006,Environmental Compliance Check,2026-01-12,EMP-0007,,Production Floor,No deficiencies noted during environmental compliance check.,0,Completed
+INSP-0116,FAC-006,Crane & Rigging Inspection,2025-08-27,EMP-0059,EQ-0050,CNC Machining Center area,1 deficiency(ies) noted during crane & rigging inspection in the CNC Machining Center area; see linked corrective actions.,1,Findings Open
+INSP-0117,FAC-006,Environmental Compliance Check,2025-09-14,EMP-0007,,Utilities Room,2 deficiency(ies) noted during environmental compliance check in the Utilities Room; see linked corrective actions.,2,Findings Open
+INSP-0118,FAC-006,PPE Compliance Audit,2025-04-14,EMP-0059,EQ-0049,Industrial Boiler area,2 deficiency(ies) noted during ppe compliance audit in the Industrial Boiler area; see linked corrective actions.,2,Findings Open
+INSP-0119,FAC-006,Safety Walkthrough,2026-08-09,EMP-0059,,Main Aisle,1 deficiency(ies) noted during safety walkthrough in the Main Aisle; see linked corrective actions.,1,Completed
+INSP-0120,FAC-006,Equipment Inspection,2025-03-07,EMP-0007,,Utilities Room,1 deficiency(ies) noted during equipment inspection in the Utilities Room; see linked corrective actions.,1,Completed
+INSP-0121,FAC-007,Environmental Compliance Check,2025-05-31,EMP-0067,,Main Aisle,No deficiencies noted during environmental compliance check.,0,Completed
+INSP-0122,FAC-007,Safety Walkthrough,2025-03-09,EMP-0068,EQ-0060,Pressure Vessel / Tank area,1 deficiency(ies) noted during safety walkthrough in the Pressure Vessel / Tank area; see linked corrective actions.,1,Completed
+INSP-0123,FAC-007,Fire System Inspection,2025-09-11,EMP-0068,,Main Aisle,1 deficiency(ies) noted during fire system inspection in the Main Aisle; see linked corrective actions.,1,Completed
+INSP-0124,FAC-007,Housekeeping Audit,2025-02-24,EMP-0067,,Main Aisle,1 deficiency(ies) noted during housekeeping audit in the Main Aisle; see linked corrective actions.,1,Findings Open
+INSP-0125,FAC-007,Fire System Inspection,2025-07-02,EMP-0068,EQ-0060,Pressure Vessel / Tank area,No deficiencies noted during fire system inspection.,0,Completed
+INSP-0126,FAC-007,Environmental Compliance Check,2025-11-08,EMP-0067,,Main Aisle,No deficiencies noted during environmental compliance check.,0,Completed
+INSP-0127,FAC-007,Fire System Inspection,2025-04-17,EMP-0062,,Loading Dock,1 deficiency(ies) noted during fire system inspection in the Loading Dock; see linked corrective actions.,1,Findings Open
+INSP-0128,FAC-007,Fire System Inspection,2026-06-07,EMP-0068,,Warehouse,No deficiencies noted during fire system inspection.,0,Completed
+INSP-0129,FAC-007,Environmental Compliance Check,2025-06-03,EMP-0068,,Production Floor,No deficiencies noted during environmental compliance check.,0,Completed
+INSP-0130,FAC-007,Safety Walkthrough,2025-09-13,EMP-0067,,Utilities Room,No deficiencies noted during safety walkthrough.,0,Completed
+INSP-0131,FAC-007,Environmental Compliance Check,2025-05-19,EMP-0062,EQ-0058,CNC Machining Center area,1 deficiency(ies) noted during environmental compliance check in the CNC Machining Center area; see linked corrective actions.,1,Findings Open
+INSP-0132,FAC-007,Safety Walkthrough,2026-02-24,EMP-0068,,Production Floor,3 deficiency(ies) noted during safety walkthrough in the Production Floor; see linked corrective actions.,3,Findings Open
+INSP-0133,FAC-007,PPE Compliance Audit,2026-07-04,EMP-0062,,Main Aisle,1 deficiency(ies) noted during ppe compliance audit in the Main Aisle; see linked corrective actions.,1,Completed
+INSP-0134,FAC-007,Environmental Compliance Check,2025-08-06,EMP-0068,,Main Aisle,2 deficiency(ies) noted during environmental compliance check in the Main Aisle; see linked corrective actions.,2,Findings Open
+INSP-0135,FAC-007,Safety Walkthrough,2026-02-16,EMP-0068,,Warehouse,No deficiencies noted during safety walkthrough.,0,Completed

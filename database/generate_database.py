@@ -199,13 +199,13 @@ T["companies"].append({
 # =============================================================================
 T["facilities"] = [
     {"facility_id":"FAC-001","company_id":"CO-001","name":"Rex North Plant","facility_type":"Heavy Manufacturing",
-     "city":"Canton","state":"OH","address":"4820 Blue Ridge Industrial Pkwy, Canton, OH 44706",
+     "city":"Canton","state":"OH","country":"United States","address":"4820 Blue Ridge Industrial Pkwy, Canton, OH 44706",
      "square_footage":285000,"year_established":1978,"employee_capacity":340},
     {"facility_id":"FAC-002","company_id":"CO-001","name":"Rex Central Plant","facility_type":"Assembly & Fabrication",
-     "city":"Baytown","state":"TX","address":"1150 Gulf Freight Rd, Baytown, TX 77520",
+     "city":"Baytown","state":"TX","country":"United States","address":"1150 Gulf Freight Rd, Baytown, TX 77520",
      "square_footage":190000,"year_established":1996,"employee_capacity":260},
     {"facility_id":"FAC-003","company_id":"CO-001","name":"Rex South Plant","facility_type":"Distribution & Light Fabrication",
-     "city":"Savannah","state":"GA","address":"770 Peachtree Logistics Dr, Savannah, GA 31408",
+     "city":"Savannah","state":"GA","country":"United States","address":"770 Peachtree Logistics Dr, Savannah, GA 31408",
      "square_footage":150000,"year_established":2008,"employee_capacity":180},
 ]
 FAC_IDS = [f["facility_id"] for f in T["facilities"]]
@@ -1416,6 +1416,410 @@ print(f"Evidence records: {len(T['evidence'])}")
 print(f"\n=== GENERATION COMPLETE ===")
 for k, v in T.items():
     print(f"  {k}: {len(v)}")
+
+# =============================================================================
+# INTERNATIONAL EXPANSION — 4 new facilities (UK, Germany, India, Australia)
+# under the existing company CO-001, with proportional linked data for the new
+# "Global Risk Map" UI feature. This block is a PURE APPEND: it runs after
+# every random.* call above it, so nothing about the original 3-facility
+# dataset (ids, dates, patterns, or the specific rows docs/database-design.md
+# and docs/sample-documents/*.md cite verbatim) is perturbed by its presence.
+# It is also the LAST consumer of the random stream in the whole script —
+# everything after this point (SQLite build, CSV export, JSON writes) makes
+# no random.* calls — so nothing downstream is order-sensitive to it either.
+#
+# Written as a clean per-facility loop (unlike the flat-random generation
+# above) since this is new code, not a rewrite of the original. It reuses the
+# EXISTING helper functions (add_hazard, add_control, add_maintenance,
+# add_training, add_incident, add_control_assessment, add_risk_assessment,
+# add_inspection, add_audit_finding, add_action, add_evidence) exactly as-is,
+# so every new row has the identical column shape/behavior as the original
+# 3-facility dataset. It deliberately does NOT replicate the 6 hand-wired
+# "Pattern" narratives — those are fixtures tied to test_scenarios.json
+# ground truth for the original 3 facilities. New facilities get organic,
+# realistic variety from the same template pools instead.
+# =============================================================================
+
+# ---- small per-country name pools, used ONLY for these facilities' employees
+# (the original FIRST_NAMES/LAST_NAMES/unique_name() are untouched) ----
+UK_FIRST_NAMES = ["Oliver","Harry","George","Jack","Charlie","Thomas","Jacob","Alfie","Freddie","Archie",
+                   "Amelia","Olivia","Isla","Ava","Emily","Sophie","Grace","Lily","Chloe","Ella"]
+UK_LAST_NAMES = ["Smith","Jones","Taylor","Brown","Williams","Wilson","Johnson","Davies","Robinson","Wright",
+                  "Thompson","Evans","Walker","White","Roberts","Green","Hall","Wood","Clarke","Hughes"]
+GERMANY_FIRST_NAMES = ["Lukas","Maximilian","Felix","Jonas","Paul","Leon","Finn","Elias","Noah","Ben",
+                        "Anna","Emma","Mia","Hannah","Lea","Lena","Laura","Sophie","Marie","Johanna"]
+GERMANY_LAST_NAMES = ["Müller","Schmidt","Schneider","Fischer","Weber","Meyer","Wagner","Becker","Hoffmann","Schulz",
+                       "Koch","Bauer","Richter","Klein","Wolf","Schröder","Neumann","Zimmermann","Braun","Krüger"]
+INDIA_FIRST_NAMES = ["Arjun","Rohan","Vikram","Aditya","Rahul","Amit","Sanjay","Karan","Nikhil","Suresh",
+                      "Priya","Ananya","Neha","Pooja","Divya","Kavita","Meera","Sunita","Anjali","Deepa"]
+INDIA_LAST_NAMES = ["Sharma","Verma","Gupta","Patel","Iyer","Nair","Reddy","Kulkarni","Joshi","Rao",
+                     "Deshmukh","Kapoor","Chatterjee","Mehta","Choudhary","Bhat","Pillai","Menon","Agarwal","Naik"]
+AUSTRALIA_FIRST_NAMES = ["Jack","William","Noah","Lucas","Ethan","James","Oliver","Liam","Henry","Mason",
+                          "Charlotte","Olivia","Ava","Mia","Isla","Zoe","Ruby","Chloe","Grace","Ella"]
+AUSTRALIA_LAST_NAMES = ["Smith","Jones","Williams","Brown","Wilson","Taylor","Anderson","Thompson","Martin","Clarke",
+                         "King","Mitchell","Robinson","Campbell","Stewart","Kelly","Harris","Ryan","Cooper","Bell"]
+
+_used_intl_names = set()
+def unique_intl_name(first_pool, last_pool):
+    while True:
+        fn, ln = random.choice(first_pool), random.choice(last_pool)
+        if (fn, ln) not in _used_intl_names:
+            _used_intl_names.add((fn, ln))
+            return fn, ln
+
+NEW_FACILITIES = [
+    {"facility_id": "FAC-004", "company_id": "CO-001", "name": "Rex UK Plant",
+     "facility_type": "Precision Fabrication", "city": "Manchester", "state": "England", "country": "United Kingdom",
+     "address": "14 Trafford Park Road, Manchester, M17 1EH, United Kingdom",
+     "square_footage": 210000, "year_established": 1989, "employee_capacity": 260},
+    {"facility_id": "FAC-005", "company_id": "CO-001", "name": "Rex Germany Plant",
+     "facility_type": "Precision Engineering & Machining", "city": "Stuttgart", "state": "Baden-Württemberg", "country": "Germany",
+     "address": "Industriestraße 42, 70565 Stuttgart, Germany",
+     "square_footage": 225000, "year_established": 1992, "employee_capacity": 280},
+    {"facility_id": "FAC-006", "company_id": "CO-001", "name": "Rex India Plant",
+     "facility_type": "Component Manufacturing & Assembly", "city": "Pune", "state": "Maharashtra", "country": "India",
+     "address": "Plot 27, MIDC Industrial Area, Pune, Maharashtra 411019, India",
+     "square_footage": 195000, "year_established": 2003, "employee_capacity": 320},
+    {"facility_id": "FAC-007", "company_id": "CO-001", "name": "Rex Australia Plant",
+     "facility_type": "Distribution & Light Fabrication", "city": "Melbourne", "state": "Victoria", "country": "Australia",
+     "address": "88 Ricketts Road, Mount Waverley, VIC 3149, Australia",
+     "square_footage": 155000, "year_established": 1998, "employee_capacity": 200},
+]
+T["facilities"].extend(NEW_FACILITIES)
+NEW_FAC_IDS = [f["facility_id"] for f in NEW_FACILITIES]
+FAC_UK, FAC_DE, FAC_IN, FAC_AU = NEW_FAC_IDS
+FACILITY_NAME_POOLS = {
+    FAC_UK: (UK_FIRST_NAMES, UK_LAST_NAMES),
+    FAC_DE: (GERMANY_FIRST_NAMES, GERMANY_LAST_NAMES),
+    FAC_IN: (INDIA_FIRST_NAMES, INDIA_LAST_NAMES),
+    FAC_AU: (AUSTRALIA_FIRST_NAMES, AUSTRALIA_LAST_NAMES),
+}
+
+EMPLOYEES_PER_FACILITY = 10
+EQUIPMENT_PER_FACILITY = 9
+HAZARDS_PER_FACILITY = 18
+CONTROLS_PER_FACILITY = 11
+MAINTENANCE_PER_FACILITY = 10
+TRAINING_PER_FACILITY = 10
+INCIDENTS_PER_FACILITY = 23
+
+NEW_EMPLOYEES, NEW_EQUIPMENT, NEW_HAZARDS, NEW_CONTROLS = [], [], [], []
+NEW_MAINTENANCE, NEW_TRAINING, NEW_INCIDENTS = [], [], []
+
+for fac in NEW_FACILITIES:
+    fid = fac["facility_id"]
+    first_pool, last_pool = FACILITY_NAME_POOLS[fid]
+
+    # ---- employees ----
+    fac_employees = []
+    role_pool = ROLE_CATALOG.copy()
+    random.shuffle(role_pool)
+    for i in range(EMPLOYEES_PER_FACILITY):
+        fn, ln = unique_intl_name(first_pool, last_pool)
+        title, dept, _ = role_pool[i % len(role_pool)]
+        hire_date = rand_date(date(2008, 1, 1), date(2025, 9, 1))
+        emp_idx = len(T["employees"]) + 1
+        emp = {
+            "employee_id": f"EMP-{emp_idx:04d}", "facility_id": fid, "role_id": ROLE_BY_TITLE[title],
+            "first_name": fn, "last_name": ln, "email": f"{fn.lower()}.{ln.lower()}@rexindustrial-example.com",
+            "hire_date": iso(hire_date), "is_active": 1,
+        }
+        T["employees"].append(emp)
+        NEW_EMPLOYEES.append(emp)
+        fac_employees.append(emp)
+    # guarantee this facility has >=1 Plant Manager and >=1 Safety Manager,
+    # mirroring the original 3-facility guarantee logic but scoped to this facility's own roster
+    for needed in ["Plant Manager", "Safety Manager"]:
+        if not any(e["role_id"] == ROLE_BY_TITLE[needed] for e in fac_employees):
+            cand = next(e for e in fac_employees if e["role_id"] not in (ROLE_BY_TITLE["Plant Manager"], ROLE_BY_TITLE["Safety Manager"]))
+            cand["role_id"] = ROLE_BY_TITLE[needed]
+
+    # ---- equipment ----
+    fac_equipment = []
+    for i in range(EQUIPMENT_PER_FACILITY):
+        etype, category, makers = random.choice(EQUIPMENT_TYPES)
+        install = rand_date(date(2005, 1, 1), date(2024, 6, 1))
+        last_maint = rand_date(max(install, date(2025, 3, 1)), TODAY - timedelta(days=10))
+        next_due = last_maint + timedelta(days=random.choice([90, 120, 180]))
+        eq_idx = len(T["equipment"]) + 1
+        eq = {
+            "equipment_id": f"EQ-{eq_idx:04d}", "facility_id": fid, "equipment_type": etype, "category": category,
+            "manufacturer": random.choice(makers), "model_number": f"{random.choice(['MX','GX','TX','RX','PX'])}-{random.randint(100,999)}",
+            "serial_number": f"SN{random.randint(100000,999999)}", "install_date": iso(install),
+            "last_maintenance_date": iso(last_maint), "next_maintenance_due": iso(next_due),
+            "status": "Operational", "criticality": random.choice(["Medium", "Medium", "High"]),
+        }
+        T["equipment"].append(eq)
+        NEW_EQUIPMENT.append(eq)
+        fac_equipment.append(eq)
+
+    # ---- hazards (organic variety from the shared template pools; no hand-wired patterns) ----
+    fac_hazards = []
+    for i in range(HAZARDS_PER_FACILITY):
+        cat = random.choice(HAZARD_CATEGORIES)
+        if fac_equipment and random.random() < 0.65:
+            eq_choice = random.choice(fac_equipment)
+            equipment_id, equip_label = eq_choice["equipment_id"], eq_choice["equipment_type"]
+        else:
+            equipment_id, equip_label = None, cat.lower()
+        add_hazard(cat, HAZARD_DESC_TEMPLATES[cat].format(equip=equip_label),
+                   facility_id=fid, equipment_id=equipment_id, consequence=CATEGORY_CONSEQUENCE[cat])
+        fac_hazards.append(T["hazards"][-1])
+    NEW_HAZARDS.extend(fac_hazards)
+
+    # ---- controls: 1-2 per hazard until this facility's target is reached ----
+    fac_controls = []
+    hz_shuffled = fac_hazards.copy()
+    random.shuffle(hz_shuffled)
+    i = 0
+    while len(fac_controls) < CONTROLS_PER_FACILITY and hz_shuffled:
+        hz = hz_shuffled[i % len(hz_shuffled)]
+        i += 1
+        ctype = CONTROL_TYPE_BY_CATEGORY.get(hz["hazard_category"], "Administrative")
+        add_control(f"{hz['hazard_category']} Control — {hz['hazard_id']}", ctype, hz["hazard_id"],
+                    sop_id=sop_for_category(hz["hazard_category"]), facility_id=fid,
+                    description=f"Control addressing: {hz['description']}")
+        fac_controls.append(T["controls"][-1])
+        if i > 200:
+            break
+    NEW_CONTROLS.extend(fac_controls)
+
+    # ---- maintenance ----
+    fac_maintenance = []
+    for i in range(MAINTENANCE_PER_FACILITY):
+        eq = random.choice(fac_equipment)
+        scheduled = rand_date(WINDOW_START, TODAY - timedelta(days=5))
+        status = random.choices(["Completed", "Delayed", "Overdue", "Scheduled"], weights=[0.72, 0.13, 0.08, 0.07])[0]
+        delay = random.randint(5, 25) if status in ("Delayed", "Overdue") else 0
+        mtype = random.choices(["Preventive", "Corrective", "Inspection"], weights=[0.6, 0.25, 0.15])[0]
+        add_maintenance(eq["equipment_id"], scheduled, status, mtype=mtype, delay_days=delay)
+        fac_maintenance.append(T["maintenance_records"][-1])
+    NEW_MAINTENANCE.extend(fac_maintenance)
+
+    # sync this facility's equipment maintenance dates to its real maintenance_records,
+    # mirroring the original post-generation sync pass
+    for eq in fac_equipment:
+        recs = [m for m in T["maintenance_records"] if m["equipment_id"] == eq["equipment_id"]]
+        performed = [m for m in recs if m["actual_date"]]
+        if performed:
+            latest = max(performed, key=lambda m: m["actual_date"])
+            eq["last_maintenance_date"] = latest["actual_date"]
+        unperformed_future = [m for m in recs if m["status"] in ("Scheduled", "Overdue") and not m["actual_date"]]
+        if unperformed_future:
+            nearest = min(unperformed_future, key=lambda m: m["scheduled_date"])
+            eq["next_maintenance_due"] = nearest["scheduled_date"]
+        elif performed:
+            base = date.fromisoformat(eq["last_maintenance_date"])
+            eq["next_maintenance_due"] = iso(base + timedelta(days=random.choice([90, 120, 180])))
+
+    # ---- training (employees only — no international contractor roster in scope) ----
+    fac_training = []
+    safety_critical_fac_employees = [e for e in fac_employees
+                                      if next(r["is_safety_critical"] for r in T["roles"] if r["role_id"] == e["role_id"])]
+    for i in range(TRAINING_PER_FACILITY):
+        emp = random.choice(safety_critical_fac_employees or fac_employees)
+        topic = random.choice(SAFETY_TOPICS)
+        tdate = rand_date(WINDOW_START, TODAY - timedelta(days=10))
+        expiry = tdate + timedelta(days=730)
+        status = "Expired" if expiry < TODAY else "Current"
+        add_training(topic, status, employee_id=emp["employee_id"], training_date=tdate, expiry=expiry, result="Pass")
+        fac_training.append(T["training_records"][-1])
+    NEW_TRAINING.extend(fac_training)
+
+    # ---- incidents ----
+    fac_incidents = []
+    for i in range(INCIDENTS_PER_FACILITY):
+        hz = random.choice(fac_hazards)
+        eq_id = hz["equipment_id"]
+        if eq_id is None and fac_equipment and random.random() < 0.7:
+            eq_id = random.choice(fac_equipment)["equipment_id"]
+        involved_employee = random.choice(fac_employees)["employee_id"] if random.random() < 0.7 else None
+        add_incident(fid, hz, equipment_id=eq_id, involved_employee_id=involved_employee)
+        fac_incidents.append(T["incidents"][-1])
+    NEW_INCIDENTS.extend(fac_incidents)
+
+print(f"International expansion — facilities:{len(NEW_FACILITIES)} employees:{len(NEW_EMPLOYEES)} "
+      f"equipment:{len(NEW_EQUIPMENT)} hazards:{len(NEW_HAZARDS)} controls:{len(NEW_CONTROLS)} "
+      f"maintenance:{len(NEW_MAINTENANCE)} training:{len(NEW_TRAINING)} incidents:{len(NEW_INCIDENTS)}")
+
+# ---- control assessments for the new controls ----
+NEW_CONTROL_ASSESSMENTS = []
+for c in NEW_CONTROLS:
+    for _ in range(random.choice([1, 1, 2])):
+        rating = random.choices(["Effective", "Partially Effective", "Ineffective"], weights=[0.55, 0.32, 0.13])[0]
+        findings = {
+            "Effective": "Control observed functioning as designed during review.",
+            "Partially Effective": "Control generally functions but inconsistent compliance was observed.",
+            "Ineffective": "Control was not functioning as intended at time of review.",
+        }[rating]
+        add_control_assessment(c["control_id"], rand_date(WINDOW_START, TODAY - timedelta(days=10)), rating, findings)
+        NEW_CONTROL_ASSESSMENTS.append(T["control_assessments"][-1])
+
+# ---- risk assessments + risk register for the new hazards (not every hazard gets a
+# formal assessment, matching the ~65% ratio the original 3-facility dataset used) ----
+NEW_RISK_ASSESSMENTS = []
+for hz in NEW_HAZARDS:
+    if random.random() < 0.65:
+        add_risk_assessment(hz, rand_date(WINDOW_START + timedelta(days=60), TODAY - timedelta(days=5)))
+        NEW_RISK_ASSESSMENTS.append(T["risk_assessments"][-1])
+
+NEW_HAZ_BY_ID = {h["hazard_id"]: h for h in NEW_HAZARDS}
+latest_ra_by_hazard_new = {}
+for ra in sorted(NEW_RISK_ASSESSMENTS, key=lambda r: r["assessment_date"]):
+    latest_ra_by_hazard_new[ra["hazard_id"]] = ra
+
+NEW_RISK_REGISTER = []
+for hazard_id, ra in latest_ra_by_hazard_new.items():
+    rr_seq += 1
+    hz = NEW_HAZ_BY_ID[hazard_id]
+    hz_incidents = [i for i in NEW_INCIDENTS if i["hazard_id"] == hazard_id]
+    created_from = "Incident" if ra["source_incident_id"] or hz_incidents else "Proactive Assessment"
+    created_date = min([ra["assessment_date"]] + [i["incident_datetime"][:10] for i in hz_incidents])
+    rr = {
+        "risk_register_id": f"RISK-{rr_seq:04d}", "hazard_id": hazard_id, "facility_id": ra["facility_id"],
+        "current_risk_assessment_id": ra["risk_assessment_id"], "title": f"{hz['hazard_category']} — {hz['hazard_id']}",
+        "current_score": ra["adjusted_score"], "current_level": ra["risk_level"],
+        "owner_employee_id": random.choice(employees_at(ra["facility_id"], random.choice(["Safety Manager", "Plant Manager"])))["employee_id"],
+        "created_date": created_date, "created_from": created_from,
+        "last_reviewed_date": ra["assessment_date"],
+        "next_review_due": iso(date.fromisoformat(ra["assessment_date"]) + timedelta(days=180)),
+        "status": "Open" if ra["risk_level"] in ("High", "Critical") else random.choice(["Open", "Mitigated"]),
+    }
+    T["risk_register"].append(rr)
+    NEW_RISK_REGISTER.append(rr)
+
+NEW_RISK_REGISTER_BY_HAZARD = {r["hazard_id"]: r["risk_register_id"] for r in NEW_RISK_REGISTER}
+for i in NEW_INCIDENTS:
+    if i["hazard_id"] in NEW_RISK_REGISTER_BY_HAZARD:
+        i["related_risk_register_id"] = NEW_RISK_REGISTER_BY_HAZARD[i["hazard_id"]]
+
+# ---- inspections ----
+NEW_INSPECTIONS = []
+INSPECTIONS_PER_FACILITY = 15
+for fac in NEW_FACILITIES:
+    fid = fac["facility_id"]
+    fac_equip_pool = equip_at(fid)
+    for i in range(INSPECTIONS_PER_FACILITY):
+        itype = random.choice(INSPECTION_TYPES)
+        eq_id = random.choice(fac_equip_pool)["equipment_id"] if random.random() < 0.4 else None
+        add_inspection(fid, itype, rand_date(WINDOW_START, TODAY - timedelta(days=3)), equipment_id=eq_id)
+        NEW_INSPECTIONS.append(T["inspections"][-1])
+
+# ---- audit findings ----
+NEW_AUDIT_FINDINGS = []
+AUDIT_PER_FACILITY = 6
+for fac in NEW_FACILITIES:
+    fid = fac["facility_id"]
+    for i in range(AUDIT_PER_FACILITY):
+        cat = random.choice(FINDING_CATEGORIES)
+        sev = random.choices(["Low", "Medium", "High"], weights=[0.4, 0.45, 0.15])[0]
+        sop = random.choice(T["sops"])["sop_id"] if random.random() < 0.6 else None
+        internal = random.random() < 0.4
+        auditor_emp = random.choice(employees_at(fid, "Safety Manager"))["employee_id"] if internal else None
+        add_audit_finding(fid, rand_date(WINDOW_START, TODAY - timedelta(days=10)), cat,
+            f"{cat} finding identified during scheduled audit at {fid}; see recommended corrective action.", sev,
+            sop_id=sop, auditor_employee_id=auditor_emp)
+        NEW_AUDIT_FINDINGS.append(T["audit_findings"][-1])
+
+# ---- actions: incidents -> audit findings -> inspections -> risk assessments, same cascade order as the original ----
+NEW_ACTIONS = []
+ACTIONS_TOTAL_TARGET = 80
+
+completed_new_incidents = [i for i in NEW_INCIDENTS if i["investigation_status"] == "Completed"]
+random.shuffle(completed_new_incidents)
+for inc in completed_new_incidents:
+    if len(NEW_ACTIONS) >= int(ACTIONS_TOTAL_TARGET * 0.45):
+        break
+    created = date.fromisoformat(inc["incident_datetime"][:10]) + timedelta(days=random.randint(1, 5))
+    action_type = "Corrective" if inc["incident_type"] in ("Injury", "Property Damage", "Environmental", "Equipment Failure") else random.choice(["Corrective", "Preventive"])
+    ctl = controls_for_hazard(inc["hazard_id"])
+    owner = random.choice(employees_at(inc["facility_id"], random.choice(["Maintenance Technician", "Safety Manager", "Shift Supervisor", "EHS Coordinator"])))["employee_id"]
+    add_action(action_type, "Incident", inc["facility_id"], owner,
+        f"Address root cause identified for {inc['incident_id']} ({inc['hazard_id']}: {NEW_HAZ_BY_ID[inc['hazard_id']]['hazard_category']}).",
+        created, timeframe_days=random.choice([14, 21, 30, 45]),
+        related_control_id=(ctl[0]["control_id"] if ctl else None), source_incident_id=inc["incident_id"])
+    NEW_ACTIONS.append(T["actions"][-1])
+
+random.shuffle(NEW_AUDIT_FINDINGS)
+for af in NEW_AUDIT_FINDINGS:
+    if len(NEW_ACTIONS) >= int(ACTIONS_TOTAL_TARGET * 0.65):
+        break
+    created = date.fromisoformat(af["audit_date"]) + timedelta(days=random.randint(2, 7))
+    owner = random.choice(employees_at(af["facility_id"], random.choice(["Safety Manager", "EHS Coordinator"])))["employee_id"]
+    add_action("Corrective", "Audit Finding", af["facility_id"], owner,
+        f"Remediate audit finding {af['audit_finding_id']}: {af['finding_category']}.",
+        created, timeframe_days=random.choice([21, 30, 45]), related_control_id=af["related_control_id"],
+        source_audit_finding_id=af["audit_finding_id"])
+    NEW_ACTIONS.append(T["actions"][-1])
+
+deficient_new_inspections = [i for i in NEW_INSPECTIONS if i["deficiencies_found"] > 0]
+random.shuffle(deficient_new_inspections)
+for insp in deficient_new_inspections:
+    if len(NEW_ACTIONS) >= int(ACTIONS_TOTAL_TARGET * 0.85):
+        break
+    created = date.fromisoformat(insp["inspection_date"]) + timedelta(days=random.randint(1, 5))
+    owner = random.choice(employees_at(insp["facility_id"], random.choice(["Maintenance Technician", "Shift Supervisor"])))["employee_id"]
+    add_action("Preventive", "Inspection", insp["facility_id"], owner,
+        f"Correct deficiency from {insp['inspection_id']} ({insp['inspection_type']}).",
+        created, timeframe_days=random.choice([14, 21, 30]), source_inspection_id=insp["inspection_id"])
+    NEW_ACTIONS.append(T["actions"][-1])
+
+high_new_risks = [r for r in NEW_RISK_ASSESSMENTS if r["risk_level"] in ("High", "Critical")]
+random.shuffle(high_new_risks)
+for ra in high_new_risks:
+    if len(NEW_ACTIONS) >= ACTIONS_TOTAL_TARGET:
+        break
+    created = date.fromisoformat(ra["assessment_date"]) + timedelta(days=random.randint(1, 5))
+    hz = NEW_HAZ_BY_ID[ra["hazard_id"]]
+    owner = random.choice(employees_at(ra["facility_id"], random.choice(["Safety Manager", "Mechanical Engineer"])))["employee_id"]
+    add_action("Preventive", "Risk Assessment", ra["facility_id"], owner,
+        f"Implement additional preventive control for {hz['hazard_category']} risk ({ra['risk_assessment_id']}).",
+        created, timeframe_days=45, source_risk_assessment_id=ra["risk_assessment_id"])
+    NEW_ACTIONS.append(T["actions"][-1])
+
+# ---- evidence, same source rules as the original ----
+NEW_EVIDENCE = []
+for inc in NEW_INCIDENTS:
+    if inc["incident_type"] in ("Injury", "Property Damage", "Environmental", "Equipment Failure"):
+        udate = date.fromisoformat(inc["reported_at"][:10])
+        add_evidence("Incident", inc["incident_id"], f"{inc['incident_id']}-scene-photo-01.jpg", "image/jpeg",
+                     f"Scene photo documenting conditions at time of report for {inc['incident_id']}.", udate,
+                     uploader=inc["reported_by_employee_id"])
+        NEW_EVIDENCE.append(T["evidence"][-1])
+
+for insp in NEW_INSPECTIONS:
+    if insp["deficiencies_found"] > 1:
+        add_evidence("Inspection", insp["inspection_id"], f"{insp['inspection_id']}-findings-photo.jpg", "image/jpeg",
+                     f"Photo documentation of deficiency noted during {insp['inspection_id']}.",
+                     date.fromisoformat(insp["inspection_date"]), uploader=insp["inspector_employee_id"])
+        NEW_EVIDENCE.append(T["evidence"][-1])
+
+for af in NEW_AUDIT_FINDINGS[:12]:
+    add_evidence("Audit Finding", af["audit_finding_id"], f"{af['audit_finding_id']}-audit-report-excerpt.pdf", "application/pdf",
+                 f"Audit report excerpt covering finding {af['audit_finding_id']}.", date.fromisoformat(af["audit_date"]))
+    NEW_EVIDENCE.append(T["evidence"][-1])
+
+for act in NEW_ACTIONS:
+    if act["status"] == "Completed" and random.random() < 0.35:
+        add_evidence("Action", act["action_id"], f"{act['action_id']}-completion-signoff.pdf", "application/pdf",
+                     f"Completion sign-off and verification record for {act['action_id']}.",
+                     date.fromisoformat(act["completion_date"]), uploader=act["owner_employee_id"])
+        NEW_EVIDENCE.append(T["evidence"][-1])
+
+for m in NEW_MAINTENANCE:
+    if m["status"] == "Delayed":
+        add_evidence("Maintenance Record", m["maintenance_record_id"], f"{m['maintenance_record_id']}-work-order.pdf", "application/pdf",
+                     f"Work order record for delayed maintenance on {m['equipment_id']}.",
+                     date.fromisoformat(m["actual_date"]) if m["actual_date"] else TODAY)
+        NEW_EVIDENCE.append(T["evidence"][-1])
+
+print(f"International expansion complete: control_assessments:{len(NEW_CONTROL_ASSESSMENTS)} "
+      f"risk_assessments:{len(NEW_RISK_ASSESSMENTS)} risk_register:{len(NEW_RISK_REGISTER)} "
+      f"inspections:{len(NEW_INSPECTIONS)} audit_findings:{len(NEW_AUDIT_FINDINGS)} "
+      f"actions:{len(NEW_ACTIONS)} evidence:{len(NEW_EVIDENCE)}")
+print(f"Totals after expansion: facilities={len(T['facilities'])} employees={len(T['employees'])} "
+      f"equipment={len(T['equipment'])} hazards={len(T['hazards'])} controls={len(T['controls'])} "
+      f"incidents={len(T['incidents'])} actions={len(T['actions'])}")
 
 # =============================================================================
 # BUILD SQLITE DATABASE

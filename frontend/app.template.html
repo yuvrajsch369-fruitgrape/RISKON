@@ -1,4 +1,5 @@
 <title>RISKON</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
@@ -40,9 +41,17 @@
     --seq-1: #cde2fb; --seq-2: #86b6ef; --seq-3: #3987e5; --seq-4: #1c5cab; --seq-5: #0d366b;
 
     --shadow-card: 0 1px 2px rgba(16,24,32,0.06), 0 1px 1px rgba(16,24,32,0.04);
+    --shadow-raised: 0 2px 6px rgba(16,24,32,0.08), 0 1px 2px rgba(16,24,32,0.05);
     --shadow-pop: 0 8px 24px rgba(16,24,32,0.14), 0 2px 6px rgba(16,24,32,0.08);
     --radius: 8px;
     --radius-sm: 5px;
+    --radius-lg: 12px;
+
+    /* Spacing scale — new steps (--space-1..6) sit alongside the many
+       existing hardcoded px values rather than replacing them outright;
+       new/redesigned components should use these, existing ones migrate
+       incrementally so nothing regresses mid-redesign. */
+    --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 32px;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
@@ -80,6 +89,7 @@
       --seq-1: #16324f; --seq-2: #1c5cab; --seq-3: #3987e5; --seq-4: #6da7ec; --seq-5: #b7d3f6;
 
       --shadow-card: 0 1px 2px rgba(0,0,0,0.3);
+      --shadow-raised: 0 2px 8px rgba(0,0,0,0.35);
       --shadow-pop: 0 8px 28px rgba(0,0,0,0.5);
     }
   }
@@ -109,6 +119,7 @@
     --neutral-soft: rgba(183,192,201,0.10);
     --seq-1: #16324f; --seq-2: #1c5cab; --seq-3: #3987e5; --seq-4: #6da7ec; --seq-5: #b7d3f6;
     --shadow-card: 0 1px 2px rgba(0,0,0,0.3);
+    --shadow-raised: 0 2px 8px rgba(0,0,0,0.35);
     --shadow-pop: 0 8px 28px rgba(0,0,0,0.5);
   }
 
@@ -118,8 +129,8 @@
     background: var(--page);
     color: var(--ink);
     font-family: var(--font-sans);
-    font-size: 13.5px;
-    line-height: 1.5;
+    font-size: 14.5px;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
   h1,h2,h3,h4{ font-family: var(--font-sans); font-weight: 700; margin: 0; text-wrap: balance; color: var(--ink); }
@@ -153,6 +164,9 @@
   .rail-scope-label svg{ opacity:0.8; }
 
   .rail-nav{ display:flex; flex-direction:column; gap:1px; padding: 8px 10px; flex:1; overflow-y:auto; }
+  .rail-group-label{ font-size:10px; text-transform:uppercase; letter-spacing:0.06em; font-weight:700; color:var(--rail-ink-dim);
+    padding:14px 10px 6px; }
+  .rail-group-label:first-child{ padding-top:4px; }
   .rail-link{
     display:flex; align-items:center; gap:10px; padding: 9px 10px; border-radius: var(--radius-sm);
     color: var(--rail-ink); text-decoration:none; font-size:13px; font-weight:500; cursor:pointer;
@@ -191,7 +205,7 @@
   .topbar-sub{ font-size:12.5px; color: var(--ink-2); margin-top:3px; max-width:60ch; }
   .topbar-actions{ display:flex; gap:8px; flex:0 0 auto; }
 
-  .view{ padding: 20px 28px 40px; flex:1; }
+  .view{ padding: 28px 36px 48px; flex:1; }
   .view-grid{ display:grid; gap:16px; }
 
   /* ---------- buttons / inputs ---------- */
@@ -231,14 +245,15 @@
   .chip .chip-count{ font-family: var(--font-mono); font-weight:600; font-size:14px; }
 
   /* ---------- cards / tiles ---------- */
-  .card{ background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-card); }
-  .card-pad{ padding: 16px 18px; }
-  .card-head{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; padding: 14px 18px 0; }
+  .card{ background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-card); min-width:0; }
+  .card-pad{ padding: 20px 22px; }
+  .card-head{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; padding: 14px 18px 0; flex-wrap:wrap; min-width:0; }
+  .card-head > div{ min-width:0; }
   .card-head h3{ font-size:13.5px; }
   .card-head .card-head-sub{ font-size:11.5px; color: var(--ink-3); }
 
-  .tiles{ display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; }
-  .tile{ background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); padding:14px 16px; box-shadow: var(--shadow-card); position:relative; overflow:hidden; }
+  .tiles{ display:grid; grid-template-columns: repeat(4, 1fr); gap:16px; }
+  .tile{ background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); padding:18px 20px; box-shadow: var(--shadow-card); position:relative; overflow:hidden; }
   .tile::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background: var(--tile-accent, var(--border)); }
   .tile-label{ font-size:11px; color: var(--ink-2); text-transform:uppercase; letter-spacing:0.03em; font-weight:600; }
   .tile-value{ font-family: var(--font-mono); font-size:26px; font-weight:600; margin-top:6px; line-height:1; }
@@ -288,9 +303,11 @@
   /* ---------- two column layout ---------- */
   .cols-2{ display:grid; grid-template-columns: 1.3fr 1fr; gap:16px; }
   .cols-3{ display:grid; grid-template-columns: repeat(3,1fr); gap:14px; }
+  .cols-2 > *, .cols-3 > *{ min-width:0; }
 
   /* ---------- AI Investigation layout ---------- */
   .invest-shell{ display:grid; grid-template-columns: 280px 1fr; gap:16px; align-items:start; }
+  .invest-shell > *{ min-width:0; }
   .invest-list{ background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); overflow:hidden; position:sticky; top:76px; max-height: calc(100vh - 96px); display:flex; flex-direction:column; }
   .invest-list-search{ padding:10px; border-bottom:1px solid var(--border); }
   .invest-list-items{ overflow-y:auto; }
@@ -395,17 +412,30 @@
   .newform-actions{ display:flex; justify-content:flex-end; gap:8px; margin-top:14px; }
 
   /* ---------- Executive Dashboard ---------- */
-  .exec-section-heading{ display:flex; align-items:center; gap:9px; margin: 26px 0 10px; }
+  .exec-section-heading{ display:flex; align-items:center; gap:9px; margin: 34px 0 14px; }
   .exec-section-heading:first-child{ margin-top:0; }
   .exec-section-heading h3{ font-size:14.5px; }
   .exec-section-num{ font-family: var(--font-mono); font-size:10.5px; font-weight:700; color: var(--accent-ink); background: var(--accent); width:19px; height:19px; border-radius:5px; display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
 
-  .exec-hero{ background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); padding:18px 20px; box-shadow: var(--shadow-card); }
-  .exec-hero-label{ font-size:11px; text-transform:uppercase; letter-spacing:0.04em; color: var(--ink-2); font-weight:600; }
-  .exec-hero-row{ display:flex; align-items:baseline; gap:18px; margin-top:8px; flex-wrap:wrap; }
-  .exec-hero-score{ font-size:44px; font-weight:700; line-height:1; }
+  .exec-hero{ background: var(--surface); border:1px solid var(--border); border-left:3px solid var(--hero-accent, var(--accent));
+    border-radius: var(--radius-lg); padding: var(--space-5) var(--space-6); box-shadow: var(--shadow-raised); }
+  .exec-hero-label{ font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color: var(--ink-2); font-weight:700; }
+  .exec-hero-row{ display:flex; align-items:baseline; gap:22px; margin-top:10px; flex-wrap:wrap; }
+  .exec-hero-score{ font-size:56px; font-weight:700; line-height:1; letter-spacing:-0.02em; }
   .exec-hero-trend{ font-size:12px; font-weight:600; margin-top:6px; }
-  .exec-hero-sub{ font-size:11.5px; color: var(--ink-3); margin-top:10px; max-width:70ch; }
+  .exec-hero-sub{ font-size:11.5px; color: var(--ink-3); margin-top:12px; max-width:70ch; }
+
+  /* ---- Command Center "needs attention" strip — a compact, scannable
+     answer to "what requires management attention right now", sitting
+     above the hero so it's the very first thing read. ---- */
+  .attn-strip{ display:flex; gap:1px; background:var(--border); border:1px solid var(--border); border-radius: var(--radius-lg);
+    overflow:hidden; margin-bottom: var(--space-4); box-shadow: var(--shadow-card); }
+  .attn-item{ flex:1; background: var(--surface); padding: var(--space-3) var(--space-4); display:flex; align-items:center; gap:10px; min-width:0; }
+  .attn-item-icon{ width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+    background: var(--attn-tone-soft, var(--neutral-soft)); color: var(--attn-tone, var(--ink-2)); }
+  .attn-item-text{ min-width:0; }
+  .attn-item-label{ font-size:10.5px; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-3); font-weight:600; }
+  .attn-item-value{ font-size:13px; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
   .exec-risk-list{ display:flex; flex-direction:column; gap:8px; margin-top:10px; }
   .exec-risk-row{ background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-card); overflow:hidden; }
@@ -463,6 +493,13 @@
   @media (max-width: 720px){
     .exec-risk-row-head{ flex-wrap:wrap; }
     .exec-risk-score{ order:5; width:auto; }
+    .attn-strip{ flex-direction:column; }
+    .attn-item{ border-bottom:1px solid var(--border); }
+    .welcome-headline{ font-size:26px; }
+    .welcome-loop{ gap:6px; padding:36px 16px; }
+    .welcome-loop-connector{ display:none; }
+    .welcome-benefits{ grid-template-columns:1fr; padding:0 16px 40px; }
+    .demo-panel{ left:12px; right:12px; width:auto; bottom:12px; }
   }
 
   @media (max-width: 1180px){
@@ -471,6 +508,115 @@
     .cols-3{ grid-template-columns: 1fr; }
     .invest-shell{ grid-template-columns: 1fr; }
     .invest-list{ position:static; max-height:340px; }
+  }
+
+  /* ---------- Feed cards — a simple, scannable list item used in place of
+     dense tables wherever the audience is "anyone", not just a power user
+     (Overview mini-feeds, the full Incidents/Actions lists). ---------- */
+  .feed-list{ display:flex; flex-direction:column; gap:8px; }
+  .feed-card{ display:flex; align-items:center; gap:14px; background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius-lg); padding:14px 16px; cursor:pointer; }
+  .feed-card:hover{ border-color:var(--accent); box-shadow:var(--shadow-card); }
+  .feed-card-icon{ width:38px; height:38px; border-radius:50%; flex:0 0 auto; display:flex; align-items:center; justify-content:center;
+    background:var(--fc-tone-soft, var(--neutral-soft)); color:var(--fc-tone, var(--ink-2)); }
+  .feed-card-main{ flex:1; min-width:0; }
+  .feed-card-title{ font-size:14px; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .feed-card-meta{ font-size:12px; color:var(--ink-3); margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .feed-card-tags{ display:flex; gap:6px; flex:0 0 auto; align-items:center; flex-wrap:wrap; justify-content:flex-end; max-width:220px; }
+  .feed-more-link{ text-align:center; padding:10px; font-size:12.5px; font-weight:600; color:var(--accent); }
+  .feed-more-link:hover{ text-decoration:underline; }
+  @media (max-width:600px){
+    .feed-card{ flex-wrap:wrap; }
+    .feed-card-tags{ max-width:none; width:100%; justify-content:flex-start; padding-left:52px; }
+  }
+
+  /* ---------- Demo Mode floating panel ---------- */
+  .demo-panel{ position:fixed; right:24px; bottom:24px; width:320px; background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius-lg); box-shadow:var(--shadow-pop); padding:var(--space-4); z-index:50; }
+  .demo-panel-head{ display:flex; align-items:center; justify-content:space-between; }
+  .demo-panel-count{ font-size:10px; text-transform:uppercase; letter-spacing:0.04em; font-weight:700; color:var(--accent); }
+  .demo-panel-close{ background:none; border:none; cursor:pointer; color:var(--ink-3); padding:2px; display:flex; }
+  .demo-panel-close:hover{ color:var(--ink); }
+  .demo-panel-title{ font-size:14px; font-weight:700; margin-top:6px; }
+  .demo-panel-text{ font-size:12px; color:var(--ink-2); margin-top:6px; line-height:1.5; }
+  .demo-panel-actions{ display:flex; justify-content:space-between; gap:8px; margin-top:12px; }
+
+  /* ---------- Landing page ---------- */
+  .welcome-screen{ width:100%; min-height:100vh; background:var(--page); color:var(--ink); overflow-x:hidden; }
+  .welcome-hero{ width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:72px 20px 64px; background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(46,166,201,0.16), transparent 65%), var(--rail);
+    color:var(--rail-ink); }
+  .welcome-brand{ display:flex; align-items:center; gap:12px; margin-bottom:32px; }
+  .welcome-name{ font-size:22px; font-weight:700; color:#fff; letter-spacing:0.02em; }
+  .welcome-headline{ font-size:40px; font-weight:700; color:#fff; max-width:760px; line-height:1.18; letter-spacing:-0.01em; }
+  .welcome-sub{ font-size:15.5px; color:var(--rail-ink); max-width:600px; margin-top:18px; line-height:1.65; }
+  .welcome-actions{ display:flex; gap:12px; margin-top:36px; flex-wrap:wrap; justify-content:center; }
+  .welcome-btn{ padding:13px 26px; border-radius:var(--radius-sm); font-size:14px; font-weight:600; cursor:pointer; border:1px solid transparent; }
+  .welcome-btn-primary{ background:var(--accent); color:var(--accent-ink); }
+  .welcome-btn-primary:hover{ opacity:0.9; }
+  .welcome-btn-ghost{ background:transparent; border-color:var(--rail-border); color:#fff; }
+  .welcome-btn-ghost:hover{ background:rgba(255,255,255,0.08); }
+
+  .welcome-loop{ display:flex; align-items:flex-start; justify-content:center; gap:0; flex-wrap:wrap;
+    max-width:1080px; margin:0 auto; padding:56px 24px; }
+  .welcome-loop-step{ display:flex; flex-direction:column; align-items:center; text-align:center; width:170px; padding:0 8px; }
+  .welcome-loop-icon{ width:52px; height:52px; border-radius:50%; background:var(--accent-soft); color:var(--accent);
+    display:flex; align-items:center; justify-content:center; margin-bottom:12px; }
+  .welcome-loop-icon svg{ width:22px; height:22px; }
+  .welcome-loop-label{ font-size:13.5px; font-weight:700; color:var(--ink); }
+  .welcome-loop-text{ font-size:12px; color:var(--ink-2); margin-top:6px; line-height:1.5; }
+  .welcome-loop-connector{ height:1px; background:var(--border); flex:1 1 30px; margin-top:26px; min-width:20px; }
+
+  .welcome-benefits{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1080px; margin:0 auto; padding:0 24px 64px; }
+  .welcome-benefit-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg);
+    padding:24px; box-shadow:var(--shadow-card); text-align:left; }
+  .welcome-benefit-icon{ width:40px; height:40px; border-radius:var(--radius); background:var(--accent-soft); color:var(--accent);
+    display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+  .welcome-benefit-title{ font-size:15px; font-weight:700; }
+  .welcome-benefit-text{ font-size:13px; color:var(--ink-2); margin-top:8px; line-height:1.55; }
+
+  .welcome-footer{ border-top:1px solid var(--border); padding:24px 20px 40px; text-align:center; }
+  .welcome-disclaimer{ font-size:11.5px; color:var(--ink-3); max-width:560px; margin:0 auto; line-height:1.5; }
+
+  /* ---------- Global Risk Map ---------- */
+  .map-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:var(--space-4); box-shadow:var(--shadow-raised); }
+  .map-land{ fill:var(--border); opacity:0.55; }
+  .map-grid{ stroke:var(--border); stroke-width:0.6; opacity:0.6; }
+  .map-pin{ cursor:pointer; }
+  .map-pin circle.ring{ fill:none; stroke-width:1.4; opacity:0.55; }
+  .map-pin circle.dot{ stroke:var(--surface); stroke-width:1.5; }
+  .map-pin:hover circle.dot{ stroke-width:2.5; }
+  .map-pin-label{ font-size:9.5px; font-weight:600; fill:var(--ink-2); pointer-events:none; }
+  .fac-card-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; margin-top:14px; }
+  .fac-card{ background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--fac-tone,var(--border)); border-radius:var(--radius); padding:12px 14px; cursor:pointer; box-shadow:var(--shadow-card); }
+  .fac-card:hover{ border-color:var(--accent); }
+  .fac-card.selected{ box-shadow:0 0 0 2px var(--accent); }
+  .fac-card-name{ font-weight:700; font-size:13px; }
+  .fac-card-loc{ font-size:11px; color:var(--ink-3); margin-top:2px; }
+  .fac-card-stats{ display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:10px; }
+  .fac-card-stat-v{ font-family:var(--font-mono); font-weight:700; font-size:15px; }
+  .fac-card-stat-k{ font-size:9.5px; text-transform:uppercase; color:var(--ink-3); letter-spacing:0.03em; }
+
+  /* ---------- Risk Graph ---------- */
+  .graph-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:var(--space-4); box-shadow:var(--shadow-raised); overflow-x:auto; }
+  .graph-col-label{ font-size:10px; text-transform:uppercase; letter-spacing:0.05em; font-weight:700; fill:var(--ink-3); }
+  .graph-edge{ stroke:var(--border-strong); stroke-width:1.4; fill:none; }
+  .graph-node-box{ fill:var(--surface); stroke:var(--border-strong); stroke-width:1.2; cursor:pointer; }
+  .graph-node-box:hover{ stroke:var(--accent); }
+  .graph-node-box.selected{ stroke:var(--accent); stroke-width:2; fill:var(--accent-soft); }
+  .graph-node-box.anchor{ fill:var(--accent); stroke:var(--accent); }
+  .graph-node-label{ font-size:10.5px; font-weight:600; fill:var(--ink); pointer-events:none; }
+  .graph-node-sub{ font-size:9px; fill:var(--ink-3); pointer-events:none; }
+  .graph-node-box.anchor ~ .graph-node-label{ fill:var(--accent-ink); }
+  .graph-more-label{ font-size:10px; fill:var(--ink-3); font-style:italic; }
+
+  @media print{
+    .rail, .topbar, .report-toolbar{ display:none !important; }
+    .main{ display:block; }
+    .view{ padding:0; }
+    .card{ box-shadow:none; break-inside:avoid; }
+    body{ background:#fff; }
   }
 </style>
 
@@ -494,6 +640,14 @@ function getStoredTheme(){
 }
 function setStoredTheme(v){
   try { localStorage.setItem('riskon-theme', v); } catch(e){}
+}
+/* ---- generic small flags (e.g. "has this browser seen the landing page
+   before"), same localStorage-with-fallback pattern as theme/user above ---- */
+function getStoredFlag(key){
+  try { return localStorage.getItem(key)==='1'; } catch(e){ return false; }
+}
+function setStoredFlag(key, v){
+  try { localStorage.setItem(key, v?'1':'0'); } catch(e){}
 }
 /* ---- signed-up profile -- same localStorage pattern as theme above; this
    is a remembered DISPLAY profile, not an authenticated session (see
@@ -561,13 +715,13 @@ DATA.auditTrail = DATA.auditTrail || [];
    ========================================================================= */
 var ROLES = {
   employee:      { label:'Employee',      canApprove:false, canSubmitIncident:true,  scope:'facility',
-                    nav:['dashboard','incidents'] },
+                    nav:['dashboard','incidents','admin'] },
   hse_manager:   { label:'HSE Manager',   canApprove:true,  canSubmitIncident:true,  scope:'facility',
-                    nav:['dashboard','incidents','investigation','actions','register','riskintel','learning','audit'] },
+                    nav:['dashboard','incidents','investigation','actions','register','facilities','riskgraph','riskintel','learning','audit','reports','admin'] },
   plant_manager: { label:'Plant Manager', canApprove:true,  canSubmitIncident:true,  scope:'facility',
-                    nav:['dashboard','executive','incidents','investigation','actions','register','riskintel','learning','intelligence','audit'] },
+                    nav:['dashboard','executive','incidents','investigation','actions','register','facilities','riskgraph','riskintel','learning','intelligence','audit','reports','admin'] },
   executive:     { label:'Executive',     canApprove:false, canSubmitIncident:false, scope:'all',
-                    nav:['dashboard','executive','riskintel','learning','intelligence'] }
+                    nav:['dashboard','executive','facilities','riskgraph','riskintel','learning','intelligence','reports','admin'] }
 };
 function currentRole(){ return ROLES[App.currentRole] || ROLES.hse_manager; }
 function roleCanSeeNav(name){ return currentRole().nav.indexOf(name) >= 0; }
@@ -651,7 +805,11 @@ var ICONS = {
   lock: '<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="7" width="9" height="7" rx="1.2" stroke="currentColor" stroke-width="1.3"/><path d="M5.3 7V5a2.7 2.7 0 0 1 5.4 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>',
   trend: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12.5L6.2 8L9.2 10.5L14 4.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.4 4H14V7.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   chevron: '<svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M4.5 6L8 9.6L11.5 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  learning: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 8A5.5 5.5 0 1 1 11.9 4.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M13.7 2.5V5.3H10.9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="8" r="1.15" fill="currentColor"/></svg>'
+  learning: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 8A5.5 5.5 0 1 1 11.9 4.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M13.7 2.5V5.3H10.9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="8" r="1.15" fill="currentColor"/></svg>',
+  graph: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="4" cy="3.5" r="1.7" stroke="currentColor" stroke-width="1.3"/><circle cx="12.5" cy="3.5" r="1.7" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="9" r="1.9" stroke="currentColor" stroke-width="1.3"/><circle cx="4" cy="13.2" r="1.5" stroke="currentColor" stroke-width="1.3"/><circle cx="12.2" cy="13.2" r="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.3 4.7L6.7 7.5M10.9 4.7L9.3 7.5M6.6 10.4L5 11.9M9.4 10.4L11 11.9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>',
+  reports: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 1.75h6l2.75 2.75V13.5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-10.75a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M5.5 8h5M5.5 10.3h5M5.5 5.7h2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>',
+  admin: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.1" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.8v1.7M8 12.5v1.7M14.2 8h-1.7M3.5 8H1.8M12.3 3.7l-1.2 1.2M4.9 11.1l-1.2 1.2M12.3 12.3l-1.2-1.2M4.9 4.9L3.7 3.7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>',
+  globe: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.2" stroke="currentColor" stroke-width="1.3"/><path d="M1.8 8h12.4M8 1.8c1.9 1.7 2.9 4 2.9 6.2S9.9 12.5 8 14.2C6.1 12.5 5.1 10.2 5.1 8S6.1 3.5 8 1.8Z" stroke="currentColor" stroke-width="1.2"/></svg>'
 };
 
 var SHIELD_MARK = '<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 2.5L22.5 6V12.5C22.5 18.5 18.6 22.7 13 24C7.4 22.7 3.5 18.5 3.5 12.5V6L13 2.5Z" fill="#0E6E8C"/><path d="M8.5 13.2L11.3 16L17.5 9.5" stroke="#EAF6FA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -673,6 +831,9 @@ var App = {
   selectedIncidentId: null,
   newIncidentOpen: false,
   execExpandedRiskId: null,
+  riskGraphEquipmentId: null,
+  riskGraphSelectedNode: null,
+  selectedFacilityId: null,
   learningGraphRecId: null,
   lastLearningFeedbackId: null,
   liveAnalyses: {},
@@ -681,6 +842,63 @@ var App = {
 };
 
 var PAGE_SIZE = 14;
+
+/* =========================================================================
+   DEMO MODE - a guided tour that drives the SAME navigate()/render() the
+   rest of the app uses; it never fakes a screen, it just walks a real user
+   through real screens with a running commentary panel.
+   ========================================================================= */
+var DemoMode = { active: false, step: 0 };
+var DEMO_STEPS = [
+  { hash:'dashboard', title:'1. Overview', text:'This is the operational summary for the facility currently in scope &mdash; open incidents, overdue actions, and open high-risk items, all real and live.' },
+  { hash:'facilities', title:'2. Select a facility', text:'RISKON tracks every Rex Industrial facility worldwide. Click a facility card or map pin to see its real risk signal and drill into its operations.' },
+  { hash:'riskintel', title:'3. Select an emerging risk', text:'Risk Intelligence surfaces company-wide patterns computed from real incident/control data &mdash; not a single incident, a genuine cross-facility signal.' },
+  { hash:'riskgraph', title:'4. Open the Risk Graph', text:'Pick a piece of equipment and see its real, traced relationship chain: maintenance history, incidents, hazards, and controls.' },
+  { hash:'riskgraph', title:'5. Discover related equipment', text:'Every node here is a real database record. Click the equipment node itself to see its full maintenance and criticality profile.' },
+  { hash:'riskgraph', title:'6. Open related incidents', text:'Click an incident node in the graph to see the real report behind it, then jump straight into its AI investigation.' },
+  { hash:'investigation', title:'7. Open the AI investigation', text:'Every incident with a full AI trace shows the complete reasoning pipeline: facts, analysis, hypotheses, and recommendations.' },
+  { hash:'investigation', title:'8. Review the AI reasoning', text:'Notice the FACT / AI ANALYSIS / AI HYPOTHESIS / RECOMMENDATION labels on each stage &mdash; RISKON never blurs a computed fact with a guess.' },
+  { hash:'actions', title:'9. Review corrective actions', text:'Recommended actions become real, trackable corrective actions once a human approves the AI\'s findings.' },
+  { hash:'investigation', title:'10. Approve an action', text:'Scroll to the Human Review Decision panel on an investigation and Approve or Reject &mdash; this is the human-in-the-loop gate, every time.' },
+  { hash:'register', title:'11. Update the risk register', text:'An approved AI finding can create or update a real Risk Register entry, scored by likelihood &times; impact like every other entry.' },
+  { hash:'executive', title:'12. Return to the Command Center', text:'The Command Center rolls all of this up into one enterprise risk signal, with a "needs attention" strip right at the top.' },
+  { hash:'riskintel', title:'13. See Risk Intelligence update', text:'Risk Intelligence reflects the same underlying data the Command Center and Risk Graph already showed you &mdash; one source of truth, several lenses.' },
+  { hash:'learning', title:'14. Open AI Learning', text:'This is how RISKON grades its own advice: every recommendation is tracked from human decision through measured outcome.' },
+  { hash:'learning', title:'15. See how the system learned', text:'The Controlled Improvement Pipeline shows exactly how a learning signal becomes a candidate change &mdash; evaluated and human-approved, never automatic.' }
+];
+function startDemo(){
+  DemoMode.active = true; DemoMode.step = 0;
+  navigate(DEMO_STEPS[0].hash);
+}
+function exitDemo(){ DemoMode.active = false; render(); }
+function demoStep(delta){
+  var next = DemoMode.step + delta;
+  if(next<0 || next>=DEMO_STEPS.length){ exitDemo(); return; }
+  var prevHash = DEMO_STEPS[DemoMode.step].hash;
+  DemoMode.step = next;
+  var nextHash = DEMO_STEPS[next].hash;
+  if(nextHash===prevHash){
+    // setting location.hash to its current value doesn't fire 'hashchange',
+    // so consecutive demo steps on the same screen need an explicit render()
+    // -- otherwise the panel silently stops advancing.
+    render();
+  } else {
+    navigate(nextHash);
+  }
+}
+function renderDemoPanel(){
+  var s = DEMO_STEPS[DemoMode.step];
+  return '<div class="demo-panel">'+
+    '<div class="demo-panel-head"><span class="demo-panel-count">Guided Demo &middot; Step '+(DemoMode.step+1)+' of '+DEMO_STEPS.length+'</span>'+
+      '<button class="demo-panel-close" data-action="demoExit" title="Exit demo">'+ICONS.x+'</button></div>'+
+    '<div class="demo-panel-title">'+esc(s.title)+'</div>'+
+    '<div class="demo-panel-text">'+s.text+'</div>'+
+    '<div class="demo-panel-actions">'+
+      '<button class="btn btn-sm" data-action="demoBack"'+(DemoMode.step===0?' disabled':'')+'>&larr; Back</button>'+
+      '<button class="btn btn-sm btn-primary" data-action="demoNext">'+(DemoMode.step===DEMO_STEPS.length-1?'Finish':'Next &rarr;')+'</button>'+
+    '</div>'+
+  '</div>';
+}
 
 /* =========================================================================
    LOOKUPS
@@ -693,6 +911,7 @@ var SOP = byId(DATA.sops, 'sop_id');
 var CTL = byId(DATA.controls || [], 'control_id');
 var CA = byId(DATA.correctiveActions || [], 'corrective_action_id');
 var INC = byId(DATA.incidents || [], 'incident_id');
+var HAZ = byId(DATA.hazards || [], 'hazard_id');
 
 function facName(id){ return id && FAC[id] ? FAC[id].name.replace('Rex Industrial &ndash; ','') : (id || '-'); }
 function empName(id){ return id && EMP[id] ? (EMP[id].first_name+' '+EMP[id].last_name) : (id||'Unassigned'); }
@@ -755,16 +974,22 @@ window.addEventListener('hashchange', function(){ App.route = parseHash(); rende
    SHELL
    ========================================================================= */
 var NAV_ITEMS = [
-  {name:'dashboard', label:'Dashboard', icon:ICONS.dashboard},
-  {name:'executive', label:'Executive Dashboard', icon:ICONS.trend},
-  {name:'incidents', label:'Incident Reporting', icon:ICONS.incidents},
-  {name:'investigation', label:'AI Investigation', icon:ICONS.investigation},
-  {name:'actions', label:'Corrective Actions', icon:ICONS.actions},
-  {name:'register', label:'Risk Register', icon:ICONS.register},
-  {name:'riskintel', label:'Risk Intelligence', icon:ICONS.signal},
-  {name:'learning', label:'Continuous Learning', icon:ICONS.learning},
-  {name:'audit', label:'Audit Trail', icon:ICONS.audit},
-  {name:'intelligence', label:'Management Intelligence', icon:ICONS.intelligence}
+  {name:'dashboard', label:'Overview', icon:ICONS.dashboard, group:'Workspace'},
+  {name:'incidents', label:'Incidents', icon:ICONS.incidents, group:'Workspace'},
+  {name:'investigation', label:'Investigations', icon:ICONS.investigation, group:'Workspace'},
+  {name:'actions', label:'Corrective Actions', icon:ICONS.actions, group:'Workspace'},
+  {name:'register', label:'Risk Register', icon:ICONS.register, group:'Workspace'},
+
+  {name:'executive', label:'Command Center', icon:ICONS.trend, group:'Intelligence'},
+  {name:'riskintel', label:'Risk Intelligence', icon:ICONS.signal, group:'Intelligence'},
+  {name:'facilities', label:'Facilities', icon:ICONS.globe, group:'Intelligence'},
+  {name:'riskgraph', label:'Risk Graph', icon:ICONS.graph, group:'Intelligence'},
+  {name:'learning', label:'AI Learning', icon:ICONS.learning, group:'Intelligence'},
+  {name:'intelligence', label:'Management Intelligence', icon:ICONS.intelligence, group:'Intelligence'},
+
+  {name:'reports', label:'Reports', icon:ICONS.reports, group:'System'},
+  {name:'audit', label:'Audit Trail', icon:ICONS.audit, group:'System'},
+  {name:'admin', label:'Administration', icon:ICONS.admin, group:'System'}
 ];
 
 function navBadgeCount(name){
@@ -801,9 +1026,15 @@ function renderRailUser(){
 function renderShell(){
   var role = currentRole();
   var visibleItems = NAV_ITEMS.filter(function(item){ return roleCanSeeNav(item.name); });
+  var lastGroup = null;
   var nav = visibleItems.map(function(item){
     var count = navBadgeCount(item.name);
-    return '<a class="rail-link'+(App.route.name===item.name?' active':'')+'" href="#'+item.name+'">'+
+    var groupLabel = '';
+    if(item.group !== lastGroup){
+      lastGroup = item.group;
+      groupLabel = '<div class="rail-group-label">'+item.group+'</div>';
+    }
+    return groupLabel+'<a class="rail-link'+(App.route.name===item.name?' active':'')+'" href="#'+item.name+'">'+
       item.icon+'<span>'+item.label+'</span>'+ (count!=null ? '<span class="rail-link-num">'+count+'</span>' : '') +
     '</a>';
   }).join('');
@@ -818,11 +1049,13 @@ function renderShell(){
 
   return (
   '<div class="rail">'+
-    '<div class="rail-brand">'+SHIELD_MARK+'<div class="rail-brand-text"><span class="rail-brand-name">RISKON</span><span class="rail-brand-sub">Industrial Risk OS</span></div></div>'+
+    '<div class="rail-brand">'+SHIELD_MARK+'<div class="rail-brand-text"><span class="rail-brand-name">RISKON</span><span class="rail-brand-sub">Industrial Risk Intelligence</span></div></div>'+
     '<div class="rail-scope"><label class="rail-scope-label">'+ICONS.lock+' Viewing as (demo)</label><select id="roleScope">'+roleOpts+'</select></div>'+
     '<div class="rail-scope"><select id="facilityScope">'+facOpts+'</select></div>'+
     '<nav class="rail-nav">'+nav+'</nav>'+
-    '<div class="rail-foot">'+themeToggleHtml()+renderRailUser()+'</div>'+
+    '<div class="rail-foot">'+
+      '<button class="theme-toggle-btn" data-action="startDemoFromWelcome" style="margin-bottom:10px">'+ICONS.learning+'<span>Guided Demo</span></button>'+
+      themeToggleHtml()+renderRailUser()+'</div>'+
   '</div>'+
   '<div class="main"><div id="topbar"></div><div class="view" id="viewRoot"></div></div>'
   );
@@ -833,16 +1066,20 @@ function viewMeta(){
   // subtitle depends on App.facilityScope, which changes after this would
   // otherwise have been computed once at script load.
   return {
-    dashboard: { title:'Dashboard', sub:'Live operational summary across '+(App.facilityScope==='ALL'?'all Rex Industrial facilities':facName(App.facilityScope))+'.' },
-    executive: { title:'Executive Dashboard', sub:'Where is our industrial risk increasing, why, and what should management investigate &mdash; company-wide, independent of the facility filter above.' },
-    incidents: { title:'Incident Reporting', sub:'Submit and track incident reports across the incident lifecycle.' },
-    investigation: { title:'AI Investigation', sub:'AI-assisted classification, root-cause hypotheses, and recommended actions &mdash; every output requires your review.' },
+    dashboard: { title:'Overview', sub:'Live operational summary across '+(App.facilityScope==='ALL'?'all Rex Industrial facilities':facName(App.facilityScope))+'.' },
+    executive: { title:'Command Center', sub:'Where is our industrial risk increasing, why, and what should management investigate &mdash; company-wide, independent of the facility filter above.' },
+    incidents: { title:'Incidents', sub:'Submit and track incident reports across the incident lifecycle.' },
+    investigation: { title:'Investigations', sub:'AI-assisted classification, root-cause hypotheses, and recommended actions &mdash; every output requires your review.' },
     actions: { title:'Corrective Actions', sub:'Track corrective and preventive actions from assignment to verification.' },
     register: { title:'Risk Register', sub:'Facility risk exposure by likelihood &times; impact, sourced only from approved assessments.' },
     riskintel: { title:'Risk Intelligence', sub:'Emerging risk patterns detected across incidents, controls, and corrective actions &mdash; company-wide, computed independently of the facility filter above.' },
-    learning: { title:'Continuous Learning', sub:'How RISKON learns from what happened after its own recommendations &mdash; human feedback, measured outcomes, and controlled, human-approved improvements. Company-wide, independent of the facility filter above.' },
+    learning: { title:'AI Learning', sub:'How RISKON learns from what happened after its own recommendations &mdash; human feedback, measured outcomes, and controlled, human-approved improvements. Company-wide, independent of the facility filter above.' },
     audit: { title:'Audit Trail', sub:'Who did what, when, and why &mdash; every AI-generated recommendation and every human review decision, in order.' },
     intelligence: { title:'Management Intelligence', sub:'Trend and exposure summary for leadership review.' },
+    riskgraph: { title:'Risk Graph', sub:'A traced relationship chain from real records &mdash; equipment, maintenance, incidents, hazards, and controls. Every edge is a real foreign key, not a decorative connection.' },
+    facilities: { title:'Facilities', sub:'Every Rex Industrial facility, its real location, and its current risk signal &mdash; company-wide, independent of the facility filter above.' },
+    reports: { title:'Reports', sub:'Generate and export summary reports from live operational data &mdash; no manual data pulls.' },
+    admin: { title:'Administration', sub:'Your profile, company &amp; facility reference data, and the role-based access model this demo uses.' },
     signup: { title: App.currentUser ? 'Your Profile' : 'Sign Up', sub:'Your name, occupation, and post &mdash; shown in the sidebar. Not a login; RISKON has no password or session.' }
   };
 }
@@ -1137,7 +1374,7 @@ function renderExecOverview(ov, trend){
     return '<div class="tile" style="--tile-accent:var(--'+t.tone+')"><div class="tile-label">'+t.label+'</div><div class="tile-value mono">'+t.value+'</div><div class="tile-sub">'+t.sub+'</div></div>';
   }).join('');
 
-  return '<div class="exec-hero">'+
+  return '<div class="exec-hero" style="--hero-accent:var(--'+severityTone(ov.overall_risk_band)+')">'+
       '<div class="exec-hero-label">Overall Enterprise Risk Signal</div>'+
       '<div class="exec-hero-row"><div class="exec-hero-score mono">'+ov.overall_risk_signal_score+'</div>'+
         '<div>'+pill(ov.overall_risk_band, severityTone(ov.overall_risk_band))+
@@ -1308,9 +1545,27 @@ function renderManagementBrief(mb){
   '</div>';
 }
 
+function attnItem(label, value, tone, icon){
+  return '<div class="attn-item" style="--attn-tone:var(--'+tone+');--attn-tone-soft:var(--'+tone+'-soft)">'+
+    '<div class="attn-item-icon">'+icon+'</div>'+
+    '<div class="attn-item-text"><div class="attn-item-label">'+label+'</div><div class="attn-item-value">'+value+'</div></div>'+
+  '</div>';
+}
+function renderAttentionStrip(ed){
+  var topRisk = ed.topRisks[0];
+  var highestFac = ed.facilityComparison.highest_risk_facility;
+  return '<div class="attn-strip">'+
+    attnItem('Top Emerging Risk', topRisk ? esc(topRisk.risk_name||topRisk.hazard_category||topRisk.risk_id) : 'None detected', topRisk?severityTone(topRisk.risk_band):'good', ICONS.signal)+
+    attnItem('Overdue Corrective Actions', ed.correctiveActionIntelligence.overdue_count, ed.correctiveActionIntelligence.overdue_count>0?'critical':'good', ICONS.actions)+
+    attnItem('Open High/Critical Risks', ed.overview.open_high_risk_issues, ed.overview.open_high_risk_issues>0?'serious':'good', ICONS.warn)+
+    attnItem('Highest-Risk Facility', highestFac ? esc(facShort(highestFac)) : '&mdash;', 'accent', ICONS.building)+
+  '</div>';
+}
+
 function renderExecutiveDashboard(){
   var ed = execData();
   return (
+    renderAttentionStrip(ed)+
     sectionHeading(1, 'Enterprise Risk Overview')+
     renderExecOverview(ed.overview, ed.riskTrend)+
     sectionHeading(2, 'Top Emerging Risks')+
@@ -1730,6 +1985,30 @@ function renderAuditTrail(){
 /* =========================================================================
    VIEW: DASHBOARD
    ========================================================================= */
+function incidentFeedCard(i){
+  var tone = severityTone(i.severity_reported);
+  return '<div class="feed-card" data-action="goInvestigation" data-id="'+i.incident_id+'" style="--fc-tone:var(--'+tone+');--fc-tone-soft:var(--'+tone+'-soft)">'+
+    '<div class="feed-card-icon">'+ICONS.incidents+'</div>'+
+    '<div class="feed-card-main"><div class="feed-card-title">'+esc(i.title)+'</div>'+
+      '<div class="feed-card-meta">'+esc(facShort(i.facility_id))+' &middot; '+fmtDateShort(i.date_occurred)+'</div></div>'+
+    '<div class="feed-card-tags">'+pill(i.severity_reported, tone)+pill(i.status, incidentStatusTone(i.status))+'</div>'+
+  '</div>';
+}
+function actionFeedCard(a, showComplete){
+  var tone = actionStatusTone(a.status);
+  var completeBtn = (showComplete && a.status!=='Completed') ?
+    '<button class="btn btn-sm" data-action="completeAction" data-id="'+a.corrective_action_id+'" '+
+      'title="'+(BACKEND_REACHABLE?'Marks this action Completed in the real database':'No backend reachable -- static demo mode')+'"'+
+      (BACKEND_REACHABLE?'':' disabled')+'>'+ICONS.check+' Complete</button>' : '';
+  return '<div class="feed-card" data-action="goInvestigation" data-id="'+(a.incident_id||'')+'" style="--fc-tone:var(--'+tone+');--fc-tone-soft:var(--'+tone+'-soft)">'+
+    '<div class="feed-card-icon">'+ICONS.actions+'</div>'+
+    '<div class="feed-card-main"><div class="feed-card-title">'+esc(truncate(a.description,70))+'</div>'+
+      '<div class="feed-card-meta">'+esc(empName(a.owner_employee_id))+' &middot; due '+fmtDateShort(a.due_date)+
+      (a.incident_id ? ' &middot; '+a.incident_id : '')+'</div></div>'+
+    '<div class="feed-card-tags">'+pill(a.status, tone)+completeBtn+'</div>'+
+  '</div>';
+}
+
 function renderDashboard(){
   var incs = DATA.incidents.filter(function(i){ return inScope(i.facility_id); });
   var risks = DATA.riskAssessments.filter(function(r){ return inScope(r.facility_id); });
@@ -1751,58 +2030,30 @@ function renderDashboard(){
     return '<div class="tile" style="--tile-accent: var(--'+t.tone+')"><div class="tile-label">'+t.label+'</div><div class="tile-value mono">'+t.value+'</div><div class="tile-sub">'+t.sub+'</div></div>';
   }).join('');
 
-  var monthMap = {};
-  incs.forEach(function(i){ var mk=monthKey(i.date_occurred); monthMap[mk]=monthMap[mk]||{Low:0,Medium:0,High:0,Critical:0}; monthMap[mk][i.severity_reported]=(monthMap[mk][i.severity_reported]||0)+1; });
-  var months = Object.keys(monthMap).sort().slice(-6);
-  var buckets = months.map(function(mk){ var o=Object.assign({label:monthLabel(mk)}, monthMap[mk]); return o; });
-  var sevColors = {Low:'var(--good)',Medium:'var(--warning)',High:'var(--serious)',Critical:'var(--critical)'};
-  var sevLabels = {Low:'Low',Medium:'Medium',High:'High',Critical:'Critical'};
+  var recentIncidents = incs.slice().sort(function(a,b){ return new Date(b.date_occurred)-new Date(a.date_occurred); }).slice(0,5);
+  var dueSoon = actions.filter(function(a){ return a.status!=='Completed'; }).sort(function(a,b){ return new Date(a.due_date)-new Date(b.due_date); }).slice(0,5);
 
-  var recentIncidents = incs.slice().sort(function(a,b){ return new Date(b.date_occurred)-new Date(a.date_occurred); }).slice(0,7);
-  var recentRows = recentIncidents.map(function(i){
-    return '<tr class="rowlink" data-action="goInvestigation" data-id="'+i.incident_id+'">'+
-      '<td class="td-id">'+i.incident_id+'</td>'+
-      '<td class="td-title">'+esc(i.title)+'</td>'+
-      '<td class="td-muted">'+esc(facName(i.facility_id))+'</td>'+
-      '<td>'+pill(i.severity_reported,severityTone(i.severity_reported))+'</td>'+
-      '<td>'+pill(i.status,incidentStatusTone(i.status))+'</td>'+
-      '<td class="mono td-muted">'+fmtDateShort(i.date_occurred)+'</td>'+
-    '</tr>';
-  }).join('');
-
-  var dueSoon = actions.filter(function(a){ return a.status!=='Completed'; }).sort(function(a,b){ return new Date(a.due_date)-new Date(b.due_date); }).slice(0,7);
-  var dueRows = dueSoon.map(function(a){
-    var overdue = a.status==='Overdue';
-    return '<tr class="rowlink" data-action="goInvestigation" data-id="'+(a.incident_id||'')+'">'+
-      '<td class="stripe-cell"><span class="stripe" style="background:'+(overdue?'var(--critical)':'var(--warning)')+'"></span></td>'+
-      '<td class="td-title" style="max-width:220px">'+esc(truncate(a.description,60))+'</td>'+
-      '<td class="td-muted">'+esc(empName(a.owner_employee_id))+'</td>'+
-      '<td class="mono">'+fmtDateShort(a.due_date)+'</td>'+
-      '<td>'+pill(a.status,actionStatusTone(a.status))+'</td>'+
-    '</tr>';
-  }).join('');
-
-  var riTop3 = roleCanSeeNav('riskintel') ? (riskIntelData().topRisks || []).slice(0,3) : [];
-  var riSection = riTop3.length ? (
-    '<div style="margin-top:16px"><div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px">'+
-      '<h3 style="font-size:14px">'+ICONS.signal+' <span style="vertical-align:2px;margin-left:4px">Risk Intelligence &mdash; Top Emerging Risks</span></h3>'+
-      '<a href="#riskintel" style="font-size:11.5px;color:var(--accent);font-weight:600">View full Risk Intelligence &rarr;</a>'+
-    '</div><div class="cols-3">'+riTop3.map(function(r){ return renderRiskCard(r, true); }).join('')+'</div></div>'
+  var riTop = roleCanSeeNav('riskintel') ? (riskIntelData().topRisks || []) : [];
+  var riCallout = riTop.length ? (
+    '<a href="#riskintel" class="feed-card" style="margin-top:16px;--fc-tone:var(--serious);--fc-tone-soft:var(--serious-soft);text-decoration:none">'+
+      '<div class="feed-card-icon">'+ICONS.signal+'</div>'+
+      '<div class="feed-card-main"><div class="feed-card-title">'+riTop.length+' emerging risk pattern'+(riTop.length===1?'':'s')+' detected</div>'+
+        '<div class="feed-card-meta">Top signal: '+esc(riTop[0].risk_name||riTop[0].hazard_category||'')+' &middot; '+riTop[0].risk_band+'</div></div>'+
+      '<div class="feed-card-tags"><span style="font-size:12px;font-weight:600;color:var(--accent)">View Risk Intelligence &rarr;</span></div>'+
+    '</a>'
   ) : '';
 
   return (
     '<div class="tiles">'+tileHtml+'</div>'+
-    riSection+
-    '<div class="cols-2" style="margin-top:16px">'+
-      '<div class="card"><div class="card-head"><h3>Risk Matrix &mdash; Open Risks</h3><span class="card-head-sub">Likelihood &times; Impact</span></div>'+riskMatrix(risks.filter(function(r){return r.status==='Open';}))+'</div>'+
-      '<div class="card"><div class="card-head"><h3>Incidents by Severity</h3><span class="card-head-sub">Last 6 months</span></div><div class="chartwrap">'+stackedMonthlyChart(buckets,['Low','Medium','High','Critical'],sevColors,sevLabels)+'</div></div>'+
-    '</div>'+
-    '<div class="cols-2" style="margin-top:16px">'+
-      '<div class="card"><div class="card-head"><h3>Recent Incidents</h3><a href="#incidents" class="card-head-sub">View all &rarr;</a></div>'+
-        '<div class="tablewrap" style="border:none;border-radius:0;margin-top:10px"><table><thead><tr><th>ID</th><th>Title</th><th>Facility</th><th>Severity</th><th>Status</th><th>Date</th></tr></thead><tbody>'+(recentRows||'<tr><td colspan="6" class="empty-state">No incidents in scope.</td></tr>')+'</tbody></table></div>'+
+    riCallout+
+    '<div class="cols-2" style="margin-top:24px">'+
+      '<div><div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px">'+
+          '<h3 style="font-size:14px">Recent Incidents</h3><a href="#incidents" style="font-size:12px;color:var(--accent);font-weight:600">View all &rarr;</a></div>'+
+        '<div class="feed-list">'+(recentIncidents.length ? recentIncidents.map(incidentFeedCard).join('') : '<div class="empty-state">No incidents in scope.</div>')+'</div>'+
       '</div>'+
-      '<div class="card"><div class="card-head"><h3>Corrective Actions &mdash; Due Soon</h3><a href="#actions" class="card-head-sub">View all &rarr;</a></div>'+
-        '<div class="tablewrap" style="border:none;border-radius:0;margin-top:10px"><table><thead><tr><th></th><th>Action</th><th>Owner</th><th>Due</th><th>Status</th></tr></thead><tbody>'+(dueRows||'<tr><td colspan="5" class="empty-state">No open actions in scope.</td></tr>')+'</tbody></table></div>'+
+      '<div><div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px">'+
+          '<h3 style="font-size:14px">Corrective Actions &mdash; Due Soon</h3><a href="#actions" style="font-size:12px;color:var(--accent);font-weight:600">View all &rarr;</a></div>'+
+        '<div class="feed-list">'+(dueSoon.length ? dueSoon.map(actionFeedCard).join('') : '<div class="empty-state">No open actions in scope.</div>')+'</div>'+
       '</div>'+
     '</div>'
   );
@@ -1837,18 +2088,7 @@ function renderIncidents(){
   list = list.slice().sort(function(a,b){ return new Date(b.date_occurred)-new Date(a.date_occurred); });
 
   var p = paginate(list, App.pages.incidents);
-  var rows = p.rows.map(function(i){
-    return '<tr class="rowlink" data-action="goInvestigation" data-id="'+i.incident_id+'">'+
-      '<td class="td-id">'+i.incident_id+'</td>'+
-      '<td class="td-title">'+esc(i.title)+'</td>'+
-      '<td class="td-muted">'+esc(facName(i.facility_id))+'</td>'+
-      '<td class="td-muted">'+esc(i.hazard_category)+'</td>'+
-      '<td>'+pill(i.severity_reported,severityTone(i.severity_reported))+'</td>'+
-      '<td>'+pill(i.status,incidentStatusTone(i.status))+'</td>'+
-      '<td class="mono td-muted">'+fmtDateShort(i.date_occurred)+'</td>'+
-      '<td>'+(i.has_full_ai_pipeline? '<span class="ai-tag">Full AI Trace</span>' : (i.ai_confidence!=null ? '<span class="ai-tag">AI '+fmtPct(i.ai_confidence)+'</span>' : '<span class="td-muted">&mdash;</span>'))+'</td>'+
-    '</tr>';
-  }).join('');
+  var cards = p.rows.map(incidentFeedCard).join('');
 
   var facOpts = '<option value="">Facility &mdash; All</option>'+DATA.facilities.map(function(fac){ return '<option value="'+fac.facility_id+'"'+(f.facility===fac.facility_id?' selected':'')+'>'+esc(facName(fac.facility_id))+'</option>'; }).join('');
   var statusOpts = ['New','In Review','Approved','Rejected','Closed'].map(function(s){ return '<option value="'+s+'"'+(f.status===s?' selected':'')+'>'+s+'</option>'; }).join('');
@@ -1865,8 +2105,8 @@ function renderIncidents(){
       '<div class="field"><label>Category</label><select id="f_inc_category"><option value="">Category &mdash; All</option>'+catOpts+'</select></div>'+
       '<button class="btn btn-sm filterbar-clear" data-action="clearFilters" data-scope="incidents">Clear</button>'+
     '</div>'+
-    '<div class="tablewrap"><table><thead><tr><th>ID</th><th>Title</th><th>Facility</th><th>Category</th><th>Severity</th><th>Status</th><th>Occurred</th><th>AI</th></tr></thead>'+
-    '<tbody>'+(rows||'<tr><td colspan="8" class="empty-state">No incidents match these filters.</td></tr>')+'</tbody></table>'+pagerHtml(p,'incidents')+'</div>'
+    '<div class="feed-list">'+(cards||'<div class="empty-state">No incidents match these filters.</div>')+'</div>'+
+    (p.total ? '<div style="margin-top:12px">'+pagerHtml(p,'incidents')+'</div>' : '')
   );
 }
 
@@ -1928,61 +2168,63 @@ function renderFullPipeline(pipeline, incident){
       fieldRow('When Occurred', s2.when_occurred)+fieldRow('Where', s2.where_location)+
       fieldRow('Equipment', s2.equipment_involved)+fieldRow('Injuries Reported', s2.injuries_reported)+
       fieldRow('Witnesses', s2.witnesses)+fieldRow('Environmental Conditions', s2.environmental_conditions)+
-    '</div>');
+    '</div>', ['fact','FACT']);
 
   out += stageBlock('3','Classification','AI-assigned category &mdash; requires human confirmation.',
-    '<div class="factgrid">'+fieldRow('Incident Category', s3.incident_category)+fieldRow('Incident Type', s3.incident_type)+'</div>');
+    '<div class="factgrid">'+fieldRow('Incident Category', s3.incident_category)+fieldRow('Incident Type', s3.incident_type)+'</div>', ['pattern','AI ANALYSIS']);
 
   out += stageBlock('4','Hazard Identification','', s4.hazards.map(function(h){
     return reasonItem(esc(h.hazard_type), '<div style="font-size:12px;color:var(--ink-2);margin-bottom:2px">'+esc(h.description)+'</div>', h.confidence, 'Evidence', h.evidence);
-  }).join('') + '<div class="evidence-text" style="margin-top:6px;font-size:11.5px;color:var(--ink-3);border:none;padding:0">'+esc(s4.coverage_note)+'</div>');
+  }).join('') + '<div class="evidence-text" style="margin-top:6px;font-size:11.5px;color:var(--ink-3);border:none;padding:0">'+esc(s4.coverage_note)+'</div>', ['pattern','AI ANALYSIS']);
 
   out += stageBlock('5','Potential Consequence Assessment','Reasonable worst case &mdash; hypothetical, not what occurred.', s5.consequences.map(function(c){
     return reasonItem(esc(c.description), pill(c.plausible_worst_case_severity, severityTone(c.plausible_worst_case_severity)), c.confidence, 'Evidence', c.evidence);
-  }).join(''));
+  }).join(''), ['hypothesis','AI HYPOTHESIS']);
 
   out += stageBlock('6','Preliminary Severity Assessment','Status: pending human confirmation.',
     '<div class="cols-3">'+
       '<div class="reason-item"><div class="fact-k">AI-Suggested Severity</div><div style="margin-top:6px">'+pill(s6.ai_suggested_severity.value, severityTone(s6.ai_suggested_severity.value))+'</div><div class="evidence-text" style="margin-top:8px">'+esc(s6.ai_suggested_severity.reasoning)+'</div></div>'+
       '<div class="reason-item"><div class="fact-k">Recurrence Likelihood</div><div style="margin-top:6px;font-weight:600">'+esc(s6.ai_suggested_recurrence_likelihood.value)+'</div><div class="evidence-text" style="margin-top:8px">'+esc(s6.ai_suggested_recurrence_likelihood.reasoning)+'</div></div>'+
       '<div class="reason-item"><div class="fact-k">Reported Severity (Human)</div><div style="margin-top:6px">'+pill(incident.severity_reported, severityTone(incident.severity_reported))+'</div><div class="evidence-text" style="margin-top:8px">As submitted by the reporter, prior to AI review.</div></div>'+
-    '</div>');
+    '</div>', ['pattern','AI ANALYSIS']);
 
   out += stageBlock('7','Contributing-Factor Analysis','', s7.factors.map(function(f){
     return reasonItem('<span class="pill tone-neutral">'+f.category+'</span> '+esc(f.description), '', f.confidence, 'Evidence', f.evidence);
-  }).join(''));
+  }).join(''), ['pattern','AI ANALYSIS']);
 
   out += stageBlock('8','Root-Cause Hypotheses','Ranked hypotheses &mdash; never a confirmed cause.', s8.hypotheses.map(function(hy){
     return reasonItem('#'+hy.rank+' &nbsp;'+esc(hy.statement), '<span class="pill tone-neutral" style="margin-bottom:6px">Hypothesis &mdash; not confirmed</span>', hy.confidence, 'Evidence', 'Supporting: '+hy.supporting_evidence+(hy.contradicting_evidence? '\\n\\nOpen question: '+hy.contradicting_evidence : ''));
-  }).join(''));
+  }).join(''), ['hypothesis','AI HYPOTHESIS']);
 
   out += stageBlock('9','Existing-Control Identification','', s9.controls.map(function(c){
     var st = c.status==='present'?'good':(c.status==='absent'?'critical':'neutral');
     return reasonItem(esc(c.control_description)+' <span style="font-weight:400;color:var(--ink-3)">('+c.control_type+')</span>', pill(c.status.replace(/_/g,' '), st), null, 'Evidence', c.evidence);
-  }).join(''));
+  }).join(''), ['fact','FACT']);
 
   out += stageBlock('10','Control-Gap Identification','', s10.gaps.map(function(g){
     return reasonItem(esc(g.gap_description), '', g.confidence, 'Evidence', g.evidence);
-  }).join(''));
+  }).join(''), ['hypothesis','AI HYPOTHESIS']);
 
   out += stageBlock('11','Recommended Corrective / Preventive Actions','Recommendations only &mdash; none are auto-assigned.',
     '<div class="tablewrap" style="border:none"><table><thead><tr><th>Type</th><th>Description</th><th>Priority</th><th>Owner Role</th><th>Timeframe</th></tr></thead><tbody>'+
     s11.actions.map(function(a){
       return '<tr><td>'+pill(a.action_type, a.action_type==='Corrective'?'accent':'neutral')+'</td><td class="td-title" style="max-width:260px;white-space:normal">'+esc(a.description)+'</td><td>'+pill(a.priority, severityTone(a.priority==='Critical'?'Critical':a.priority==='High'?'High':a.priority==='Medium'?'Medium':'Low'))+'</td><td class="td-muted">'+esc(a.suggested_owner_role)+'</td><td class="mono td-muted">'+a.suggested_timeframe_days+'d</td></tr>';
-    }).join('') + '</tbody></table></div>');
+    }).join('') + '</tbody></table></div>', ['recommendation','RECOMMENDATION']);
 
   out += stageBlock('12','Risk-Register Impact','Proposed diff only &mdash; not written until approved.',
     '<div class="cols-3">'+
       '<div class="reason-item"><div class="fact-k">Proposed Action</div><div style="margin-top:6px;font-weight:600">'+ (s12.proposed_action==='create_new_risk'?'Create New Risk Entry':'Update Existing Risk') +'</div></div>'+
       '<div class="reason-item"><div class="fact-k">Likelihood &times; Impact</div><div style="margin-top:6px" class="mono">'+s12.likelihood.value+' &times; '+s12.impact.value+' = '+s12.risk_score.value+'</div></div>'+
       '<div class="reason-item"><div class="fact-k">Risk Level</div><div style="margin-top:6px">'+pill(s12.risk_level.value, riskLevelTone(s12.risk_level.value))+'</div></div>'+
-    '</div><div class="evidence-text" style="margin-top:10px">'+esc(s12.reasoning)+'</div>');
+    '</div><div class="evidence-text" style="margin-top:10px">'+esc(s12.reasoning)+'</div>', ['recommendation','RECOMMENDATION']);
 
   return out;
 }
 
-function stageBlock(num, title, sub, body){
-  return '<div class="stage"><div class="stage-head"><span class="stage-num">'+num+'</span><span class="stage-title">'+title+'</span>'+(sub?'<span style="font-size:11px;color:var(--ink-3);margin-left:auto">'+sub+'</span>':'')+'</div><div class="stage-body">'+body+'</div></div>';
+function stageBlock(num, title, sub, body, tag){
+  return '<div class="stage"><div class="stage-head"><span class="stage-num">'+num+'</span><span class="stage-title">'+title+'</span>'+
+    (tag?'<span class="ev-tag ev-'+tag[0]+'" style="margin-left:10px">'+tag[1]+'</span>':'')+
+    (sub?'<span style="font-size:11px;color:var(--ink-3);margin-left:auto">'+sub+'</span>':'')+'</div><div class="stage-body">'+body+'</div></div>';
 }
 
 function renderCondensedPipeline(incident){
@@ -2087,7 +2329,7 @@ function renderInvestigation(){
   if(incident){
     detail += '<div class="card card-pad" style="margin-bottom:14px">'+
       '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">'+
-        '<div><div class="td-id" style="font-size:12px">'+incident.incident_id+' &middot; '+esc(facName(incident.facility_id))+'</div><h2 style="font-size:17px;margin-top:4px">'+esc(incident.title)+'</h2>'+
+        '<div style="min-width:0"><div class="td-id" style="font-size:12px">'+incident.incident_id+' &middot; '+esc(facName(incident.facility_id))+'</div><h2 style="font-size:17px;margin-top:4px;word-break:break-word">'+esc(incident.title)+'</h2>'+
         '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">'+pill('Reported: '+incident.severity_reported, severityTone(incident.severity_reported))+pill(incident.status, incidentStatusTone(incident.status))+'<span class="pill tone-neutral">'+esc(incident.hazard_category)+'</span></div></div>'+
       '</div>'+
       '<div class="evidence-text" style="margin-top:12px">'+esc(incident.description)+'</div>'+
@@ -2130,7 +2372,7 @@ function renderApprovalBar(incident){
     '</div>';
   }
   return '<div class="approval-bar">'+
-    '<h4>Human Review Decision</h4>'+
+    '<h4>Human Review Decision <span class="ev-tag" style="background:var(--accent-soft);color:var(--accent);margin-left:4px">HUMAN DECISION</span></h4>'+
     '<div style="font-size:11.5px;color:var(--ink-3);margin-top:2px">Approving will create/update the linked risk-register entry and open the recommended corrective/preventive actions. Nothing above has been written to the register yet. This decision is recorded in the Audit Trail.</div>'+
     '<div class="approval-row">'+
       '<textarea id="reviewComment" placeholder="Optional reviewer comment&hellip;" rows="1"></textarea>'+
@@ -2157,21 +2399,7 @@ function renderActions(){
   list = list.slice().sort(function(a,b){ return new Date(a.due_date)-new Date(b.due_date); });
 
   var p = paginate(list, App.pages.actions);
-  var rows = p.rows.map(function(a){
-    var stripe = a.status==='Overdue'?'var(--critical)':(a.status==='Open'?'var(--accent)':(a.status==='In Progress'?'var(--warning)':'var(--good)'));
-    return '<tr class="rowlink" data-action="goInvestigation" data-id="'+(a.incident_id||'')+'">'+
-      '<td class="stripe-cell"><span class="stripe" style="background:'+stripe+'"></span></td>'+
-      '<td class="td-id">'+a.corrective_action_id+'</td>'+
-      '<td class="td-title" style="max-width:280px">'+esc(a.description)+'</td>'+
-      '<td>'+pill(a.action_type, a.action_type==='Corrective'?'accent':'neutral')+'</td>'+
-      '<td class="td-id">'+(a.incident_id||'&mdash;')+'</td>'+
-      '<td class="td-muted">'+esc(empName(a.owner_employee_id))+'</td>'+
-      '<td class="mono">'+fmtDateShort(a.due_date)+'</td>'+
-      '<td>'+pill(a.status,actionStatusTone(a.status))+
-        (a.status!=='Completed' ? '<button class="btn btn-sm" style="margin-left:8px" data-action="completeAction" data-id="'+a.corrective_action_id+'" title="'+(BACKEND_REACHABLE?'Marks this action Completed in the real database':'No backend reachable -- static demo mode')+'"'+(BACKEND_REACHABLE?'':' disabled')+'>'+ICONS.check+' Complete</button>' : '')+
-      '</td>'+
-    '</tr>';
-  }).join('');
+  var cards = p.rows.map(function(a){ return actionFeedCard(a, true); }).join('');
 
   var facOpts = '<option value="">Facility &mdash; All</option>'+DATA.facilities.map(function(fac){ return '<option value="'+fac.facility_id+'"'+(f.facility===fac.facility_id?' selected':'')+'>'+esc(facName(fac.facility_id))+'</option>'; }).join('');
   var typeOpts = ['Corrective','Preventive'].map(function(t){ return '<option value="'+t+'"'+(f.type===t?' selected':'')+'>'+t+'</option>'; }).join('');
@@ -2188,8 +2416,8 @@ function renderActions(){
       '<div class="field"><label>Type</label><select id="f_act_type"><option value="">Type &mdash; All</option>'+typeOpts+'</select></div>'+
       '<button class="btn btn-sm filterbar-clear" data-action="clearFilters" data-scope="actions">Clear</button>'+
     '</div>'+
-    '<div class="tablewrap"><table><thead><tr><th></th><th>ID</th><th>Description</th><th>Type</th><th>Incident</th><th>Owner</th><th>Due</th><th>Status</th></tr></thead>'+
-    '<tbody>'+(rows||'<tr><td colspan="8" class="empty-state">No actions match these filters.</td></tr>')+'</tbody></table>'+pagerHtml(p,'actions')+'</div>'
+    '<div class="feed-list">'+(cards||'<div class="empty-state">No actions match these filters.</div>')+'</div>'+
+    (p.total ? '<div style="margin-top:12px">'+pagerHtml(p,'actions')+'</div>' : '')
   );
 }
 function actionStatusToneColor(s){ return {Open:'accent',Overdue:'critical','In Progress':'warning',Completed:'good'}[s]; }
@@ -2308,6 +2536,497 @@ function renderIntelligence(){
     '</div>'+
     '<div class="card" style="margin-top:16px"><div class="card-head"><h3>Facility Scorecard</h3></div>'+
       '<div class="tablewrap scorecard-table" style="border:none;margin-top:10px"><table><thead><tr><th>Facility</th><th>Open Incidents</th><th>High/Critical Risks</th><th>Overdue Actions</th><th>Avg AI Confidence</th></tr></thead><tbody>'+scoreRows+'</tbody></table></div>'+
+    '</div>'
+  );
+}
+
+/* =========================================================================
+   VIEW: WELCOME - product introduction, shown once per browser (see the
+   getStoredFlag('riskon-visited') check in the boot logic below), reachable
+   again any time at #welcome. Deliberately makes no exaggerated claims --
+   see docs/governance-and-controls.md and this file's own epistemic
+   labeling conventions for why that discipline matters throughout RISKON.
+   ========================================================================= */
+function renderWelcome(){
+  var loop = [
+    {icon:ICONS.incidents, label:'Connect', text:'Report what happens on the floor in a few clicks.'},
+    {icon:ICONS.investigation, label:'Understand', text:'AI reads the report and pulls in the real history behind it.'},
+    {icon:ICONS.signal, label:'Detect', text:'Spots patterns across incidents a person could easily miss.'},
+    {icon:ICONS.actions, label:'Act', text:'A person reviews and approves &mdash; nothing happens on its own.'},
+    {icon:ICONS.learning, label:'Learn', text:'Tracks what actually worked, so advice keeps getting better.'}
+  ];
+  var benefits = [
+    {icon:ICONS.signal, title:'See trouble coming', text:'Spot a pattern across incidents before it becomes a serious one &mdash; not after.'},
+    {icon:ICONS.investigation, title:'AI that shows its work', text:'Every AI answer is labeled fact, guess, or recommendation. Nothing is presented as certain when it isn\'t.'},
+    {icon:ICONS.actions, title:'Nothing falls through the cracks', text:'Every report, decision, and fix is tracked from start to finish, automatically.'}
+  ];
+  return '<div class="welcome-screen">'+
+    '<div class="welcome-hero">'+
+      '<div class="welcome-brand">'+SHIELD_MARK+'<span class="welcome-name">RISKON</span></div>'+
+      '<div class="welcome-headline">Workplace safety, with an AI partner that never stops watching.</div>'+
+      '<div class="welcome-sub">Report an incident. RISKON reads it, checks it against everything else that\'s happened, and tells you plainly what it found &mdash; a fact, a guess, or a suggestion, always labeled, always reviewed by a person before anything changes.</div>'+
+      '<div class="welcome-actions">'+
+        '<button class="welcome-btn welcome-btn-primary" data-action="enterApp">Enter RISKON</button>'+
+        '<button class="welcome-btn welcome-btn-ghost" data-action="startDemoFromWelcome">Take the 5-Minute Tour</button>'+
+      '</div>'+
+    '</div>'+
+    '<div class="welcome-loop">'+loop.map(function(s,i){
+      return (i>0?'<div class="welcome-loop-connector"></div>':'')+
+        '<div class="welcome-loop-step"><div class="welcome-loop-icon">'+s.icon+'</div>'+
+        '<div class="welcome-loop-label">'+s.label+'</div><div class="welcome-loop-text">'+s.text+'</div></div>';
+    }).join('')+'</div>'+
+    '<div class="welcome-benefits">'+benefits.map(function(b){
+      return '<div class="welcome-benefit-card"><div class="welcome-benefit-icon">'+b.icon+'</div>'+
+        '<div class="welcome-benefit-title">'+b.title+'</div><div class="welcome-benefit-text">'+b.text+'</div></div>';
+    }).join('')+'</div>'+
+    '<div class="welcome-footer">'+
+      '<div class="welcome-disclaimer">RISKON is decision-support software for safety professionals &mdash; it does not eliminate accidents, predict every incident, or replace a safety professional\'s judgment. This is a functional prototype running on a realistic demo dataset for Rex Industrial Manufacturing.</div>'+
+    '</div>'+
+  '</div>';
+}
+
+/* =========================================================================
+   VIEW: FACILITIES + GLOBAL RISK MAP - real coordinates for the real cities
+   Rex Industrial's facilities are actually in (public geographic knowledge,
+   not company data), real per-facility stats computed the same way the
+   Command Center's Facility Comparison already does. No invented facility,
+   no invented number.
+   ========================================================================= */
+var FACILITY_COORDS = {
+  'FAC-001': {lat:40.80, lon:-81.38}, // Canton, OH
+  'FAC-002': {lat:29.73, lon:-94.98}, // Baytown, TX
+  'FAC-003': {lat:32.08, lon:-81.09}, // Savannah, GA
+  'FAC-004': {lat:53.48, lon:-2.24},  // Manchester, UK
+  'FAC-005': {lat:48.78, lon:9.18},   // Stuttgart, Germany
+  'FAC-006': {lat:18.52, lon:73.86},  // Pune, India
+  'FAC-007': {lat:-37.81, lon:144.96} // Melbourne, Australia
+};
+function signalBandForScore(score){
+  if(score==null) return 'Low';
+  if(score>=80) return 'Critical';
+  if(score>=60) return 'High';
+  if(score>=40) return 'Medium';
+  return 'Low';
+}
+function facilityStats(facilityId){
+  var incs = DATA.incidents.filter(function(i){ return i.facility_id===facilityId; });
+  var open = incs.filter(function(i){ return i.status!=='Closed'; });
+  var acts = DATA.correctiveActions.filter(function(a){ return a.facility_id===facilityId; });
+  var openActs = acts.filter(function(a){ return a.status!=='Completed'; });
+  var overdueActs = acts.filter(function(a){ return a.status==='Overdue'; });
+  var risks = DATA.riskAssessments.filter(function(r){ return r.facility_id===facilityId; });
+  var openHighRisks = risks.filter(function(r){ return r.status==='Open' && (r.risk_level==='High'||r.risk_level==='Critical'); });
+  var summary = (execData().facilityComparison.facility_summaries||{})[facilityId] || {};
+  return { incidents: incs.length, openIncidents: open.length, openActions: openActs.length,
+    overdueActions: overdueActs.length, openHighRisks: openHighRisks.length,
+    signalScore: summary.max_risk_signal_score || 0, topRisk: summary.fastest_increasing_risk,
+    riskCount: summary.risk_count || 0 };
+}
+function renderFacilities(){
+  var facs = DATA.facilities;
+  var W = 960, H = 460;
+  function proj(lat, lon){ return { x: (lon+180)/360*W, y: (80-lat)/135*H }; }
+
+  // deliberately schematic continent silhouettes (rounded blobs, not precise
+  // coastlines) -- this is an operational overview map, not a cartographic
+  // product; real facility positions below are exact, real coordinates.
+  var land = [
+    {d:'M120,140 Q200,100 300,130 Q340,180 300,240 Q220,280 150,250 Q100,200 120,140 Z', label:'North America'},
+    {d:'M430,110 Q490,90 520,120 Q510,160 470,170 Q430,150 430,110 Z', label:'Europe'},
+    {d:'M120,300 Q180,280 220,320 Q210,370 160,390 Q110,360 120,300 Z', label:'South America'},
+    {d:'M440,220 Q500,210 520,260 Q500,320 450,330 Q410,280 440,220 Z', label:'Africa'},
+    {d:'M560,100 Q700,80 800,140 Q820,220 720,240 Q600,220 560,160 Z', label:'Asia'},
+    {d:'M760,330 Q830,320 850,360 Q820,400 760,390 Q740,355 760,330 Z', label:'Australia'}
+  ];
+  var landSvg = land.map(function(l){ return '<path class="map-land" d="'+l.d+'"></path>'; }).join('');
+  var gridSvg = '';
+  for(var glon=-150; glon<=150; glon+=30){ var gx=proj(0,glon).x; gridSvg += '<line class="map-grid" x1="'+gx+'" y1="0" x2="'+gx+'" y2="'+H+'"></line>'; }
+  for(var glat=-45; glat<=75; glat+=30){ var gy=proj(glat,0).y; gridSvg += '<line class="map-grid" x1="0" y1="'+gy+'" x2="'+W+'" y2="'+gy+'"></line>'; }
+
+  var pins = facs.map(function(f){
+    var c = FACILITY_COORDS[f.facility_id]; if(!c) return '';
+    var p = proj(c.lat, c.lon);
+    var stats = facilityStats(f.facility_id);
+    var band = signalBandForScore(stats.signalScore);
+    var tone = severityTone(band);
+    return '<g class="map-pin" data-action="selectFacility" data-id="'+f.facility_id+'" transform="translate('+p.x+','+p.y+')">'+
+      '<circle class="ring" r="12" stroke="var(--'+tone+')"></circle>'+
+      '<circle class="dot" r="6" fill="var(--'+tone+')"></circle>'+
+      '<text class="map-pin-label" x="10" y="4">'+esc(facShort(f.facility_id))+'</text>'+
+    '</g>';
+  }).join('');
+
+  var mapSvg = '<div class="map-card">'+svgWrap(W,H, landSvg+gridSvg+pins)+
+    '<div style="display:flex;gap:16px;margin-top:10px;font-size:11px;color:var(--ink-2)">'+
+      ['Low','Medium','High','Critical'].map(function(b){ return '<span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--'+severityTone(b)+');display:inline-block"></span>'+b+'</span>'; }).join('')+
+    '</div></div>';
+
+  var cards = facs.map(function(f){
+    var stats = facilityStats(f.facility_id);
+    var band = signalBandForScore(stats.signalScore);
+    var sel = App.selectedFacilityId===f.facility_id;
+    return '<div class="fac-card'+(sel?' selected':'')+'" style="--fac-tone:var(--'+severityTone(band)+')" data-action="selectFacility" data-id="'+f.facility_id+'">'+
+      '<div class="fac-card-name">'+esc(f.name)+'</div><div class="fac-card-loc">'+esc(f.city)+', '+esc(f.country)+'</div>'+
+      '<div style="margin-top:8px">'+pill(band+' Signal', severityTone(band))+'</div>'+
+      '<div class="fac-card-stats">'+
+        '<div><div class="fac-card-stat-v">'+stats.openIncidents+'</div><div class="fac-card-stat-k">Open Incidents</div></div>'+
+        '<div><div class="fac-card-stat-v">'+stats.overdueActions+'</div><div class="fac-card-stat-k">Overdue Actions</div></div>'+
+        '<div><div class="fac-card-stat-v">'+stats.openHighRisks+'</div><div class="fac-card-stat-k">High/Critical Risks</div></div>'+
+        '<div><div class="fac-card-stat-v" style="font-size:11.5px;font-weight:600">'+esc(stats.topRisk||'None')+'</div><div class="fac-card-stat-k">Top Emerging Risk</div></div>'+
+      '</div></div>';
+  }).join('');
+
+  var detail = App.selectedFacilityId ? renderFacilityDetail(App.selectedFacilityId) : '';
+
+  return mapSvg + '<div class="fac-card-grid">'+cards+'</div>' + detail;
+}
+
+function renderFacilityDetail(facilityId){
+  var f = FAC[facilityId]; if(!f) return '';
+  var incs = DATA.incidents.filter(function(i){ return i.facility_id===facilityId; }).slice(0,8);
+  var eq = DATA.equipment.filter(function(e){ return e.facility_id===facilityId; });
+  var acts = DATA.correctiveActions.filter(function(a){ return a.facility_id===facilityId && a.status!=='Completed'; }).slice(0,6);
+  // zones: derived from incidents.location free text, grouped -- exactly
+  // the kind of real-but-unstructured field the exploration confirmed
+  var zoneCounts = {};
+  DATA.incidents.filter(function(i){return i.facility_id===facilityId;}).forEach(function(i){
+    var z = eqType(i.equipment_id) || i.hazard_category;
+    zoneCounts[z] = (zoneCounts[z]||0)+1;
+  });
+  var zones = Object.keys(zoneCounts).sort(function(a,b){return zoneCounts[b]-zoneCounts[a];}).slice(0,6);
+
+  var incRows = incs.map(function(i){
+    return '<tr><td class="td-id">'+i.incident_id+'</td><td class="td-title" style="max-width:220px">'+esc(i.title)+'</td>'+
+      '<td>'+pill(i.severity_reported, severityTone(i.severity_reported))+'</td><td class="mono td-muted">'+fmtDateShort(i.date_occurred)+'</td></tr>';
+  }).join('');
+  var actRows = acts.map(function(a){
+    return '<tr><td class="td-id">'+a.corrective_action_id+'</td><td class="td-title" style="max-width:220px">'+esc(a.description)+'</td>'+
+      '<td>'+pill(a.status, actionStatusTone(a.status))+'</td><td class="mono td-muted">'+fmtDateShort(a.due_date)+'</td></tr>';
+  }).join('');
+
+  return '<div class="card" style="margin-top:16px">'+
+    '<div class="card-head"><div><h3>'+esc(f.name)+' — Facility Detail</h3><span class="card-head-sub">'+esc(f.address)+'</span></div>'+
+      '<button class="btn btn-sm" data-action="clearFacilitySelection">Close</button></div>'+
+    '<div class="card-pad">'+
+      '<div class="tiles">'+
+        '<div class="tile"><div class="tile-label">Equipment</div><div class="tile-value mono">'+eq.length+'</div></div>'+
+        '<div class="tile"><div class="tile-label">Employee Capacity</div><div class="tile-value mono">'+(f.employee_capacity||'&mdash;')+'</div></div>'+
+        '<div class="tile"><div class="tile-label">Facility Type</div><div class="tile-value" style="font-size:14px">'+esc(f.facility_type)+'</div></div>'+
+        '<div class="tile"><div class="tile-label">Established</div><div class="tile-value mono">'+(f.year_established||'&mdash;')+'</div></div>'+
+      '</div>'+
+      '<h4 style="margin:16px 0 8px;font-size:12.5px">Zones by Incident Concentration <span style="font-weight:400;color:var(--ink-3)">(derived from real incident/equipment records)</span></h4>'+
+      '<div class="chipbar">'+zones.map(function(z){ return '<span class="chip">'+esc(z)+' <span class="chip-count">'+zoneCounts[z]+'</span></span>'; }).join('')+'</div>'+
+      '<div class="cols-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px">'+
+        '<div><h4 style="margin-bottom:8px;font-size:12.5px">Recent Incidents</h4><div class="tablewrap"><table><thead><tr><th>ID</th><th>Title</th><th>Severity</th><th>Date</th></tr></thead><tbody>'+(incRows||'<tr><td colspan="4" style="text-align:center;color:var(--ink-3)">None</td></tr>')+'</tbody></table></div></div>'+
+        '<div><h4 style="margin-bottom:8px;font-size:12.5px">Open Corrective Actions</h4><div class="tablewrap"><table><thead><tr><th>ID</th><th>Description</th><th>Status</th><th>Due</th></tr></thead><tbody>'+(actRows||'<tr><td colspan="4" style="text-align:center;color:var(--ink-3)">None</td></tr>')+'</tbody></table></div></div>'+
+      '</div>'+
+    '</div>'+
+  '</div>';
+}
+
+/* =========================================================================
+   VIEW: RISK GRAPH - a real, foreign-key-traced relationship diagram, not a
+   decorative one. Every node below comes from an actual DATA.* row and
+   every edge is a real FK: equipment -> maintenance/inspections/incidents
+   -> hazards -> controls -> control assessments. Nothing here is invented;
+   an equipment with no real connections simply shows a sparse graph.
+   ========================================================================= */
+function plainFieldRow(label, value){
+  return '<div class="fact"><div class="fact-k">'+esc(label)+'</div><div class="fact-v">'+(value==null||value===''?'&mdash;':esc(value))+'</div></div>';
+}
+function riskGraphFor(equipmentId){
+  var eq = EQ[equipmentId];
+  if(!eq) return null;
+  var maint = (DATA.maintenance||[]).filter(function(m){ return m.equipment_id===equipmentId; });
+  var insp = (DATA.inspections||[]).filter(function(i){ return i.equipment_id===equipmentId; });
+  var incidents = DATA.incidents.filter(function(i){ return i.equipment_id===equipmentId; });
+  var hazards = (DATA.hazards||[]).filter(function(h){ return h.equipment_id===equipmentId; });
+  var hazIds = hazards.map(function(h){ return h.hazard_id; });
+  var controls = DATA.controls.filter(function(c){ return hazIds.indexOf(c.hazard_id)>=0; });
+  var ctlIds = controls.map(function(c){ return c.control_id; });
+  var assessments = (DATA.controlAssessments||[]).filter(function(a){ return ctlIds.indexOf(a.control_id)>=0; });
+  var latestByControl = {};
+  assessments.forEach(function(a){
+    var cur = latestByControl[a.control_id];
+    if(!cur || a.assessment_date > cur.assessment_date) latestByControl[a.control_id] = a;
+  });
+  var ineffective = Object.values(latestByControl).filter(function(a){ return a.effectiveness_rating!=='Effective'; }).length;
+  var signalBand = (ineffective>=2 || incidents.length>=6) ? 'Critical' : (ineffective>=1 || incidents.length>=3) ? 'High' : incidents.length>=1 ? 'Medium' : 'Low';
+  return { equipment:eq, maintenance:maint, inspections:insp, incidents:incidents, hazards:hazards, controls:controls,
+    assessments:assessments, latestByControl:latestByControl, signalBand:signalBand };
+}
+
+function graphNode(x, y, w, h, label, sub, type, id, anchor, tone){
+  var sel = App.riskGraphSelectedNode && App.riskGraphSelectedNode.type===type && App.riskGraphSelectedNode.id===id;
+  var cls = 'graph-node-box'+(anchor?' anchor':'')+(sel&&!anchor?' selected':'');
+  var strokeOverride = tone ? ' style="stroke:var(--'+tone+')"' : '';
+  return '<g data-action="graphSelectNode" data-type="'+type+'" data-id="'+esc(id)+'" transform="translate('+x+','+y+')">'+
+    '<rect class="'+cls+'" width="'+w+'" height="'+h+'" rx="7"'+strokeOverride+'></rect>'+
+    '<text class="graph-node-label" x="10" y="'+(h/2 - (sub?4:-3))+'">'+esc(truncate(label,22))+'</text>'+
+    (sub ? '<text class="graph-node-sub" x="10" y="'+(h/2+10)+'">'+esc(truncate(sub,26))+'</text>' : '')+
+  '</g>';
+}
+
+function renderRiskGraph(){
+  var eqOptions = DATA.equipment.filter(function(e){ return inScope(e.facility_id); })
+    .sort(function(a,b){ return a.equipment_id<b.equipment_id?-1:1; });
+  if(!App.riskGraphEquipmentId || !eqOptions.some(function(e){return e.equipment_id===App.riskGraphEquipmentId;})){
+    // default to the equipment with the richest real connections, so the
+    // first view of this screen is never sparse/empty by accident
+    var best = null, bestScore = -1;
+    eqOptions.forEach(function(e){
+      var score = DATA.incidents.filter(function(i){return i.equipment_id===e.equipment_id;}).length +
+                  (DATA.hazards||[]).filter(function(h){return h.equipment_id===e.equipment_id;}).length;
+      if(score>bestScore){ bestScore=score; best=e; }
+    });
+    App.riskGraphEquipmentId = best ? best.equipment_id : (eqOptions[0]||{}).equipment_id;
+  }
+  var g = riskGraphFor(App.riskGraphEquipmentId);
+  var eqOpts = eqOptions.map(function(e){
+    return '<option value="'+e.equipment_id+'"'+(e.equipment_id===App.riskGraphEquipmentId?' selected':'')+'>'+
+      e.equipment_id+' &mdash; '+esc(e.equipment_type)+' ('+esc(facShort(e.facility_id))+')</option>';
+  }).join('');
+
+  var picker = '<div class="filterbar"><div class="field" style="min-width:340px"><label>Equipment</label>'+
+    '<select id="riskGraphEquip">'+eqOpts+'</select></div></div>';
+
+  if(!g){ return picker + '<div class="empty-state">No equipment in scope.</div>'; }
+
+  var COL_X = [20, 220, 440, 660, 880, 1080];
+  var NODE_W = 170, NODE_H = 40, GAP = 10, MAX_SHOWN = 6;
+  var colTitles = ['Equipment', 'Maintenance & Inspections', 'Incidents', 'Hazards', 'Controls', 'Risk Signal'];
+
+  function layColumn(items, colIdx, mapFn){
+    var shown = items.slice(0, MAX_SHOWN);
+    var svg = '';
+    shown.forEach(function(item, i){
+      var y = 30 + i*(NODE_H+GAP);
+      var n = mapFn(item);
+      svg += graphNode(COL_X[colIdx], y, colIdx===2?190:NODE_W, NODE_H, n.label, n.sub, n.type, n.id, false, n.tone);
+    });
+    if(items.length>MAX_SHOWN){
+      svg += '<text class="graph-more-label" x="'+COL_X[colIdx]+'" y="'+(30+MAX_SHOWN*(NODE_H+GAP)+8)+'">+'+(items.length-MAX_SHOWN)+' more</text>';
+    }
+    return svg;
+  }
+
+  var maintInsp = g.maintenance.map(function(m){ return {kind:'maint', row:m}; })
+    .concat(g.inspections.map(function(i){ return {kind:'insp', row:i}; }));
+
+  var svgBody = '';
+  // column headers
+  colTitles.forEach(function(t,i){ svgBody += '<text class="graph-col-label" x="'+COL_X[i]+'" y="14">'+t.toUpperCase()+'</text>'; });
+
+  // Equipment (anchor)
+  svgBody += graphNode(COL_X[0], 30, NODE_W, NODE_H, g.equipment.equipment_id, truncate(g.equipment.equipment_type,20), 'equipment', g.equipment.equipment_id, true);
+
+  // Maintenance + Inspections
+  svgBody += layColumn(maintInsp, 1, function(item){
+    if(item.kind==='maint') return {label:item.row.maintenance_record_id, sub:item.row.status, type:'maintenance', id:item.row.maintenance_record_id, tone:item.row.status==='Delayed'||item.row.status==='Overdue'?'warning':null};
+    return {label:item.row.inspection_id, sub:item.row.deficiencies_found+' deficiency(ies)', type:'inspection', id:item.row.inspection_id, tone:item.row.deficiencies_found>0?'warning':null};
+  });
+
+  // Incidents
+  svgBody += layColumn(g.incidents, 2, function(i){
+    return {label:i.incident_id+' — '+truncate(i.hazard_category,20), sub:i.severity_reported+' · '+fmtDateShort(i.date_occurred), type:'incident', id:i.incident_id, tone:severityTone(i.severity_reported)};
+  });
+
+  // Hazards
+  svgBody += layColumn(g.hazards, 3, function(h){
+    return {label:h.hazard_category, sub:h.status, type:'hazard', id:h.hazard_id, tone:null};
+  });
+
+  // Controls
+  svgBody += layColumn(g.controls, 4, function(c){
+    var latest = g.latestByControl[c.control_id];
+    var rating = latest ? latest.effectiveness_rating : 'Not Assessed';
+    return {label:c.control_name, sub:rating, type:'control', id:c.control_id, tone:rating==='Effective'?'good':(rating==='Ineffective'?'critical':'warning')};
+  });
+
+  // Risk Signal (summary)
+  svgBody += graphNode(COL_X[5], 30, 150, NODE_H, g.signalBand+' Signal', g.incidents.length+' incidents traced', 'signal', 'summary', false, severityTone(g.signalBand));
+
+  // Edges: equipment -> maintInsp/incidents/hazards ; hazards -> controls ; controls -> signal
+  var edges = '';
+  function edge(fromCol, fromI, fromN, toCol, toI, toN, fromH, toH){
+    var x1 = COL_X[fromCol] + (fromCol===2?190:NODE_W), y1 = 30 + fromI*(NODE_H+GAP) + NODE_H/2;
+    var x2 = COL_X[toCol], y2 = 30 + toI*(NODE_H+GAP) + (toCol===2?NODE_H:NODE_H)/2;
+    var midX = (x1+x2)/2;
+    return '<path class="graph-edge" d="M'+x1+' '+y1+' C '+midX+' '+y1+', '+midX+' '+y2+', '+x2+' '+y2+'"></path>';
+  }
+  maintInsp.slice(0,MAX_SHOWN).forEach(function(_,i){ edges += edge(0,0,1, 1,i,1); });
+  g.incidents.slice(0,MAX_SHOWN).forEach(function(_,i){ edges += edge(0,0,1, 2,i,1); });
+  g.hazards.slice(0,MAX_SHOWN).forEach(function(_,i){ edges += edge(0,0,1, 3,i,1); });
+  g.controls.slice(0,MAX_SHOWN).forEach(function(c,i){
+    var hIdx = g.hazards.slice(0,MAX_SHOWN).findIndex(function(h){return h.hazard_id===c.hazard_id;});
+    if(hIdx>=0) edges += edge(3,hIdx,1, 4,i,1);
+  });
+  g.controls.slice(0,MAX_SHOWN).forEach(function(_,i){ edges += edge(4,i,1, 5,0,1); });
+
+  var maxRows = Math.max(1, maintInsp.length, g.incidents.length, g.hazards.length, g.controls.length, MAX_SHOWN===0?0:Math.min(MAX_SHOWN, Math.max(maintInsp.length,g.incidents.length,g.hazards.length,g.controls.length)));
+  var svgH = 30 + Math.min(MAX_SHOWN, Math.max(1,maxRows))*(NODE_H+GAP) + 40;
+
+  var graphSvg = '<div class="graph-card">'+svgWrap(1260, svgH, edges+svgBody)+'</div>';
+
+  var detail = renderRiskGraphDetail(g);
+
+  return picker + graphSvg + detail;
+}
+
+function renderRiskGraphDetail(g){
+  var sel = App.riskGraphSelectedNode;
+  var title = 'Select a node above for details', body = '<div style="font-size:12px;color:var(--ink-3)">Click any box in the diagram to see its real record.</div>';
+  if(sel){
+    if(sel.type==='equipment'){
+      var e = g.equipment;
+      title = e.equipment_id+' — '+e.equipment_type;
+      body = '<div class="factgrid">'+plainFieldRow('Manufacturer', e.manufacturer)+plainFieldRow('Model', e.model_number)+
+        plainFieldRow('Facility', facName(e.facility_id))+plainFieldRow('Criticality', e.criticality)+
+        plainFieldRow('Status', e.status)+plainFieldRow('Install Date', fmtDate(e.install_date))+'</div>';
+    } else if(sel.type==='maintenance'){
+      var m = g.maintenance.find(function(x){return x.maintenance_record_id===sel.id;});
+      if(m){ title = m.maintenance_record_id+' — Maintenance Record'; body = '<div class="factgrid">'+
+        plainFieldRow('Type', m.maintenance_type)+plainFieldRow('Status', m.status)+plainFieldRow('Scheduled', fmtDate(m.scheduled_date))+
+        plainFieldRow('Actual', m.actual_date?fmtDate(m.actual_date):'Not yet performed')+plainFieldRow('Delay (days)', m.delay_days)+
+        plainFieldRow('Description', m.description)+'</div>'; }
+    } else if(sel.type==='inspection'){
+      var ip = g.inspections.find(function(x){return x.inspection_id===sel.id;});
+      if(ip){ title = ip.inspection_id+' — Inspection'; body = '<div class="factgrid">'+
+        plainFieldRow('Type', ip.inspection_type)+plainFieldRow('Area', ip.area_location)+plainFieldRow('Date', fmtDate(ip.inspection_date))+
+        plainFieldRow('Deficiencies Found', ip.deficiencies_found)+plainFieldRow('Findings', ip.findings_summary)+'</div>'; }
+    } else if(sel.type==='incident'){
+      var i = INC[sel.id];
+      if(i){ title = i.incident_id+' — '+i.title; body = '<div class="factgrid">'+
+        plainFieldRow('Category', i.hazard_category)+plainFieldRow('Severity', i.severity_reported)+plainFieldRow('Status', i.status)+
+        plainFieldRow('Occurred', fmtDate(i.date_occurred))+plainFieldRow('Description', i.description)+'</div>'+
+        '<button class="btn btn-sm" style="margin-top:10px" data-action="goInvestigation" data-id="'+i.incident_id+'">Open in Investigations &rarr;</button>'; }
+    } else if(sel.type==='hazard'){
+      var h = HAZ[sel.id];
+      if(h){ title = h.hazard_id+' — '+h.hazard_category; body = '<div class="factgrid">'+
+        plainFieldRow('Description', h.description)+plainFieldRow('Typical Consequence', h.typical_consequence)+
+        plainFieldRow('Status', h.status)+plainFieldRow('Identified', fmtDate(h.identified_date))+'</div>'; }
+    } else if(sel.type==='control'){
+      var c = CTL[sel.id];
+      var latest = g.latestByControl[sel.id];
+      if(c){ title = c.control_id+' — '+c.control_name; body = '<div class="factgrid">'+
+        plainFieldRow('Type', c.control_type)+
+        plainFieldRow('Latest Effectiveness', latest?latest.effectiveness_rating:'Not yet assessed')+
+        plainFieldRow('Latest Assessment Date', latest?fmtDate(latest.assessment_date):'—')+
+        plainFieldRow('Latest Findings', latest?latest.findings:'—')+'</div>'; }
+    } else if(sel.type==='signal'){
+      title = g.signalBand+' Risk Signal — Summary';
+      body = '<div class="evidence-text">Derived from '+g.incidents.length+' traced incident(s) and '+
+        Object.values(g.latestByControl).filter(function(a){return a.effectiveness_rating!=='Effective';}).length+
+        ' control(s) not currently rated Effective on this equipment. This is a computed summary of the chain above, not a separate AI claim.</div>';
+    }
+  }
+  return '<div class="card card-pad" style="margin-top:14px"><h3 style="margin-bottom:10px">'+esc(title)+'</h3>'+body+'</div>';
+}
+
+/* =========================================================================
+   VIEW: REPORTS - print/export-friendly summaries assembled entirely from
+   data already live in this session (DATA.*), scoped to the current
+   facility filter exactly like every other screen. No new backend
+   endpoint: these are the same numbers Overview/Command Center/Risk
+   Register already compute, just laid out for printing or handoff.
+   ========================================================================= */
+function renderReports(){
+  var facs = scopedFacilities();
+  var incs = DATA.incidents.filter(function(i){ return inScope(i.facility_id); });
+  var acts = DATA.correctiveActions.filter(function(a){ return inScope(a.facility_id); });
+  var risks = DATA.riskAssessments.filter(function(r){ return inScope(r.facility_id); });
+  var openIncs = incs.filter(function(i){ return i.status!=='Closed'; });
+  var overdueActs = acts.filter(function(a){ return a.status==='Overdue'; });
+  var openHighRisks = risks.filter(function(r){ return r.status==='Open' && (r.risk_level==='High'||r.risk_level==='Critical'); });
+  var scopeLabel = App.facilityScope==='ALL' ? 'All Facilities' : facName(App.facilityScope);
+
+  function reportCard(title, sub, rows, cols){
+    var head = '<tr>'+cols.map(function(c){return '<th>'+c.label+'</th>';}).join('')+'</tr>';
+    var body = rows.length ? rows.map(function(r){
+      return '<tr>'+cols.map(function(c){ return '<td>'+c.get(r)+'</td>'; }).join('')+'</tr>';
+    }).join('') : '<tr><td colspan="'+cols.length+'" style="color:var(--ink-3);text-align:center;padding:16px">No records in this scope.</td></tr>';
+    return '<div class="card" style="margin-bottom:16px">'+
+      '<div class="card-head"><div><h3>'+title+'</h3><div class="card-head-sub">'+sub+'</div></div></div>'+
+      '<div class="tablewrap" style="margin-top:10px"><table><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>'+
+    '</div>';
+  }
+
+  return (
+    '<div class="report-toolbar" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">'+
+      '<div style="font-size:12.5px;color:var(--ink-2)">Report scope: <b>'+esc(scopeLabel)+'</b> &middot; generated '+fmtDate('2026-09-03')+'</div>'+
+      '<button class="btn btn-primary" data-action="printReports">'+ICONS.reports+' Print / Export</button>'+
+    '</div>'+
+    '<div class="tiles" style="margin-bottom:16px">'+
+      '<div class="tile" style="--tile-accent:var(--accent)"><div class="tile-label">Facilities in scope</div><div class="tile-value mono">'+facs.length+'</div></div>'+
+      '<div class="tile" style="--tile-accent:var(--warning)"><div class="tile-label">Open Incidents</div><div class="tile-value mono">'+openIncs.length+'</div></div>'+
+      '<div class="tile" style="--tile-accent:var(--critical)"><div class="tile-label">Overdue Actions</div><div class="tile-value mono">'+overdueActs.length+'</div></div>'+
+      '<div class="tile" style="--tile-accent:var(--serious)"><div class="tile-label">Open High/Critical Risks</div><div class="tile-value mono">'+openHighRisks.length+'</div></div>'+
+    '</div>'+
+    reportCard('Incident Summary Report', incs.length+' incidents in scope', incs.slice(0,25), [
+      {label:'ID', get:function(i){return i.incident_id;}},
+      {label:'Title', get:function(i){return esc(truncate(i.title,50));}},
+      {label:'Facility', get:function(i){return esc(facShort(i.facility_id));}},
+      {label:'Severity', get:function(i){return i.severity_reported;}},
+      {label:'Status', get:function(i){return i.status;}},
+      {label:'Occurred', get:function(i){return fmtDateShort(i.date_occurred);}}
+    ])+
+    reportCard('Corrective Action Status Report', acts.length+' actions in scope', acts.filter(function(a){return a.status!=='Completed';}).slice(0,25), [
+      {label:'ID', get:function(a){return a.corrective_action_id;}},
+      {label:'Description', get:function(a){return esc(truncate(a.description,55));}},
+      {label:'Owner', get:function(a){return esc(empName(a.owner_employee_id));}},
+      {label:'Due', get:function(a){return fmtDateShort(a.due_date);}},
+      {label:'Status', get:function(a){return a.status;}}
+    ])+
+    reportCard('Risk Exposure Report', risks.length+' risk assessments in scope', risks.filter(function(r){return r.status==='Open';}).slice(0,25), [
+      {label:'ID', get:function(r){return r.risk_id||r.risk_assessment_id;}},
+      {label:'Category', get:function(r){return esc(r.hazard_category||'');}},
+      {label:'Facility', get:function(r){return esc(facShort(r.facility_id));}},
+      {label:'Level', get:function(r){return r.risk_level;}},
+      {label:'Status', get:function(r){return r.status;}}
+    ])
+  );
+}
+
+/* =========================================================================
+   VIEW: ADMINISTRATION - your profile, real company/facility reference
+   data, and the actual live RBAC configuration this demo runs on (read
+   directly from the ROLES object, not a separate description of it).
+   ========================================================================= */
+function renderAdministration(){
+  var u = App.currentUser;
+  var role = currentRole();
+  var facRows = DATA.facilities.map(function(f){
+    return '<tr><td class="mono">'+f.facility_id+'</td><td>'+esc(f.name)+'</td><td>'+esc(f.address||'&mdash;')+
+      '</td><td class="mono">'+(f.employee_capacity||'&mdash;')+'</td></tr>';
+  }).join('');
+  var roleRows = Object.keys(ROLES).map(function(k){
+    var r = ROLES[k];
+    return '<tr><td>'+r.label+(k===App.currentRole?' <span class="pill tone-accent" style="margin-left:6px">Current</span>':'')+'</td>'+
+      '<td>'+(r.canApprove?'Yes':'No')+'</td><td>'+(r.canSubmitIncident?'Yes':'No')+'</td>'+
+      '<td>'+(r.scope==='all'?'All facilities':'Single facility')+'</td>'+
+      '<td style="font-size:11px;color:var(--ink-2)">'+r.nav.length+' screens</td></tr>';
+  }).join('');
+
+  return (
+    '<div class="cols-2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">'+
+      '<div class="card card-pad">'+
+        '<h3 style="margin-bottom:10px">Your Profile</h3>'+
+        (u ? ('<div style="font-size:13px"><b>'+esc(u.name)+'</b><br><span style="color:var(--ink-2)">'+esc(u.occupation)+' &middot; '+esc(u.post)+'</span></div>')
+            : '<div style="font-size:12.5px;color:var(--ink-3)">No profile set up yet &mdash; viewing as the default demo identity.</div>')+
+        '<a href="#signup" class="btn btn-sm" style="margin-top:12px">'+(u?'Edit Profile':'Create Profile')+'</a>'+
+      '</div>'+
+      '<div class="card card-pad">'+
+        '<h3 style="margin-bottom:10px">Company</h3>'+
+        '<div style="font-size:13px"><b>Rex Industrial Manufacturing</b><br><span style="color:var(--ink-2)">Industrial Manufacturing &middot; '+DATA.facilities.length+' facilities</span></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="card" style="margin-bottom:16px">'+
+      '<div class="card-head"><h3>Facilities</h3><span class="card-head-sub">Real facility records from the operational database</span></div>'+
+      '<div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>ID</th><th>Facility</th><th>Location</th><th>Capacity</th></tr></thead><tbody>'+facRows+'</tbody></table></div>'+
+    '</div>'+
+    '<div class="card">'+
+      '<div class="card-head"><h3>Role-Based Access (demo)</h3><span class="card-head-sub">The actual live gating this session runs on &mdash; not a separate description of it. See docs/governance-and-controls.md for why this is a demo of the model, not real authentication.</span></div>'+
+      '<div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Role</th><th>Can Approve AI Findings</th><th>Can Submit Incidents</th><th>Facility Scope</th><th>Visible Screens</th></tr></thead><tbody>'+roleRows+'</tbody></table></div>'+
     '</div>'
   );
 }
@@ -2687,6 +3406,15 @@ document.addEventListener('click', function(e){
   if(action==='completeAction'){ e.preventDefault(); handleCompleteAction(t.dataset.id); return; }
   if(action==='submitSignup'){ handleSignup(); return; }
   if(action==='clearProfile'){ handleClearProfile(); return; }
+  if(action==='printReports'){ window.print(); return; }
+  if(action==='graphSelectNode'){ App.riskGraphSelectedNode = {type:t.dataset.type, id:t.dataset.id}; render(); return; }
+  if(action==='selectFacility'){ App.selectedFacilityId = (App.selectedFacilityId===t.dataset.id) ? null : t.dataset.id; render(); return; }
+  if(action==='clearFacilitySelection'){ App.selectedFacilityId = null; render(); return; }
+  if(action==='enterApp'){ navigate('dashboard'); return; }
+  if(action==='startDemoFromWelcome'){ startDemo(); return; }
+  if(action==='demoNext'){ demoStep(1); return; }
+  if(action==='demoBack'){ demoStep(-1); return; }
+  if(action==='demoExit'){ exitDemo(); return; }
   if(action==='clearFilters'){ App.filters[t.dataset.scope] = Object.fromEntries(Object.keys(App.filters[t.dataset.scope]).map(function(k){return [k, k==='cell'?null:'']})); App.pages[t.dataset.scope]=1; render(); return; }
   if(action==='page'){ App.pages[t.dataset.key] += parseInt(t.dataset.dir,10); render(); return; }
   if(action==='quickStatus'){ App.filters.actions.status = (App.filters.actions.status===t.dataset.status) ? '' : t.dataset.status; App.pages.actions=1; render(); return; }
@@ -2720,6 +3448,7 @@ document.addEventListener('change', function(e){
     f_aud_source:['audit','source'], f_aud_entity:['audit','entityType']
   };
   if(id==='learningGraphSelect'){ App.learningGraphRecId = e.target.value; render(); return; }
+  if(id==='riskGraphEquip'){ App.riskGraphEquipmentId = e.target.value; App.riskGraphSelectedNode = null; render(); return; }
   if(map[id]){ App.filters[map[id][0]][map[id][1]] = e.target.value; App.pages[map[id][0]] = 1; render(); }
 });
 
@@ -2823,6 +3552,14 @@ function insertLocalIncident(incidentObj, reason){
    RENDER / INIT
    ========================================================================= */
 function render(){
+  // Landing page bypasses the operational shell entirely -- a product
+  // introduction screen shouldn't wear the rail/nav chrome of the app it's
+  // introducing. Shown once per browser (see boot logic below); reachable
+  // again any time at #welcome.
+  if(App.route.name==='welcome'){
+    document.getElementById('app').innerHTML = renderWelcome();
+    return;
+  }
   // route guard: a role that can't see a screen can't reach it by typing
   // the hash directly either -- this is the same check renderShell() uses
   // to decide what to list in the nav, applied defensively here too.
@@ -2844,14 +3581,26 @@ function render(){
     case 'learning': view = renderContinuousLearning(); break;
     case 'audit': view = renderAuditTrail(); break;
     case 'intelligence': view = renderIntelligence(); break;
+    case 'facilities': view = renderFacilities(); break;
+    case 'riskgraph': view = renderRiskGraph(); break;
+    case 'reports': view = renderReports(); break;
+    case 'admin': view = renderAdministration(); break;
     case 'signup': view = renderSignup(); break;
     default: view = renderDashboard();
   }
   document.getElementById('viewRoot').innerHTML = view;
+  if(DemoMode.active){
+    var panel = document.createElement('div');
+    panel.innerHTML = renderDemoPanel();
+    app.appendChild(panel.firstElementChild);
+  }
 }
 
 App.route = parseHash();
-if(!location.hash) location.hash = '#dashboard';
+if(!location.hash){
+  location.hash = getStoredFlag('riskon-visited') ? '#dashboard' : '#welcome';
+}
+setStoredFlag('riskon-visited', true);
 
 // a previously signed-up profile (this browser, via localStorage) takes
 // over both the sidebar display AND the demo role, same as choosing it

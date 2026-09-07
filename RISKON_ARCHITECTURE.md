@@ -104,10 +104,14 @@ latency and cost per analysis is worth paying only once the simpler version has 
 The service is written so a future multi-stage pipeline could reuse its context-building, error-handling,
 and validation patterns without starting over — see RISKON_BACKEND_SETUP.md §5.
 
-**Frontend: unchanged, not rebuilt.** The priority was preserving existing functionality and UI. The
-existing frontend is 2,500+ lines of vanilla JS across 10 screens, all of it working. Rewriting it onto a
-framework, or restructuring its data model to be fetch-driven throughout, would have touched almost every
-render function for no real functional gain. Instead, exactly one structural change was made (§3), plus
+**Frontend: extended in place, not rewritten onto a framework.** This section describes the original
+decision from the backend-wiring pass, when the frontend was 2,500+ lines of vanilla JS across 10 screens.
+A later visual redesign pass grew it to 14 screens (adding Facilities, a Risk Graph, a landing page, and a
+guided demo mode, among others) and reworked several list views from tables into simpler card feeds — but
+the underlying approach from this section held throughout: no framework, no bundler, one `render()` +
+`data-action` delegation pattern, extended rather than replaced. Rewriting it onto a framework, or
+restructuring its data model to be fetch-driven throughout, would have touched almost every render function
+for no real functional gain. Instead, exactly one structural change was made (§3), plus
 targeted, additive wiring for the specific workflows that needed real backend persistence (AI analysis,
 incident creation, recommendation feedback, action completion) — see §3's table below.
 
