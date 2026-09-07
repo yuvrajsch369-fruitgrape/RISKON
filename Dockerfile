@@ -6,6 +6,13 @@
 # generic VPS). Platforms that build via Nixpacks/buildpacks instead of a
 # Dockerfile (e.g. Railway's default) can ignore this file entirely and use
 # the same two commands directly.
+#
+# Railway note: if the platform's "Custom Start Command" setting is used
+# instead of this file's CMD, set it to plain `python3 -m uvicorn
+# backend.main:app --host 0.0.0.0 --port $PORT` -- Railway substitutes bare
+# $VAR references itself without a real shell, so bash's ${VAR:-default}
+# fallback syntax is passed through literally and breaks uvicorn's arg
+# parsing. This CMD line avoids that because it already runs through `sh -c`.
 FROM python:3.11-slim
 
 WORKDIR /app
