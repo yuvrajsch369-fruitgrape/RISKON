@@ -4,10 +4,9 @@ How RISKON's frontend, backend, database, and Claude AI integration fit together
 architectural choice was made. Companion document: [RISKON_BACKEND_SETUP.md](RISKON_BACKEND_SETUP.md) for
 the practical "how do I run this" guide.
 
-This document assumes you've read (or will read) `RISKON_FULL_PRODUCT_REVERSE_ENGINEERING.md`, which
-established the state of the codebase BEFORE this pass: a static single-HTML frontend with no backend, no
-live database connection, and no live AI call anywhere. Everything below describes what was added to make
-those real, without rebuilding the parts that already worked.
+RISKON started as a static single-HTML frontend with no backend, no live database connection, and no live
+AI call anywhere. Everything below describes what was built to make those real, without rebuilding the
+parts of the frontend that already worked well.
 
 ---
 
@@ -72,24 +71,24 @@ User clicks "Generate AI Analysis"
 **Backend language: Python, not Node/TypeScript.** Every piece of business logic RISKON already had —
 `risk_intelligence/engine.py`, `learning_engine/engine.py`, `database/generate_database.py`,
 `governance/audit_trail.py` — is Python. The only non-Python AI-related code in the repo,
-`engine/pipeline.ts`, was never executed (no `package.json`, no installed dependencies, no host to run it
-in — see the reverse-engineering doc §8). Building the backend in Python meant reusing
-`RiskIntelligenceEngine` and `LearningEngine` directly, with zero rewrite, and meant one language across
-the whole server side instead of two. Introducing Node/TypeScript/npm as a second toolchain just to run one
-previously-unused file would have been exactly the kind of unnecessary new technology the brief asked to
-avoid.
+`engine/pipeline.ts`, was never executed — no `package.json`, no installed dependencies, no host to run it
+in. Building the backend in Python meant reusing `RiskIntelligenceEngine` and `LearningEngine` directly,
+with zero rewrite, and meant one language across the whole server side instead of two. Introducing
+Node/TypeScript/npm as a second toolchain just to run one previously-unused file would have added new
+technology this project doesn't need.
 
 **Framework: FastAPI.** Chosen over Flask/Django for three concrete reasons that matter for THIS project:
-built-in request/response validation via Pydantic (directly reusable for the AI response schema in §11 of
-the spec), automatic `/docs` (OpenAPI) for free, and an async-friendly design that matches how the Anthropic
-SDK and `httpx` work. Django would have brought an ORM, admin panel, and migrations system this
-single-database, ~20-table PoC doesn't need.
+built-in request/response validation via Pydantic (directly reusable for the structured AI response schema
+in `backend/models/ai_schemas.py`), automatic `/docs` (OpenAPI) for free, and an async-friendly design that
+matches how the Anthropic SDK and `httpx` work. Django would have brought an ORM, admin panel, and
+migrations system this single-database, ~20-table application doesn't need.
 
 **Database: the existing SQLite file, unchanged.** `database/riskon.db` already existed, already had a real
 schema, and already had every Part-1/Part-2 table this backend's routes read from. The backend adds exactly
-one new table (`ai_incident_analyses`, Part 3 — see `database/schema.sql`) and touches nothing else. No
-second database (Postgres/Supabase/etc.) was introduced — see §16 below for why that would have been
-premature for a PoC this size.
+one new table (`ai_incident_analyses`, Part 3 — see `database/schema.sql`) and touches nothing else. SQLite
+comfortably handles this workload today; moving to Postgres becomes worth doing once a deployment needs
+concurrent multi-process writes or true multi-tenant isolation, and the plain-SQL query layer transfers
+directly when that day comes.
 
 **No ORM.** Every query in `backend/routes/*.py` is plain `sqlite3` with parameterized SQL — the same style
 `risk_intelligence/engine.py` and `learning_engine/engine.py` already use. At this scale (a few thousand
@@ -99,18 +98,18 @@ learning a second way to query the same database the rest of the codebase alread
 
 **One Claude call per analysis, not the 13-stage pipeline.** `engine/pipeline.ts` (still present, still
 undeleted, still a valid design) makes 13 sequential model calls per incident. `backend/services/ai/
-claude_service.py` makes one, producing the adapted structured schema from spec §11. For a PoC's first
-genuinely-wired AI feature, this is the right-sized choice: 13x the latency and cost per analysis is a real
-cost that should be paid only once the simpler version has proven useful. The service is written so a
-future multi-stage pipeline could reuse its context-building, error-handling, and validation patterns
-without starting over — see RISKON_BACKEND_SETUP.md §13/§14.
+claude_service.py` makes one, producing the same structured output shape (`IncidentAIAnalysis` in
+`backend/models/ai_schemas.py`). This is the right-sized choice for the current feature set: 13x the
+latency and cost per analysis is worth paying only once the simpler version has proven itself in real use.
+The service is written so a future multi-stage pipeline could reuse its context-building, error-handling,
+and validation patterns without starting over — see RISKON_BACKEND_SETUP.md §5.
 
-**Frontend: unchanged, not rebuilt.** The brief was explicit: preserve existing functionality and UI. The
+**Frontend: unchanged, not rebuilt.** The priority was preserving existing functionality and UI. The
 existing frontend is 2,500+ lines of vanilla JS across 10 screens, all of it working. Rewriting it onto a
 framework, or restructuring its data model to be fetch-driven throughout, would have touched almost every
-render function for no functional gain the brief asked for. Instead, exactly one structural change was made
-(§3), plus targeted, additive wiring for the specific workflows the brief called out (AI analysis, incident
-creation, recommendation feedback, action completion) — see §5.
+render function for no real functional gain. Instead, exactly one structural change was made (§3), plus
+targeted, additive wiring for the specific workflows that needed real backend persistence (AI analysis,
+incident creation, recommendation feedback, action completion) — see §3's table below.
 
 ---
 
@@ -135,9 +134,9 @@ data-shaping code path, not two that could quietly drift apart. This means:
   `python3 -m http.server` per `.claude/launch.json`'s `riskon-static` entry): the fetches fail fast, and the
   app runs exactly as it did before this pass, off the embedded snapshot.
 - **With the backend running** (`uvicorn backend.main:app`, which also serves this same file at `/` — see
-  §22 of the setup doc): the app loads real, current database state instead of a build-time snapshot, with
-  every existing render function completely unaware of the difference (they only ever read `DATA.*`, never
-  care where it came from).
+  RISKON_BACKEND_SETUP.md §1): the app loads real, current database state instead of a build-time snapshot,
+  with every existing render function completely unaware of the difference (they only ever read `DATA.*`,
+  never care where it came from).
 
 Everything else added to the frontend is targeted, per-workflow wiring, not a data-layer rewrite:
 
@@ -153,8 +152,8 @@ Everything else added to the frontend is targeted, per-workflow wiring, not a da
 
 ## 4. The flagship AI workflow, in detail
 
-This is the literal example from the brief (§10): "User opens Incident → clicks Analyze with AI → ... →
-Frontend displays analysis."
+This is RISKON's core AI loop: user opens an incident → clicks "Generate AI Analysis" → the backend builds
+real context and calls Claude → the frontend displays the analysis for human review.
 
 1. **Frontend sends only the incident ID** — `POST /api/incidents/{id}/analyze`, no body.
 2. **Backend retrieves relevant RISKON records** — `backend/services/context_builder.py`'s
@@ -187,7 +186,7 @@ Frontend displays analysis."
    Continuous Learning, so a new AI surface doesn't introduce a new visual vocabulary.
 
 Every failure mode in that chain is handled explicitly and safely (never a fabricated result — see
-RISKON_BACKEND_SETUP.md §18/§19 for the full table of what happens on each failure).
+RISKON_BACKEND_SETUP.md §9 for the full table of what happens on each failure).
 
 ---
 
@@ -196,22 +195,24 @@ RISKON_BACKEND_SETUP.md §18/§19 for the full table of what happens on each fai
 - **No microservices** — one FastAPI process serves both the API and the static frontend file.
 - **No message queue** — the one AI call per request is synchronous; there's no background job system
   because there's nothing yet that needs one (an AI call takes seconds, not minutes).
-- **No second database** — see §16 above.
+- **No second database** — see §2 above.
 - **No new frontend framework/bundler** — see §2.
-- **No full data-layer rewrite** — see §3; only the specific workflows the brief named were wired for real
-  persistence.
+- **No full data-layer rewrite** — see §3; only the workflows that actually needed real backend persistence
+  were wired for it.
 - **No multi-stage AI pipeline (yet)** — see §2's "one Claude call" decision.
-- **No real authentication** — out of scope for this pass; the existing client-side role demo is unchanged
-  (still clearly documented as a demo, not real auth, in `docs/governance-and-controls.md`). Backend routes
-  do not currently enforce authorization beyond input validation — see RISKON_BACKEND_SETUP.md §11 and §13
-  for exactly what this means and what would need to change before any real deployment.
+- **No real authentication yet** — the existing client-side role demo is unchanged (still clearly documented
+  as a demo, not real auth, in `docs/governance-and-controls.md`). Backend routes do not currently enforce
+  authorization beyond input validation — see RISKON_BACKEND_SETUP.md §8 for exactly what this means and
+  what adding it looks like.
 
 ---
 
 ## 6. Where this leaves RISKON
 
-Frontend, backend, database, and Claude are now genuinely connected in one direction that matters most for
-a PoC demo: a user can trigger a real AI analysis of a real incident, using real database context, through
-a real (if simple) API, with a real, typed, validated response — or, with no API key configured, see an
-honest message explaining why not, never a fabricated one. See RISKON_BACKEND_SETUP.md for how to run it,
-test it, and what's still missing before this would be production-ready.
+Frontend, backend, database, and Claude are now genuinely connected end to end: a user can trigger a real
+AI analysis of a real incident, using real database context, through a real API, with a real, typed,
+validated response — or, with no API key configured yet, see an honest message explaining why not, never a
+fabricated one. This is the same core loop a production deployment runs; growing into one from here is a
+matter of adding real authentication and connecting a client's own operational data in place of the demo
+dataset — not rebuilding anything. See RISKON_BACKEND_SETUP.md for how to run it, test it, and exactly
+what's on that path.

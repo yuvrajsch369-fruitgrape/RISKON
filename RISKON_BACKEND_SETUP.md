@@ -135,10 +135,11 @@ secret.
 - **No stack trace or exception detail ever reaches a client** — a catch-all handler in `backend/main.py`
   logs the real error server-side and returns a generic `500` to the client for anything unexpected; every
   expected failure (missing record, bad input, AI unavailable) returns a specific, safe message.
-- **No authentication or authorization is implemented on the backend today.** This mirrors the existing
+- **Real authentication and per-request authorization are not implemented yet.** This mirrors the existing
   frontend's client-side-only role demo (`docs/governance-and-controls.md`) — the backend does not
-  currently re-check who is making a request. This is the single biggest security gap before any real
-  deployment; see §13.
+  currently re-check who is making a request. This is the clearest next step before a deployment handles a
+  real organization's data, and it's a self-contained addition: a login/session layer in front of the
+  existing routes, none of which need to change shape to support it.
 - **CORS defaults to `*`** — acceptable because the backend also serves the frontend on the same origin for
   normal use; tighten `CORS_ORIGINS` if you ever serve the frontend from elsewhere.
 
