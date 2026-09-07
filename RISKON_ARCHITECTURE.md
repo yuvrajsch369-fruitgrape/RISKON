@@ -4,10 +4,6 @@ How RISKON's frontend, backend, database, and Claude AI integration fit together
 architectural choice was made. Companion document: [RISKON_BACKEND_SETUP.md](RISKON_BACKEND_SETUP.md) for
 the practical "how do I run this" guide.
 
-RISKON started as a static single-HTML frontend with no backend, no live database connection, and no live
-AI call anywhere. Everything below describes what was built to make those real, without rebuilding the
-parts of the frontend that already worked well.
-
 ---
 
 ## 1. High-level architecture
@@ -188,31 +184,3 @@ real context and calls Claude → the frontend displays the analysis for human r
 Every failure mode in that chain is handled explicitly and safely (never a fabricated result — see
 RISKON_BACKEND_SETUP.md §9 for the full table of what happens on each failure).
 
----
-
-## 5. What was deliberately NOT built (avoiding overengineering)
-
-- **No microservices** — one FastAPI process serves both the API and the static frontend file.
-- **No message queue** — the one AI call per request is synchronous; there's no background job system
-  because there's nothing yet that needs one (an AI call takes seconds, not minutes).
-- **No second database** — see §2 above.
-- **No new frontend framework/bundler** — see §2.
-- **No full data-layer rewrite** — see §3; only the workflows that actually needed real backend persistence
-  were wired for it.
-- **No multi-stage AI pipeline (yet)** — see §2's "one Claude call" decision.
-- **No real authentication yet** — the existing client-side role demo is unchanged (still clearly documented
-  as a demo, not real auth, in `docs/governance-and-controls.md`). Backend routes do not currently enforce
-  authorization beyond input validation — see RISKON_BACKEND_SETUP.md §8 for exactly what this means and
-  what adding it looks like.
-
----
-
-## 6. Where this leaves RISKON
-
-Frontend, backend, database, and Claude are now genuinely connected end to end: a user can trigger a real
-AI analysis of a real incident, using real database context, through a real API, with a real, typed,
-validated response — or, with no API key configured yet, see an honest message explaining why not, never a
-fabricated one. This is the same core loop a production deployment runs; growing into one from here is a
-matter of adding real authentication and connecting a client's own operational data in place of the demo
-dataset — not rebuilding anything. See RISKON_BACKEND_SETUP.md for how to run it, test it, and exactly
-what's on that path.
