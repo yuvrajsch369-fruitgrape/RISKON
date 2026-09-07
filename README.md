@@ -16,3 +16,4 @@ serves that file and answers every `/api/...` request, including the one that ca
 `database/riskon.db` is a real SQLite file, seeded with realistic-but-entirely-synthetic data — nothing
 in it describes a real company. `risk_intelligence/` and `learning_engine/` are the two deterministic
 analytics engines (pattern detection and outcome-learning) the backend calls into.
+# RISKON.Prototype
