@@ -62,7 +62,7 @@ User clicks "Generate AI Analysis"
 
 ---
 
-## 2. Why this architecture (the decision, not just the diagram)
+## 2. Why this architecture ?
 
 **Backend language: Python, not Node/TypeScript.** Every piece of business logic RISKON already had —
 `risk_intelligence/engine.py`, `learning_engine/engine.py`, `database/generate_database.py`,
