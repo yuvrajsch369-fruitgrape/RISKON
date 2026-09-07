@@ -103,63 +103,7 @@ All defined in `.env.example` (copy to `.env`); every one has a safe default exc
 
 ---
 
-## 7. How to add your Claude API key
-
-```bash
-cp .env.example .env     # if you haven't already — a blank .env is also already checked in for you
-# open .env in any editor and set:
-ANTHROPIC_API_KEY=sk-ant-...your real key...
-```
-
-That's it — no source file needs editing. Restart the backend (§8) and `GET /api/health` will show
-`"ai_configured": true`.
-
----
-
-## 8. How to start the application
-
-```bash
-pip3 install -r backend/requirements.txt
-uvicorn backend.main:app --host 0.0.0.0 --port 8743
-```
-
-Then open `http://localhost:8743/` — this serves the exact same frontend as before, now backed by the live
-API. (The old `python3 -m http.server --directory frontend` path — `.claude/launch.json`'s `riskon-static`
-entry, now on port 8744 — still works too, unchanged, for offline/no-backend use.)
-
-If the database doesn't exist yet, build it first (§4). If `frontend/riskon.html` doesn't exist yet:
-`python3 scripts/build_frontend.py`.
-
----
-
-## 9. How to test AI
-
-**Without a real API key** (always possible, no cost):
-```bash
-pip3 install -r backend/requirements.txt
-python3 -m pytest backend/tests/ -v
-```
-27 tests, all passing as of this writing. They verify, with a MOCKED Anthropic client: environment-variable
-detection, request construction, JSON response parsing (including prose-wrapped JSON), Pydantic schema
-validation (including that the model cannot set `requires_human_review: false`), and every typed failure
-path (timeout, rate limit, connection error, invalid JSON, schema violation) — see
-`backend/tests/test_claude_service.py`'s module docstring for the exact scope and its limits. Also verified
-via a real running server with a placeholder key: a genuine HTTPS call to `https://api.anthropic.com/v1/
-messages` that fails with a real 401, caught and mapped to a safe message (see the log line reproduced in
-§18).
-
-**With a real API key**: set `ANTHROPIC_API_KEY` (§7), restart, then either use the "Generate AI Analysis"
-button on any incident in AI Investigation, or:
-```bash
-curl -X POST http://localhost:8743/api/incidents/INC-0001/analyze
-```
-This is the one thing that could NOT be verified during this build (no key was available) — everything
-up to and including the real network call was verified; only a genuinely successful Claude response was
-not observed. No successful response was fabricated or claimed.
-
----
-
-## 10. API endpoints
+## 7. API endpoints
 
 | Method | Path | Purpose |
 |---|---|---|
@@ -181,7 +125,7 @@ secret.
 
 ---
 
-## 11. Security considerations
+## 8. Security considerations
 
 - **`ANTHROPIC_API_KEY` never reaches the browser** — it's read server-side only
   (`backend/config.py`), never included in any API response (`Settings.as_public_dict()` deliberately
@@ -200,7 +144,7 @@ secret.
 
 ---
 
-## 12. Troubleshooting
+## 9. Troubleshooting
 
 | Symptom | Likely cause / fix |
 |---|---|
@@ -214,30 +158,7 @@ secret.
 
 ---
 
-## 13. Current limitations
-
-- No live-verified successful Claude response (§9) — everything up to the real network call was tested;
-  the actual model output was not observed during this build.
-- No real authentication/authorization on the backend (§11) — anyone who can reach the API can call any
-  endpoint.
-- `POST /api/incidents/{id}/review` creates corrective actions from approved AI recommendations, but does
-  NOT also create a new `risk_register`/`risk_assessments` entry — doing that convincingly would mean
-  re-deriving likelihood/severity/control-effectiveness/trend factors the way
-  `risk_intelligence/engine.py` does for the synthetic seed data, which is out of scope for this pass (see
-  `backend/routes/incidents.py`'s docstring on that endpoint).
-- The Continuous Learning pattern-level analytics (Recommendation Performance, Top Learning Signals, etc.)
-  remain a load-time snapshot, not recomputed live after a feedback decision — same precedent as Risk
-  Intelligence and the Executive Dashboard elsewhere in RISKON (see the reverse-engineering doc). Only the
-  Learning Overview tiles and Audit Trail update live.
-- `context_builder.py`'s relevance queries are simple (recency-ordered, capped) rather than a similarity
-  search — fine at this dataset's size, would need revisiting at real production scale.
-- No rate-limiting or request-size limiting on the API itself.
-- No automated migration tool for future schema changes — `backend/db.py`'s `ensure_schema()` only ever
-  adds the one new table; a future schema change would need its own careful, hand-written migration.
-
----
-
-## 14. What is implemented vs. future
+## 10. What is implemented vs. future
 
 | Capability | Status |
 |---|---|
