@@ -7,12 +7,13 @@
 # Dockerfile (e.g. Railway's default) can ignore this file entirely and use
 # the same two commands directly.
 #
-# Railway note: if the platform's "Custom Start Command" setting is used
-# instead of this file's CMD, set it to plain `python3 -m uvicorn
-# backend.main:app --host 0.0.0.0 --port $PORT` -- Railway substitutes bare
-# $VAR references itself without a real shell, so bash's ${VAR:-default}
-# fallback syntax is passed through literally and breaks uvicorn's arg
-# parsing. This CMD line avoids that because it already runs through `sh -c`.
+# CMD runs backend/main.py directly (plain Python, no shell) rather than
+# `uvicorn ... --port ${PORT:-8743}` through `sh -c`, because Railway's
+# Dockerfile-based deploys were observed NOT expanding that shell syntax --
+# uvicorn received the literal, unexpanded string as its --port value and
+# refused to start. backend/main.py's __main__ block already reads the PORT
+# env var in Python (see backend/config.py's `port` setting), so this
+# sidesteps shell variable expansion entirely.
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -30,4 +31,4 @@ COPY . .
 ENV PYTHONUNBUFFERED=1
 EXPOSE 8743
 
-CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8743}"]
+CMD ["python3", "-m", "backend.main"]
