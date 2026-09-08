@@ -8,8 +8,18 @@ Kingdom, Germany, India, and Australia), so every screen, workflow, and analytic
 with no setup. Point it at a real organization's operational data and the same engine runs unchanged — the
 demo dataset exists to show the product working end-to-end on day one, not to limit it.
 
-Full technical detail lives in [`RISKON_ARCHITECTURE.md`](RISKON_ARCHITECTURE.md) and
-[`RISKON_BACKEND_SETUP.md`](RISKON_BACKEND_SETUP.md).
+## Running it
+
+```bash
+pip3 install -r backend/requirements.txt
+python3 -m backend.main
+```
+
+That's it for local use — every setting in `backend/config.py` has a working default. The one thing worth
+setting is `ANTHROPIC_API_KEY` (in a `.env` file at the repo root, or as a real environment variable), which
+turns on live AI-assisted investigation; without it, RISKON runs normally and simply shows AI features as
+not configured instead of erroring. The server listens on `$PORT` if set (what Railway, Render, Fly.io, and
+similar platforms provide automatically) or `8743` otherwise.
 
 ## What's included
 

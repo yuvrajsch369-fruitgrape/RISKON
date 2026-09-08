@@ -4,8 +4,7 @@ app.template.html's renderSignup()/handleSignup(). NOT authentication: there
 is no password, no session token, and nothing anywhere checks who is "logged
 in" before serving a request. A signup only ever creates a profile the
 browser remembers (localStorage) and displays in the sidebar's lower-left
-corner — see RISKON_BACKEND_SETUP.md §11 for how this fits (or doesn't) into
-the app's overall security posture.
+corner — this is deliberately not part of the app's real security posture.
 """
 from datetime import datetime
 

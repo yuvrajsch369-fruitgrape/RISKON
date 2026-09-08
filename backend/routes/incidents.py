@@ -5,8 +5,7 @@ GET/POST endpoints for incidents, plus the flagship AI workflow:
 
 which is the real, wired-up version of the frontend's existing (disabled)
 "Generate AI Analysis" button — see frontend/app.template.html's
-renderCondensedPipeline() and RISKON_ARCHITECTURE.md "One complete AI request,
-traced" for the full before/after.
+renderCondensedPipeline() for the full before/after.
 """
 import json
 from datetime import date, datetime
@@ -187,7 +186,7 @@ def review_incident(incident_id: str, body: IncidentReviewDecision):
     risk_register/risk_assessments entry — doing that convincingly would mean
     re-deriving likelihood/severity/control-effectiveness/trend factors the
     same way risk_intelligence/engine.py does, which is out of scope for this
-    endpoint; see RISKON_BACKEND_SETUP.md "Current limitations."""
+    endpoint."""
     with db_session() as conn:
         incident = conn.execute("SELECT * FROM incidents WHERE incident_id=?", (incident_id,)).fetchone()
         if not incident:

@@ -1,6 +1,6 @@
 # RISKON V0.1 — Database Validation Report
 
-Run against `database/riskon.db`. 31/31 checks passed.
+Run against `database/riskon.db`. 45/45 checks passed.
 
 ## Consistency checks
 

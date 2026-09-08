@@ -1,7 +1,6 @@
 """
 Structured-ish logging for the backend. Deliberately simple — a formatted
-stdlib logger, not a full observability stack (see RISKON_ARCHITECTURE.md,
-"Do not overengineer"). Two rules that matter more than the format:
+stdlib logger, not a full observability stack. Two rules that matter more than the format:
   1. The Anthropic API key is NEVER logged, anywhere, under any level —
      `log_ai_request()` below is the only place AI-call metadata is logged,
      and it takes explicit named fields, not a raw request/response dump.

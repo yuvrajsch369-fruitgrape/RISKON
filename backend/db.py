@@ -2,8 +2,7 @@
 SQLite access for the RISKON backend — the SAME database file every offline
 Python script in this repo already uses (database/riskon.db). Plain
 `sqlite3`, no ORM: the dataset and query patterns are simple enough that an
-ORM would be extra machinery for no real benefit at this scale (see
-RISKON_ARCHITECTURE.md, "Why no ORM").
+ORM would be extra machinery for no real benefit at this scale.
 
 `ensure_schema()` is idempotent and only ever creates the Part-3/Part-4
 tables (`ai_incident_analyses`, `app_users`) this backend introduces — it

@@ -14,12 +14,12 @@ that file directly (or via `python3 -m http.server` per .claude/launch.json's
 `riskon-static` entry) still works exactly as before, with the frontend
 falling back to its embedded window.RISKON_DATA when no backend is reachable.
 Running it through this backend instead additionally makes /api/bootstrap,
-the AI analysis workflow, and real persistence available. See
-RISKON_ARCHITECTURE.md.
+the AI analysis workflow, and real persistence available.
 """
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 
@@ -74,10 +74,25 @@ def db_not_found_handler(request: Request, exc: DatabaseNotFoundError):
 @app.exception_handler(HTTPException)
 def http_exception_handler(request: Request, exc: HTTPException):
     # Normalizes every raise HTTPException(...) in the route layer to the
-    # same {"error", "message"} shape as the two handlers above and below,
-    # so the frontend (and any other client) only ever has one error shape
-    # to parse, regardless of which layer raised it.
+    # same {"error", "message"} shape as the other handlers here, so the
+    # frontend (and any other client) only ever has one error shape to
+    # parse, regardless of which layer raised it.
     return JSONResponse(status_code=exc.status_code, content={"error": "request_failed", "message": exc.detail})
+
+
+@app.exception_handler(RequestValidationError)
+def validation_exception_handler(request: Request, exc: RequestValidationError):
+    # Pydantic request-body validation (e.g. a missing/malformed field) is
+    # raised by FastAPI itself, before any route body runs, so it bypasses
+    # the HTTPException handler above and would otherwise reach the client
+    # as FastAPI's default {"detail": [...]} shape -- a second error shape
+    # for clients to handle. Normalized here to the same {"error", "message"}
+    # shape as every other error path in this app.
+    first = exc.errors()[0] if exc.errors() else {}
+    field = ".".join(str(p) for p in first.get("loc", []) if p != "body")
+    detail = first.get("msg", "Invalid request.")
+    message = f"{field}: {detail}" if field else detail
+    return JSONResponse(status_code=422, content={"error": "validation_failed", "message": message})
 
 
 @app.exception_handler(Exception)

@@ -1,8 +1,8 @@
 """
 The ONE place in this backend that talks to Claude. Every AI-communication
-requirement in RISKON_ARCHITECTURE.md routes through `analyze_incident()`
-below — no route handler, and nothing in the frontend, ever constructs a
-prompt or calls the Anthropic SDK directly.
+requirement routes through `analyze_incident()` below — no route handler,
+and nothing in the frontend, ever constructs a prompt or calls the Anthropic
+SDK directly.
 
 Design note — why one Claude call, not the 13-stage pipeline in
 engine/pipeline.ts: that design (real, still valid, still undeleted) makes 13
@@ -10,9 +10,8 @@ sequential model calls per incident. For a PoC's first genuinely-wired AI
 workflow, one well-structured call producing the schema in
 backend/models/ai_schemas.py is the right-sized choice — 13x the latency and
 cost for a first working feature would be over-building ahead of demonstrated
-need. See RISKON_ARCHITECTURE.md "AI architecture decisions" for the full
-rationale and for how a future stage-by-stage pipeline could reuse this same
-service's error handling and context-building patterns.
+need. A future stage-by-stage pipeline could reuse this same service's error
+handling and context-building patterns.
 """
 import json
 import time

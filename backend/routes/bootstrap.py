@@ -3,8 +3,7 @@
 window.RISKON_DATA), computed LIVE from the real database via the exact same
 `build_frontend_data()` function the offline build script calls. This is what
 makes the static build and the live backend one coherent system rather than
-two data sources that can drift apart — see database/export_frontend_data.py
-and RISKON_ARCHITECTURE.md."""
+two data sources that can drift apart — see database/export_frontend_data.py."""
 from fastapi import APIRouter
 
 from database.export_frontend_data import build_frontend_data

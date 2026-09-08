@@ -5,7 +5,7 @@ value the backend reads comes through this one module — nothing else in
 when adding a new setting or checking what's actually configurable.
 
 Loads `.env` from the repo root (not `backend/.env` — one file, one place to
-paste the API key, per RISKON_BACKEND_SETUP.md). Safe to import with no `.env`
+paste the API key). Safe to import with no `.env`
 present at all: every value has a sane default, and `ai_configured` simply
 comes back False rather than raising.
 """
@@ -32,7 +32,7 @@ class Settings:
     # the client constructor — using the same name here means a user only
     # ever sets it once, in .env, and both this backend AND (if ever wired up
     # for real) engine/pipeline.ts's `new Anthropic()` would pick it up
-    # identically. See RISKON_BACKEND_SETUP.md §6.
+    # identically.
     anthropic_api_key: str = os.environ.get("ANTHROPIC_API_KEY", "").strip()
     anthropic_model: str = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-5").strip()
     anthropic_timeout_seconds: float = float(os.environ.get("ANTHROPIC_TIMEOUT_SECONDS", "30"))

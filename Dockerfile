@@ -1,6 +1,5 @@
-# RISKON backend + frontend, one container, one process — see
-# RISKON_ARCHITECTURE.md for why this app is deployed as a single service
-# rather than split frontend/backend hosting.
+# RISKON backend + frontend, one container, one process, rather than split
+# frontend/backend hosting.
 #
 # Works unmodified on any Docker-capable host (Railway, Render, Fly.io,
 # generic VPS). Platforms that build via Nixpacks/buildpacks instead of a

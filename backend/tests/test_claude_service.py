@@ -2,9 +2,9 @@
 Tests for the Claude AI service — ALL of these use a mocked Anthropic client.
 None of them prove the real Claude API integration works end-to-end; that
 can only be verified by setting a real ANTHROPIC_API_KEY and making a real
-call (see RISKON_BACKEND_SETUP.md "How to test AI"). What these DO verify,
-for real: environment-variable detection, request construction, response
-parsing/validation, and every failure-handling path this service defines.
+call. What these DO verify, for real: environment-variable detection,
+request construction, response parsing/validation, and every
+failure-handling path this service defines.
 """
 import json
 import types

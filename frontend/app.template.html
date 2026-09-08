@@ -4,45 +4,46 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
   :root{
-    color-scheme: light;
+    color-scheme: dark;
     --font-sans: 'IBM Plex Sans', -apple-system, 'Segoe UI', sans-serif;
     --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
-    --page: #F2F4F5;
-    --surface: #FFFFFF;
-    --surface-raised: #FFFFFF;
-    --ink: #101820;
-    --ink-2: #5B6773;
-    --ink-3: #8A94A0;
-    --border: #E1E5E9;
-    --border-strong: #C9D0D6;
+    --page: #0B1116;
+    --surface: #141C22;
+    --surface-raised: #17212A;
+    --ink: #F2F5F7;
+    --ink-2: #B7C0C9;
+    --ink-3: #7C8892;
+    --border: #232F38;
+    --border-strong: #2E3D48;
 
-    --accent: #0E6E8C;
-    --accent-ink: #FFFFFF;
-    --accent-soft: rgba(14,110,140,0.09);
-    --accent-soft-strong: rgba(14,110,140,0.16);
+    --accent: #2EA6C9;
+    --accent-ink: #051217;
+    --accent-soft: rgba(46,166,201,0.14);
+    --accent-soft-strong: rgba(46,166,201,0.22);
+    --glow-accent: 46,166,201;
 
-    --rail: #0E1E2A;
+    --rail: #070F15;
     --rail-ink: #C9D6DE;
-    --rail-ink-dim: #7C8FA0;
-    --rail-active: rgba(46,166,201,0.16);
-    --rail-border: rgba(255,255,255,0.08);
+    --rail-ink-dim: #64798A;
+    --rail-active: rgba(46,166,201,0.18);
+    --rail-border: rgba(255,255,255,0.07);
 
     --good: #0ca30c;
-    --good-soft: rgba(12,163,12,0.12);
+    --good-soft: rgba(12,163,12,0.18);
     --warning: #fab219;
-    --warning-soft: rgba(250,178,25,0.16);
+    --warning-soft: rgba(250,178,25,0.18);
     --serious: #ec835a;
-    --serious-soft: rgba(236,131,90,0.15);
-    --critical: #d03b3b;
-    --critical-soft: rgba(208,59,59,0.13);
-    --neutral-soft: rgba(91,103,115,0.10);
+    --serious-soft: rgba(236,131,90,0.18);
+    --critical: #e05555;
+    --critical-soft: rgba(224,85,85,0.18);
+    --neutral-soft: rgba(183,192,201,0.10);
 
-    --seq-1: #cde2fb; --seq-2: #86b6ef; --seq-3: #3987e5; --seq-4: #1c5cab; --seq-5: #0d366b;
+    --seq-1: #16324f; --seq-2: #1c5cab; --seq-3: #3987e5; --seq-4: #6da7ec; --seq-5: #b7d3f6;
 
-    --shadow-card: 0 1px 2px rgba(16,24,32,0.06), 0 1px 1px rgba(16,24,32,0.04);
-    --shadow-raised: 0 2px 6px rgba(16,24,32,0.08), 0 1px 2px rgba(16,24,32,0.05);
-    --shadow-pop: 0 8px 24px rgba(16,24,32,0.14), 0 2px 6px rgba(16,24,32,0.08);
+    --shadow-card: 0 1px 2px rgba(0,0,0,0.3);
+    --shadow-raised: 0 2px 8px rgba(0,0,0,0.35);
+    --shadow-pop: 0 8px 28px rgba(0,0,0,0.5);
     --radius: 8px;
     --radius-sm: 5px;
     --radius-lg: 12px;
@@ -52,75 +53,25 @@
        new/redesigned components should use these, existing ones migrate
        incrementally so nothing regresses mid-redesign. */
     --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 32px;
+
+    /* Depth / glass / motion primitives (industrial dark-only design system) */
+    --glass-bg: rgba(23,33,42,0.62);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-blur: 18px;
+    --noise-opacity: 0.035;
+    --depth-0: var(--shadow-card);
+    --depth-1: var(--shadow-raised);
+    --depth-2: var(--shadow-pop);
+    --motion-fast: 160ms;
+    --motion-med: 320ms;
+    --motion-slow: 900ms;
+    --ease-standard: cubic-bezier(.2,.7,.3,1);
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      color-scheme: dark;
-      --page: #0B1116;
-      --surface: #141C22;
-      --surface-raised: #17212A;
-      --ink: #F2F5F7;
-      --ink-2: #B7C0C9;
-      --ink-3: #7C8892;
-      --border: #232F38;
-      --border-strong: #2E3D48;
-
-      --accent: #2EA6C9;
-      --accent-ink: #051217;
-      --accent-soft: rgba(46,166,201,0.14);
-      --accent-soft-strong: rgba(46,166,201,0.22);
-
-      --rail: #070F15;
-      --rail-ink: #C9D6DE;
-      --rail-ink-dim: #64798A;
-      --rail-active: rgba(46,166,201,0.18);
-      --rail-border: rgba(255,255,255,0.07);
-
-      --good: #0ca30c;
-      --good-soft: rgba(12,163,12,0.18);
-      --warning: #fab219;
-      --warning-soft: rgba(250,178,25,0.18);
-      --serious: #ec835a;
-      --serious-soft: rgba(236,131,90,0.18);
-      --critical: #e05555;
-      --critical-soft: rgba(224,85,85,0.18);
-      --neutral-soft: rgba(183,192,201,0.10);
-
-      --seq-1: #16324f; --seq-2: #1c5cab; --seq-3: #3987e5; --seq-4: #6da7ec; --seq-5: #b7d3f6;
-
-      --shadow-card: 0 1px 2px rgba(0,0,0,0.3);
-      --shadow-raised: 0 2px 8px rgba(0,0,0,0.35);
-      --shadow-pop: 0 8px 28px rgba(0,0,0,0.5);
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+      animation-duration: 0.001ms !important; animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important; scroll-behavior: auto !important;
     }
-  }
-  :root[data-theme="dark"]{
-    color-scheme: dark;
-    --page: #0B1116;
-    --surface: #141C22;
-    --surface-raised: #17212A;
-    --ink: #F2F5F7;
-    --ink-2: #B7C0C9;
-    --ink-3: #7C8892;
-    --border: #232F38;
-    --border-strong: #2E3D48;
-    --accent: #2EA6C9;
-    --accent-ink: #051217;
-    --accent-soft: rgba(46,166,201,0.14);
-    --accent-soft-strong: rgba(46,166,201,0.22);
-    --rail: #070F15;
-    --rail-ink: #C9D6DE;
-    --rail-ink-dim: #64798A;
-    --rail-active: rgba(46,166,201,0.18);
-    --rail-border: rgba(255,255,255,0.07);
-    --good: #0ca30c; --good-soft: rgba(12,163,12,0.18);
-    --warning: #fab219; --warning-soft: rgba(250,178,25,0.18);
-    --serious: #ec835a; --serious-soft: rgba(236,131,90,0.18);
-    --critical: #e05555; --critical-soft: rgba(224,85,85,0.18);
-    --neutral-soft: rgba(183,192,201,0.10);
-    --seq-1: #16324f; --seq-2: #1c5cab; --seq-3: #3987e5; --seq-4: #6da7ec; --seq-5: #b7d3f6;
-    --shadow-card: 0 1px 2px rgba(0,0,0,0.3);
-    --shadow-raised: 0 2px 8px rgba(0,0,0,0.35);
-    --shadow-pop: 0 8px 28px rgba(0,0,0,0.5);
   }
 
   *{ box-sizing: border-box; }
@@ -141,13 +92,57 @@
   ::-webkit-scrollbar-thumb{ background: var(--border-strong); border-radius: 6px; }
   :focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
 
+  /* ---------- depth / glass / glow primitives ----------
+     Restrained industrial-dark treatment: single accent hue, thin luminous
+     borders, soft shadow-glow — never multi-hue neon, never on every card
+     (that's what tips this into "gaming website" territory). Applied only
+     to genuinely floating/overlay elements (demo panel, callouts) and to
+     signal-priority accents (selected graph nodes, critical alerts). */
+  body{ position:relative; }
+  body::before{
+    content:""; position:fixed; inset:0; z-index:9999; pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: var(--noise-opacity); mix-blend-mode: overlay;
+  }
+  .glass-panel{ background: var(--surface-raised); border:1px solid var(--glass-border); box-shadow: var(--depth-1); }
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)){
+    .glass-panel{ background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur)); }
+  }
+  .surface-elevated{ background: var(--surface-raised); border:1px solid var(--border-strong); box-shadow: var(--depth-1); }
+  .glow-ring{ box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent), 0 0 16px -4px color-mix(in srgb, var(--accent) 60%, transparent); }
+  .glow-ring-critical{ box-shadow: 0 0 0 1px color-mix(in srgb, var(--critical) 45%, transparent), 0 0 16px -4px color-mix(in srgb, var(--critical) 60%, transparent); }
+  .glow-ring-warning{ box-shadow: 0 0 0 1px color-mix(in srgb, var(--warning) 45%, transparent), 0 0 16px -4px color-mix(in srgb, var(--warning) 60%, transparent); }
+  .glow-ring-good{ box-shadow: 0 0 0 1px color-mix(in srgb, var(--good) 45%, transparent), 0 0 16px -4px color-mix(in srgb, var(--good) 60%, transparent); }
+
+  /* ---------- motion ----------
+     Every loop is slow (>=1.6s) and low-amplitude (opacity/shadow only,
+     never scale/position) -- cinematic, not arcade. The global
+     prefers-reduced-motion override above (near :root) is the safety net;
+     JS additionally skips adding *-flow/*-pulse classes outright for
+     reduced-motion users rather than relying on CSS alone. */
+  @keyframes riskon-fade-slide-in{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
+  @keyframes riskon-pulse-glow{ 0%,100%{ box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 35%, transparent); } 50%{ box-shadow:0 0 14px 2px color-mix(in srgb, var(--accent) 55%, transparent); } }
+  @keyframes riskon-signal-flow{ to{ stroke-dashoffset:-24; } }
+  @keyframes riskon-node-glow-pulse{ 0%,100%{ filter:drop-shadow(0 0 2px currentColor); } 50%{ filter:drop-shadow(0 0 7px currentColor); } }
+  @keyframes riskon-alert-pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.6; } }
+  @keyframes riskon-shimmer-connect{ from{ opacity:0; transform:translateX(-4px); } to{ opacity:1; transform:translateX(0); } }
+  @keyframes riskon-demo-panel-in{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:translateY(0); } }
+
+  .view-enter{ animation: riskon-fade-slide-in var(--motion-med) var(--ease-standard); }
+  .ai-active{ animation: riskon-pulse-glow 2.2s ease-in-out infinite; border-radius: var(--radius-sm); }
+  .pill.pulse .pill-dot{ animation: riskon-alert-pulse 1.6s ease-in-out infinite; }
+  .reveal-init{ opacity:0; }
+  .reveal-in{ animation: riskon-shimmer-connect var(--motion-med) var(--ease-standard) both; }
+
   /* ---------- shell ---------- */
   #app{ display:flex; min-height: 100vh; }
 
   .rail{
-    width: 232px; flex: 0 0 232px; background: var(--rail); color: var(--rail-ink);
+    width: 232px; flex: 0 0 232px;
+    background: linear-gradient(180deg, var(--rail) 0%, color-mix(in srgb, var(--rail) 92%, black) 100%);
+    color: var(--rail-ink);
     display:flex; flex-direction:column; position: sticky; top:0; height:100vh;
-    border-right: 1px solid var(--rail-border);
+    box-shadow: inset -1px 0 0 color-mix(in srgb, var(--accent) 12%, transparent);
   }
   .rail-brand{ display:flex; align-items:center; gap:10px; padding: 18px 18px 14px; }
   .rail-brand svg{ flex: 0 0 auto; }
@@ -171,21 +166,24 @@
     display:flex; align-items:center; gap:10px; padding: 9px 10px; border-radius: var(--radius-sm);
     color: var(--rail-ink); text-decoration:none; font-size:13px; font-weight:500; cursor:pointer;
     border-left: 2px solid transparent; background: transparent;
+    transition: background var(--motion-fast) var(--ease-standard), box-shadow var(--motion-fast) var(--ease-standard);
   }
   .rail-link:hover{ background: rgba(255,255,255,0.045); }
-  .rail-link.active{ background: var(--rail-active); color:#fff; border-left-color: var(--accent); }
+  .rail-link.active{ background: var(--rail-active); color:#fff; border-left-color: var(--accent);
+    box-shadow: inset 0 0 12px -6px color-mix(in srgb, var(--accent) 70%, transparent); }
   .rail-link svg{ flex:0 0 auto; opacity:0.9; }
   .rail-link-num{ margin-left:auto; font-family: var(--font-mono); font-size:10.5px; color: var(--rail-ink-dim); }
   .rail-link.active .rail-link-num{ color: var(--rail-ink); }
 
   .rail-foot{ padding: 12px 14px 16px; border-top: 1px solid var(--rail-border); }
-  .theme-toggle-btn{
+  .rail-foot-btn{
     display:flex; align-items:center; gap:9px; width:100%; padding:8px 9px; margin-bottom:10px;
     background: transparent; border:1px solid var(--rail-border); border-radius: var(--radius-sm);
     color: var(--rail-ink); font-size:12.5px; font-weight:500; cursor:pointer; font-family: var(--font-sans);
+    transition: background var(--motion-fast) var(--ease-standard);
   }
-  .theme-toggle-btn:hover{ background: rgba(255,255,255,0.06); }
-  .theme-toggle-btn svg{ flex:0 0 auto; opacity:0.9; }
+  .rail-foot-btn:hover{ background: rgba(255,255,255,0.06); }
+  .rail-foot-btn svg{ flex:0 0 auto; opacity:0.9; }
   .rail-user{ display:flex; align-items:center; gap:9px; text-decoration:none; padding:6px; margin:-6px; border-radius: var(--radius-sm); }
   .rail-user:hover{ background: rgba(255,255,255,0.06); }
   .rail-avatar{
@@ -196,10 +194,16 @@
   .rail-user-name{ font-size:12.5px; color:#fff; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .rail-user-role{ font-size:11px; color: var(--rail-ink-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
+  .mobile-nav-toggle{ display:none; }
+  .mobile-nav-backdrop{ display:none; }
   .main{ flex:1; min-width:0; display:flex; flex-direction:column; }
   .topbar{
-    position: sticky; top:0; z-index:5; background: var(--page); border-bottom:1px solid var(--border);
+    position: sticky; top:0; z-index:5; background: color-mix(in srgb, var(--page) 88%, transparent);
+    border-bottom:1px solid var(--border);
     padding: 18px 28px 14px; display:flex; align-items:flex-end; justify-content:space-between; gap: 16px;
+  }
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)){
+    .topbar{ backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
   }
   .topbar-title{ font-size: 20px; }
   .topbar-sub{ font-size:12.5px; color: var(--ink-2); margin-top:3px; max-width:60ch; }
@@ -245,6 +249,10 @@
   .chip .chip-count{ font-family: var(--font-mono); font-weight:600; font-size:14px; }
 
   /* ---------- cards / tiles ---------- */
+  .card, .tile, .risk-card, .exec-risk-row, .map-card, .graph-card{
+    transition: box-shadow var(--motion-fast) var(--ease-standard), border-color var(--motion-fast) var(--ease-standard);
+  }
+  .exec-risk-row.reveal-init{ opacity:0; }
   .card{ background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-card); min-width:0; }
   .card-pad{ padding: 20px 22px; }
   .card-head{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; padding: 14px 18px 0; flex-wrap:wrap; min-width:0; }
@@ -265,19 +273,18 @@
     font-size:11px; font-weight:600; white-space:nowrap; line-height:1.6;
   }
   .pill-dot{ width:6px; height:6px; border-radius:50%; flex:0 0 auto; }
-  .tone-good{ background: var(--good-soft); color: color-mix(in srgb, var(--good) 80%, black 10%); }
+  .tone-good{ background: var(--good-soft); color: color-mix(in srgb, var(--good) 75%, white 25%); }
   .tone-good .pill-dot{ background: var(--good); }
-  .tone-warning{ background: var(--warning-soft); color: color-mix(in srgb, var(--warning) 55%, black 45%); }
+  .tone-warning{ background: var(--warning-soft); color: color-mix(in srgb, var(--warning) 88%, white 8%); }
   .tone-warning .pill-dot{ background: var(--warning); }
-  .tone-serious{ background: var(--serious-soft); color: color-mix(in srgb, var(--serious) 65%, black 35%); }
+  .tone-serious{ background: var(--serious-soft); color: color-mix(in srgb, var(--serious) 78%, white 20%); }
   .tone-serious .pill-dot{ background: var(--serious); }
-  .tone-critical{ background: var(--critical-soft); color: color-mix(in srgb, var(--critical) 85%, black 5%); }
+  .tone-critical{ background: var(--critical-soft); color: color-mix(in srgb, var(--critical) 75%, white 25%); }
   .tone-critical .pill-dot{ background: var(--critical); }
   .tone-neutral{ background: var(--neutral-soft); color: var(--ink-2); }
   .tone-neutral .pill-dot{ background: var(--ink-3); }
   .tone-accent{ background: var(--accent-soft); color: var(--accent); }
   .tone-accent .pill-dot{ background: var(--accent); }
-  [data-theme="dark"] .tone-good, .tone-good:is(:root:not([data-theme="light"]) *){ }
 
   .ai-tag{ display:inline-flex; align-items:center; gap:4px; font-size:10.5px; font-weight:600; color: var(--accent); background: var(--accent-soft); padding:2px 7px; border-radius:100px; }
 
@@ -351,8 +358,9 @@
   .ev-tag{ display:inline-block; font-family: var(--font-mono); font-size:9px; font-weight:700; letter-spacing:0.02em; padding:1.5px 5px; border-radius:3px; margin-right:6px; white-space:nowrap; }
   .ev-fact{ background: var(--neutral-soft); color: var(--ink-2); }
   .ev-pattern{ background: var(--accent-soft); color: var(--accent); }
-  .ev-hypothesis{ background: var(--warning-soft); color: color-mix(in srgb, var(--warning) 50%, black 50%); }
-  .ev-recommendation{ background: var(--good-soft); color: color-mix(in srgb, var(--good) 75%, black 15%); }
+  .ev-hypothesis{ background: var(--warning-soft); color: var(--warning); }
+  .ev-recommendation{ background: var(--good-soft); color: color-mix(in srgb, var(--good) 75%, white 25%); }
+  .ev-human{ background: transparent; color: var(--ink); border: 1px solid var(--border-strong); }
   .ev-line{ font-size:12px; line-height:1.6; margin-bottom:5px; }
   .ev-line:last-child{ margin-bottom:0; }
 
@@ -440,7 +448,7 @@
   .exec-risk-list{ display:flex; flex-direction:column; gap:8px; margin-top:10px; }
   .exec-risk-row{ background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-card); overflow:hidden; }
   .exec-risk-row.expanded{ border-color: var(--accent); }
-  .exec-risk-row-head{ display:flex; align-items:center; gap:14px; width:100%; padding:12px 16px; background:transparent; border:none; cursor:pointer; text-align:left; font-family:inherit; color: var(--ink); }
+  .exec-risk-row-head{ display:flex; align-items:center; gap:14px; width:100%; padding:12px 16px; background:transparent; border:none; cursor:pointer; text-align:left; font-family:inherit; color: var(--ink); transition: background var(--motion-fast) var(--ease-standard); }
   .exec-risk-row-head:hover{ background: var(--accent-soft); }
   .exec-risk-rank{ font-family: var(--font-mono); font-size:12px; font-weight:700; color: var(--ink-3); width:16px; flex:0 0 auto; }
   .exec-risk-main{ display:flex; flex-direction:column; gap:3px; flex:1 1 auto; min-width:0; }
@@ -448,8 +456,9 @@
   .exec-risk-meta{ font-size:11px; color: var(--ink-3); }
   .exec-risk-badges{ display:flex; gap:6px; flex:0 0 auto; }
   .exec-risk-score{ font-size:20px; font-weight:700; flex:0 0 auto; width:44px; text-align:right; }
-  .exec-risk-chevron{ flex:0 0 auto; color: var(--ink-3); transition: transform 0.15s; }
+  .exec-risk-chevron{ flex:0 0 auto; color: var(--ink-3); transition: transform var(--motion-fast) var(--ease-standard); }
   .exec-risk-row.expanded .exec-risk-chevron{ transform: rotate(180deg); color: var(--accent); }
+  .exec-risk-row.expanded .exec-risk-row-head{ box-shadow: inset 0 0 12px -6px color-mix(in srgb, var(--accent) 60%, transparent); }
   .exec-risk-next{ padding:0 16px 12px 46px; }
   .exec-risk-drilldown{ border-top:1px solid var(--border); background: var(--page); padding:14px 16px; }
 
@@ -476,7 +485,7 @@
   .pipeline-step{ display:flex; flex-direction:column; align-items:center; gap:6px; min-width:80px; text-align:center; flex:0 0 auto; }
   .pipeline-step-dot{ width:13px; height:13px; border-radius:50%; background:var(--surface); border:2px solid var(--border-strong); }
   .pipeline-step.done .pipeline-step-dot{ background:var(--good); border-color:var(--good); }
-  .pipeline-step.current .pipeline-step-dot{ background:var(--accent); border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .pipeline-step.current .pipeline-step-dot{ background:var(--accent); border-color:var(--accent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent), 0 0 16px -4px color-mix(in srgb, var(--accent) 60%, transparent); }
   .pipeline-step.rejected .pipeline-step-dot{ background:var(--critical); border-color:var(--critical); }
   .pipeline-step-label{ font-size:9.5px; color:var(--ink-3); font-weight:600; max-width:88px; line-height:1.3; }
   .pipeline-step.done .pipeline-step-label, .pipeline-step.current .pipeline-step-label{ color:var(--ink); }
@@ -500,6 +509,27 @@
     .welcome-loop-connector{ display:none; }
     .welcome-benefits{ grid-template-columns:1fr; padding:0 16px 40px; }
     .demo-panel{ left:12px; right:12px; width:auto; bottom:12px; }
+
+    /* Off-canvas nav: the 232px fixed rail is unusable on a phone-width
+       viewport, so below this breakpoint it becomes a slide-in drawer
+       toggled by a hamburger button, instead of permanently eating ~60%
+       of a 375px screen. */
+    #app{ display:block; }
+    .mobile-nav-toggle{
+      display:flex; align-items:center; justify-content:center; position:fixed; top:12px; left:12px; z-index:60;
+      width:38px; height:38px; border-radius:var(--radius-sm); background:var(--rail); color:#fff;
+      border:1px solid var(--rail-border); box-shadow:var(--shadow-raised); cursor:pointer;
+    }
+    .mobile-nav-backdrop{ display:block; position:fixed; inset:0; z-index:45; background:rgba(0,0,0,0.5); }
+    .rail{
+      position:fixed; top:0; left:0; height:100vh; z-index:50; width:264px; flex:0 0 auto;
+      transform:translateX(-100%); transition: transform var(--motion-med) var(--ease-standard);
+      box-shadow:var(--shadow-pop);
+    }
+    .rail.open{ transform:translateX(0); }
+    .main{ width:100%; }
+    .view{ padding:64px 16px 40px; }
+    .topbar{ padding-left:60px; }
   }
 
   @media (max-width: 1180px){
@@ -515,10 +545,13 @@
      (Overview mini-feeds, the full Incidents/Actions lists). ---------- */
   .feed-list{ display:flex; flex-direction:column; gap:8px; }
   .feed-card{ display:flex; align-items:center; gap:14px; background:var(--surface); border:1px solid var(--border);
-    border-radius:var(--radius-lg); padding:14px 16px; cursor:pointer; }
-  .feed-card:hover{ border-color:var(--accent); box-shadow:var(--shadow-card); }
+    border-radius:var(--radius-lg); padding:14px 16px; cursor:pointer;
+    transition: border-color var(--motion-fast) var(--ease-standard), box-shadow var(--motion-fast) var(--ease-standard), transform var(--motion-fast) var(--ease-standard); }
+  .feed-card:hover{ border-color:var(--accent); box-shadow:var(--depth-1); transform: translateY(-1px); }
+  .feed-card.reveal-init{ opacity:0; }
   .feed-card-icon{ width:38px; height:38px; border-radius:50%; flex:0 0 auto; display:flex; align-items:center; justify-content:center;
-    background:var(--fc-tone-soft, var(--neutral-soft)); color:var(--fc-tone, var(--ink-2)); }
+    background:var(--fc-tone-soft, var(--neutral-soft)); color:var(--fc-tone, var(--ink-2));
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--fc-tone, var(--accent)) 25%, transparent); }
   .feed-card-main{ flex:1; min-width:0; }
   .feed-card-title{ font-size:14px; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .feed-card-meta{ font-size:12px; color:var(--ink-3); margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -531,12 +564,15 @@
   }
 
   /* ---------- Demo Mode floating panel ---------- */
-  .demo-panel{ position:fixed; right:24px; bottom:24px; width:320px; background:var(--surface); border:1px solid var(--border);
+  .demo-panel{ position:fixed; right:24px; bottom:24px; width:320px;
     border-radius:var(--radius-lg); box-shadow:var(--shadow-pop); padding:var(--space-4); z-index:50; }
+  .demo-panel.demo-panel-in{ animation: riskon-demo-panel-in var(--motion-med) var(--ease-standard); }
   .demo-panel-head{ display:flex; align-items:center; justify-content:space-between; }
   .demo-panel-count{ font-size:10px; text-transform:uppercase; letter-spacing:0.04em; font-weight:700; color:var(--accent); }
   .demo-panel-close{ background:none; border:none; cursor:pointer; color:var(--ink-3); padding:2px; display:flex; }
   .demo-panel-close:hover{ color:var(--ink); }
+  .demo-panel-progress{ height:3px; border-radius:2px; background:var(--border); margin-top:8px; overflow:hidden; }
+  .demo-panel-progress-fill{ height:100%; background:var(--accent); transition: width var(--motion-med) var(--ease-standard); }
   .demo-panel-title{ font-size:14px; font-weight:700; margin-top:6px; }
   .demo-panel-text{ font-size:12px; color:var(--ink-2); margin-top:6px; line-height:1.5; }
   .demo-panel-actions{ display:flex; justify-content:space-between; gap:8px; margin-top:12px; }
@@ -545,7 +581,8 @@
   .welcome-screen{ width:100%; min-height:100vh; background:var(--page); color:var(--ink); overflow-x:hidden; }
   .welcome-hero{ width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;
     text-align:center; padding:72px 20px 64px; background:
-      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(46,166,201,0.16), transparent 65%), var(--rail);
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(46,166,201,0.16), transparent 65%),
+      radial-gradient(ellipse 1400px 800px at 50% 110%, rgba(46,166,201,0.07), transparent 70%), var(--rail);
     color:var(--rail-ink); }
   .welcome-brand{ display:flex; align-items:center; gap:12px; margin-bottom:32px; }
   .welcome-name{ font-size:22px; font-weight:700; color:#fff; letter-spacing:0.02em; }
@@ -553,8 +590,8 @@
   .welcome-sub{ font-size:15.5px; color:var(--rail-ink); max-width:600px; margin-top:18px; line-height:1.65; }
   .welcome-actions{ display:flex; gap:12px; margin-top:36px; flex-wrap:wrap; justify-content:center; }
   .welcome-btn{ padding:13px 26px; border-radius:var(--radius-sm); font-size:14px; font-weight:600; cursor:pointer; border:1px solid transparent; }
-  .welcome-btn-primary{ background:var(--accent); color:var(--accent-ink); }
-  .welcome-btn-primary:hover{ opacity:0.9; }
+  .welcome-btn-primary{ background:var(--accent); color:var(--accent-ink); transition: box-shadow var(--motion-fast) var(--ease-standard); }
+  .welcome-btn-primary:hover{ box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent), 0 0 18px -2px color-mix(in srgb, var(--accent) 70%, transparent); }
   .welcome-btn-ghost{ background:transparent; border-color:var(--rail-border); color:#fff; }
   .welcome-btn-ghost:hover{ background:rgba(255,255,255,0.08); }
 
@@ -566,7 +603,9 @@
   .welcome-loop-icon svg{ width:22px; height:22px; }
   .welcome-loop-label{ font-size:13.5px; font-weight:700; color:var(--ink); }
   .welcome-loop-text{ font-size:12px; color:var(--ink-2); margin-top:6px; line-height:1.5; }
-  .welcome-loop-connector{ height:1px; background:var(--border); flex:1 1 30px; margin-top:26px; min-width:20px; }
+  .welcome-loop-connector{ flex:1 1 30px; min-width:20px; margin-top:26px; height:6px; overflow:visible; display:block; }
+  .welcome-loop-connector line{ stroke:var(--border-strong); stroke-width:1.4; }
+  .welcome-loop-connector line.flowing{ stroke:var(--accent); stroke-dasharray:6 6; animation: riskon-signal-flow 1.8s linear infinite; }
 
   .welcome-benefits{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1080px; margin:0 auto; padding:0 24px 64px; }
   .welcome-benefit-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg);
@@ -591,7 +630,7 @@
   .fac-card-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; margin-top:14px; }
   .fac-card{ background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--fac-tone,var(--border)); border-radius:var(--radius); padding:12px 14px; cursor:pointer; box-shadow:var(--shadow-card); }
   .fac-card:hover{ border-color:var(--accent); }
-  .fac-card.selected{ box-shadow:0 0 0 2px var(--accent); }
+  .fac-card.selected{ box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent), 0 0 16px -4px color-mix(in srgb, var(--accent) 60%, transparent); }
   .fac-card-name{ font-weight:700; font-size:13px; }
   .fac-card-loc{ font-size:11px; color:var(--ink-3); margin-top:2px; }
   .fac-card-stats{ display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:10px; }
@@ -601,8 +640,12 @@
   /* ---------- Risk Graph ---------- */
   .graph-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:var(--space-4); box-shadow:var(--shadow-raised); overflow-x:auto; }
   .graph-col-label{ font-size:10px; text-transform:uppercase; letter-spacing:0.05em; font-weight:700; fill:var(--ink-3); }
-  .graph-edge{ stroke:var(--border-strong); stroke-width:1.4; fill:none; }
-  .graph-node-box{ fill:var(--surface); stroke:var(--border-strong); stroke-width:1.2; cursor:pointer; }
+  .graph-edge{ stroke:var(--border-strong); stroke-width:1.4; fill:none; transition: stroke var(--motion-fast) var(--ease-standard); }
+  .graph-edge.flowing{ stroke:var(--accent); stroke-dasharray:6 6; animation: riskon-signal-flow 1.8s linear infinite; }
+  @media (max-width: 720px){
+    .graph-edge.flowing{ animation:none; stroke-dasharray:none; stroke:var(--border-strong); }
+  }
+  .graph-node-box{ fill:var(--surface); stroke:var(--border-strong); stroke-width:1.2; cursor:pointer; transition: stroke var(--motion-fast) var(--ease-standard); }
   .graph-node-box:hover{ stroke:var(--accent); }
   .graph-node-box.selected{ stroke:var(--accent); stroke-width:2; fill:var(--accent-soft); }
   .graph-node-box.anchor{ fill:var(--accent); stroke:var(--accent); }
@@ -617,6 +660,8 @@
     .view{ padding:0; }
     .card{ box-shadow:none; break-inside:avoid; }
     body{ background:#fff; }
+    .glass-panel, .glow-ring, .glow-ring-critical, .glow-ring-warning, .glow-ring-good,
+    .graph-node-box, .graph-edge, body::before{ filter:none !important; animation:none !important; backdrop-filter:none !important; }
   }
 </style>
 
@@ -629,18 +674,6 @@
 (async function(){
 "use strict";
 
-/* =========================================================================
-   THEME - explicit dark/light toggle, layered on top of the CSS's own
-   prefers-color-scheme support. No stored choice = follow system theme
-   (handled entirely by CSS); once the user clicks the toggle, that choice
-   is stamped on <html data-theme> and remembered for next visit.
-   ========================================================================= */
-function getStoredTheme(){
-  try { return localStorage.getItem('riskon-theme'); } catch(e){ return null; }
-}
-function setStoredTheme(v){
-  try { localStorage.setItem('riskon-theme', v); } catch(e){}
-}
 /* ---- generic small flags (e.g. "has this browser seen the landing page
    before"), same localStorage-with-fallback pattern as theme/user above ---- */
 function getStoredFlag(key){
@@ -666,15 +699,47 @@ function initialsOf(name){
   if(!parts.length) return '?';
   return (parts[0][0] + (parts.length>1 ? parts[parts.length-1][0] : '')).toUpperCase();
 }
-function currentEffectiveTheme(){
-  var stamped = document.documentElement.getAttribute('data-theme');
-  if(stamped === 'dark' || stamped === 'light') return stamped;
-  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+function prefersReducedMotion(){
+  try { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
+  catch(e){ return false; }
 }
-(function applyStoredThemeBeforeFirstPaint(){
-  var stored = getStoredTheme();
-  if(stored === 'dark' || stored === 'light') document.documentElement.setAttribute('data-theme', stored);
-})();
+
+/* ---- motion orchestration: presentation-only, reads no AI/investigation
+   state beyond what's already rendered; skipped outright (not just CSS-
+   overridden) for reduced-motion users so no animation-triggering class is
+   ever added in the first place. ---- */
+function setViewRoot(html){
+  var el = document.getElementById('viewRoot');
+  el.innerHTML = html;
+  if(!prefersReducedMotion()) el.classList.add('view-enter');
+}
+function initScrollReveal(){
+  if(prefersReducedMotion() || !('IntersectionObserver' in window)) return;
+  var els = document.querySelectorAll('#viewRoot .feed-card, #viewRoot .exec-risk-row');
+  if(!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('reveal-in');
+        entry.target.classList.remove('reveal-init');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.15});
+  els.forEach(function(el){ el.classList.add('reveal-init'); obs.observe(el); });
+}
+function markCriticalAlerts(){
+  if(prefersReducedMotion()) return;
+  document.querySelectorAll('#viewRoot .pill.tone-critical').forEach(function(el){ el.classList.add('pulse'); });
+}
+function pulseCurrentReasoningStage(){
+  if(prefersReducedMotion()) return;
+  var stages = document.querySelectorAll('#viewRoot .stage');
+  if(!stages.length) return;
+  var last = stages[stages.length-1];
+  var items = last.querySelectorAll('.reason-item');
+  (items.length ? items[items.length-1] : last).classList.add('ai-active');
+}
 
 /* =========================================================================
    BACKEND CONNECTION - RISKON's static data (window.RISKON_DATA, baked in at
@@ -687,7 +752,7 @@ function currentEffectiveTheme(){
    using it here means the app reflects real, current database state instead
    of a stale build-time snapshot, with zero changes needed to any render
    function below (they only ever read the shape, never care where it came
-   from). See RISKON_ARCHITECTURE.md "Frontend <-> backend connection." ---- */
+   from). ---- */
 function fetchJsonWithTimeout(url, timeoutMs){
   var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
   var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, timeoutMs) : null;
@@ -797,9 +862,8 @@ var ICONS = {
   plus: '<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 2.5V13.5M2.5 8H13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
   check: '<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8.3l3.2 3.2L13 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   x: '<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  menu: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4.5h12M2 8h12M2 11.5h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
   warn: '<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 2L14.5 13.5H1.5L8 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M8 6.5v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="11.3" r="0.7" fill="currentColor"/></svg>',
-  sun: '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.1" stroke="currentColor" stroke-width="1.4"/><path d="M8 1.4v1.7M8 12.9v1.7M1.4 8h1.7M12.9 8h1.7M3.4 3.4l1.2 1.2M11.4 11.4l1.2 1.2M3.4 12.6l1.2-1.2M11.4 4.6l1.2-1.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>',
-  moon: '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.6 9.9A5.8 5.8 0 1 1 6.1 2.4a4.7 4.7 0 0 0 7.5 7.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>',
   signal: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="12.6" r="1.05" fill="currentColor"/><path d="M5.4 10.1a3.6 3.6 0 0 1 5.2 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M3.1 7.7a6.9 6.9 0 0 1 9.8 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M8 2v1.7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>',
   audit: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8.7" r="5.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 5.5v3.2l2.3 1.3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.2 2h5.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>',
   lock: '<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="7" width="9" height="7" rx="1.2" stroke="currentColor" stroke-width="1.3"/><path d="M5.3 7V5a2.7 2.7 0 0 1 5.4 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>',
@@ -812,7 +876,12 @@ var ICONS = {
   globe: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.2" stroke="currentColor" stroke-width="1.3"/><path d="M1.8 8h12.4M8 1.8c1.9 1.7 2.9 4 2.9 6.2S9.9 12.5 8 14.2C6.1 12.5 5.1 10.2 5.1 8S6.1 3.5 8 1.8Z" stroke="currentColor" stroke-width="1.2"/></svg>'
 };
 
-var SHIELD_MARK = '<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 2.5L22.5 6V12.5C22.5 18.5 18.6 22.7 13 24C7.4 22.7 3.5 18.5 3.5 12.5V6L13 2.5Z" fill="#0E6E8C"/><path d="M8.5 13.2L11.3 16L17.5 9.5" stroke="#EAF6FA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var SHIELD_MARK = '<svg width="26" height="26" viewBox="0 0 26 26" fill="none">'+
+  '<defs><filter id="shieldGlow" x="-60%" y="-60%" width="220%" height="220%">'+
+    '<feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>'+
+  '</filter></defs>'+
+  '<path d="M13 2.5L22.5 6V12.5C22.5 18.5 18.6 22.7 13 24C7.4 22.7 3.5 18.5 3.5 12.5V6L13 2.5Z" fill="#2EA6C9" filter="url(#shieldGlow)"/>'+
+  '<path d="M8.5 13.2L11.3 16L17.5 9.5" stroke="#051217" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 /* =========================================================================
    STATE
@@ -821,6 +890,7 @@ var App = {
   route: { name: 'dashboard', params: {} },
   facilityScope: 'ALL',
   currentRole: 'hse_manager',
+  mobileNavOpen: false,
   filters: {
     incidents: { q:'', facility:'', status:'', severity:'', category:'' },
     actions: { q:'', facility:'', type:'', status:'' },
@@ -888,9 +958,12 @@ function demoStep(delta){
 }
 function renderDemoPanel(){
   var s = DEMO_STEPS[DemoMode.step];
-  return '<div class="demo-panel">'+
+  var pct = Math.round(((DemoMode.step+1)/DEMO_STEPS.length)*100);
+  var animCls = prefersReducedMotion() ? '' : ' demo-panel-in';
+  return '<div class="demo-panel glass-panel'+animCls+'">'+
     '<div class="demo-panel-head"><span class="demo-panel-count">Guided Demo &middot; Step '+(DemoMode.step+1)+' of '+DEMO_STEPS.length+'</span>'+
       '<button class="demo-panel-close" data-action="demoExit" title="Exit demo">'+ICONS.x+'</button></div>'+
+    '<div class="demo-panel-progress"><div class="demo-panel-progress-fill" style="width:'+pct+'%"></div></div>'+
     '<div class="demo-panel-title">'+esc(s.title)+'</div>'+
     '<div class="demo-panel-text">'+s.text+'</div>'+
     '<div class="demo-panel-actions">'+
@@ -968,7 +1041,7 @@ function navigate(name, params){
   var qs = params ? Object.keys(params).map(function(k){ return k+'='+encodeURIComponent(params[k]); }).join('&') : '';
   location.hash = '#'+name + (qs ? '?'+qs : '');
 }
-window.addEventListener('hashchange', function(){ App.route = parseHash(); render(); });
+window.addEventListener('hashchange', function(){ App.route = parseHash(); App.mobileNavOpen = false; render(); });
 
 /* =========================================================================
    SHELL
@@ -1003,13 +1076,6 @@ function navBadgeCount(name){
   if(name==='executive') return execData().overview.open_high_risk_issues;
   if(name==='learning') return learningData().overview.pending_reviews;
   return null;
-}
-
-function themeToggleHtml(){
-  var eff = currentEffectiveTheme();
-  var isDark = eff === 'dark';
-  return '<button class="theme-toggle-btn" data-action="toggleTheme" title="Switch to '+(isDark?'light':'dark')+' mode">'+
-    (isDark ? ICONS.sun : ICONS.moon) + '<span>' + (isDark ? 'Light Mode' : 'Dark Mode') + '</span></button>';
 }
 
 function renderRailUser(){
@@ -1048,14 +1114,16 @@ function renderShell(){
   }).join('');
 
   return (
-  '<div class="rail">'+
+  '<button class="mobile-nav-toggle" data-action="toggleMobileNav" aria-label="'+(App.mobileNavOpen?'Close':'Open')+' navigation">'+(App.mobileNavOpen?ICONS.x:ICONS.menu)+'</button>'+
+  (App.mobileNavOpen ? '<div class="mobile-nav-backdrop" data-action="closeMobileNav"></div>' : '')+
+  '<div class="rail'+(App.mobileNavOpen?' open':'')+'">'+
     '<div class="rail-brand">'+SHIELD_MARK+'<div class="rail-brand-text"><span class="rail-brand-name">RISKON</span><span class="rail-brand-sub">Industrial Risk Intelligence</span></div></div>'+
     '<div class="rail-scope"><label class="rail-scope-label">'+ICONS.lock+' Viewing as (demo)</label><select id="roleScope">'+roleOpts+'</select></div>'+
     '<div class="rail-scope"><select id="facilityScope">'+facOpts+'</select></div>'+
     '<nav class="rail-nav">'+nav+'</nav>'+
     '<div class="rail-foot">'+
-      '<button class="theme-toggle-btn" data-action="startDemoFromWelcome" style="margin-bottom:10px">'+ICONS.learning+'<span>Guided Demo</span></button>'+
-      themeToggleHtml()+renderRailUser()+'</div>'+
+      '<button class="rail-foot-btn" data-action="startDemoFromWelcome">'+ICONS.learning+'<span>Guided Demo</span></button>'+
+      renderRailUser()+'</div>'+
   '</div>'+
   '<div class="main"><div id="topbar"></div><div class="view" id="viewRoot"></div></div>'
   );
@@ -1242,7 +1310,13 @@ var EV_TAG = {
 };
 function evLine(finding){
   var t = EV_TAG[finding.type] || {cls:'ev-fact', label:finding.type};
-  return '<div class="ev-line"><span class="ev-tag '+t.cls+'">'+t.label+'</span>'+esc(finding.statement)+'</div>';
+  // Some findings (e.g. the "Which risks are increasing/recurring?" QA
+  // answers) carry a risk_name but never mention it in the statement text
+  // itself -- without this prefix the reader has no idea which risk a
+  // finding like "signal score 83.5, Critical" is even about.
+  var prefix = (finding.risk_name && finding.statement.indexOf(finding.risk_name)===-1)
+    ? '<b>'+esc(finding.risk_name)+':</b> ' : '';
+  return '<div class="ev-line"><span class="ev-tag '+t.cls+'">'+t.label+'</span>'+prefix+esc(finding.statement)+'</div>';
 }
 function signalTone(signal){ return {Increasing:'critical', Stable:'neutral', Decreasing:'good'}[signal] || 'neutral'; }
 
@@ -1255,24 +1329,23 @@ function renderRiskCard(r, compact){
       '<div class="td-id">'+r.risk_id+' &middot; '+esc(r.facility)+'</div>'+
       '<div class="risk-card-title">'+esc(r.risk_name)+'</div>'+
       '<div style="margin-top:7px;display:flex;gap:6px;flex-wrap:wrap">'+
-        pill(r.risk_band+' Signal', severityTone(r.risk_band))+
-        pill(r.signal, signalTone(r.signal))+
-        '<span class="pill tone-neutral">Confidence: '+r.confidence+'</span>'+
+        pill(r.risk_band+' Priority', severityTone(r.risk_band))+
+        pill(r.signal+(r.signal==='Increasing'?' — getting worse':r.signal==='Decreasing'?' — getting better':' — holding steady'), signalTone(r.signal))+
+        '<span class="pill tone-neutral">'+r.confidence+' Confidence</span>'+
       '</div></div>'+
-      '<div class="risk-card-score"><div class="num mono">'+r.risk_signal_score+'</div><div class="lbl">Signal Score /100</div></div>'+
+      '<div class="risk-card-score"><div class="num mono">'+r.risk_signal_score+'</div><div class="lbl">out of 100<br>higher = more urgent</div></div>'+
     '</div>'+
-    '<div class="risk-card-section"><div class="risk-card-section-label">Evidence</div>'+
+    '<div class="risk-card-section"><div class="risk-card-section-label">What this might mean</div>'+evLine(r.possible_systemic_issue)+'</div>'+
+    '<div class="risk-card-section"><div class="risk-card-section-label">What to do next</div>'+evLine(r.recommended_investigation)+'</div>'+
+    (r.confidence==='Low' ? '<div class="risk-card-section evidence-text" style="font-size:11.5px"><b>Take this one with caution:</b> fewer than 3 incidents in the trailing 12 months back it up. A person should look into it before it drives any resourcing decision.</div>' : '')+
+    '<div class="risk-card-section"><div class="risk-card-section-label">Why we flagged this &mdash; supporting evidence</div>'+
       evidenceToShow.map(evLine).join('')+
       (compact && r.evidence.length>2 ? '<div class="ev-line" style="color:var(--ink-3)">+ '+(r.evidence.length-2)+' more &mdash; see full Risk Intelligence screen</div>' : '')+
     '</div>'+
-    '<div class="risk-card-section"><div class="risk-card-section-label">Possible Systemic Issue</div>'+evLine(r.possible_systemic_issue)+'</div>'+
-    '<div class="risk-card-section"><div class="risk-card-section-label">Recommended Next Step</div>'+evLine(r.recommended_investigation)+'</div>'+
-    (r.confidence==='Low' ? '<div class="risk-card-section evidence-text" style="font-size:11.5px">Confidence is Low (fewer than 3 incidents in the trailing 12 months). <b>Insufficient information &mdash; human investigation required</b> before this signal should drive a resourcing decision.</div>' : '')+
     (compact ? '' : '<div class="risk-card-section" style="font-size:11px;color:var(--ink-3)">'+
-      '<b>Data sources:</b> incidents, hazards, controls, control_assessments, actions (database/riskon.db) &middot; '+
-      'Related: '+r.related_incidents.length+' incident(s), '+r.related_hazards.length+' hazard(s), '+r.related_controls.length+' control(s)'+
-      (r.related_actions_overdue.length ? ', '+r.related_actions_overdue.length+' overdue action(s)' : '')+
-      '<br><b>Human review status:</b> '+r.human_review_status+'</div>')+
+      '<b>Based on:</b> '+r.related_incidents.length+' incident(s), '+r.related_hazards.length+' hazard record(s), '+r.related_controls.length+' safety control(s)'+
+      (r.related_actions_overdue.length ? ', '+r.related_actions_overdue.length+' overdue corrective action(s)' : '')+
+      ' on file &middot; <b>Reviewed by a person yet?</b> '+r.human_review_status+'</div>')+
   '</div>';
   return html;
 }
@@ -1296,36 +1369,39 @@ function renderRiskIntelligence(){
   var increasing = all.filter(function(r){ return r.signal==='Increasing'; }).length;
 
   var tiles = '<div class="tiles">'+
-    '<div class="tile" style="--tile-accent:var(--accent)"><div class="tile-label">Risk Clusters Analyzed</div><div class="tile-value mono">'+all.length+'</div><div class="tile-sub">hazard categories with recorded incidents</div></div>'+
-    '<div class="tile" style="--tile-accent:var(--critical)"><div class="tile-label">High / Critical Signal</div><div class="tile-value mono">'+critHigh+'</div><div class="tile-sub">of '+all.length+' clusters</div></div>'+
-    '<div class="tile" style="--tile-accent:var(--warning)"><div class="tile-label">Increasing Signal</div><div class="tile-value mono">'+increasing+'</div><div class="tile-sub">recent 6mo &gt; prior 6mo</div></div>'+
-    '<div class="tile" style="--tile-accent:var(--good)"><div class="tile-label">Generated</div><div class="tile-value mono" style="font-size:18px;margin-top:8px">'+esc(ri.generatedAt||'&mdash;')+'</div><div class="tile-sub">from database/riskon.db</div></div>'+
+    '<div class="tile" style="--tile-accent:var(--accent)"><div class="tile-label">Types of Risk Reviewed</div><div class="tile-value mono">'+all.length+'</div><div class="tile-sub">distinct hazard types with recorded incidents</div></div>'+
+    '<div class="tile" style="--tile-accent:var(--critical)"><div class="tile-label">Need Attention Now</div><div class="tile-value mono">'+critHigh+'</div><div class="tile-sub">rated High or Critical priority, of '+all.length+'</div></div>'+
+    '<div class="tile" style="--tile-accent:var(--warning)"><div class="tile-label">Getting Worse</div><div class="tile-value mono">'+increasing+'</div><div class="tile-sub">more incidents lately than before</div></div>'+
+    '<div class="tile" style="--tile-accent:var(--good)"><div class="tile-label">Last Updated</div><div class="tile-value mono" style="font-size:18px;margin-top:8px">'+esc(ri.generatedAt||'&mdash;')+'</div><div class="tile-sub">recalculated from live incident data</div></div>'+
   '</div>';
 
   var restRows = rest.map(function(r){
-    return '<tr><td class="td-id">'+r.risk_id+'</td><td class="td-title">'+esc(r.risk_name)+'</td>'+
-      '<td class="td-muted">'+esc(r.facility)+'</td>'+
-      '<td class="mono" style="font-weight:700">'+r.risk_signal_score+'</td>'+
-      '<td>'+pill(r.risk_band, severityTone(r.risk_band))+'</td>'+
-      '<td>'+pill(r.signal, signalTone(r.signal))+'</td>'+
-      '<td class="td-muted">'+r.confidence+'</td></tr>';
+    var tone = severityTone(r.risk_band);
+    return '<div class="feed-card" style="--fc-tone:var(--'+tone+');--fc-tone-soft:var(--'+tone+'-soft);cursor:default">'+
+      '<div class="feed-card-icon">'+ICONS.signal+'</div>'+
+      '<div class="feed-card-main"><div class="feed-card-title">'+esc(r.risk_name)+'</div>'+
+        '<div class="feed-card-meta">'+esc(r.facility)+' &middot; score '+r.risk_signal_score+'/100 &middot; '+r.confidence+' confidence</div></div>'+
+      '<div class="feed-card-tags">'+pill(r.risk_band, tone)+pill(r.signal, signalTone(r.signal))+'</div>'+
+    '</div>';
   }).join('');
 
   var qaOrder = ['q2_increasing_risks','q3_recurring_risks','q4_unusual_facility_patterns','q5_repeatedly_overdue_actions',
                  'q6_ineffective_controls','q7_cross_facility_hazards','q8_systemic_problem_incidents','q10_recommended_investigations'];
 
-  return tiles +
-    '<div class="summary-callout" style="margin-top:16px"><h3>How to read this screen</h3><p>Every finding below is labeled by evidentiary basis: '+
-      '<span class="ev-tag ev-fact">FACT</span> a direct count from the database, '+
-      '<span class="ev-tag ev-pattern">PATTERN</span> a computed comparison (e.g. a trend), '+
-      '<span class="ev-tag ev-hypothesis">HYPOTHESIS</span> a possible explanation, never a certainty, and '+
-      '<span class="ev-tag ev-recommendation">RECOMMENDATION</span> a proposal for a human to investigate. '+
-      'Nothing here claims to predict an accident &mdash; see docs/risk-intelligence-engine.md for the full methodology.</p></div>'+
-    '<h3 style="margin:18px 0 10px">Top 5 Emerging Risks</h3>'+
+  return '<div class="summary-callout"><h3>What is this page?</h3><p>RISKON looks across every incident, hazard, and safety control on file and groups them by risk type, so you can see where trouble is building up before it becomes a serious incident. Nothing here is a prediction &mdash; it\'s a starting point for a person to look into. Every line below is tagged so you always know how solid it is: '+
+      '<span class="ev-tag ev-fact">FACT</span> counted directly from the records, '+
+      '<span class="ev-tag ev-pattern">PATTERN</span> a trend we calculated, '+
+      '<span class="ev-tag ev-hypothesis">HYPOTHESIS</span> our best guess at why &mdash; never certain, and '+
+      '<span class="ev-tag ev-recommendation">RECOMMENDATION</span> something we suggest a person check.</p></div>'+
+    tiles +
+    '<h3 style="margin:20px 0 4px">Top 5 Risks to Look At First</h3>'+
+    '<p style="font-size:12.5px;color:var(--ink-2);margin:0 0 12px">Ranked by how urgent they look right now. Each card leads with what it might mean and what to do &mdash; the evidence behind it is lower down if you want to check our work.</p>'+
     top5.map(function(r){ return renderRiskCard(r, false); }).join('')+
-    (rest.length ? '<h3 style="margin:20px 0 10px">Remaining Risk Clusters ('+rest.length+')</h3>'+
-      '<div class="tablewrap"><table><thead><tr><th>ID</th><th>Risk</th><th>Facility</th><th>Score</th><th>Band</th><th>Signal</th><th>Confidence</th></tr></thead><tbody>'+restRows+'</tbody></table></div>' : '')+
-    '<h3 style="margin:22px 0 10px">Questions This Engine Answers</h3>'+
+    (rest.length ? '<h3 style="margin:22px 0 4px">Everything Else We Tracked ('+rest.length+')</h3>'+
+      '<p style="font-size:12.5px;color:var(--ink-2);margin:0 0 10px">Lower priority for now &mdash; still worth a glance.</p>'+
+      '<div class="feed-list">'+restRows+'</div>' : '')+
+    '<h3 style="margin:24px 0 4px">Common Questions, Already Answered</h3>'+
+    '<p style="font-size:12.5px;color:var(--ink-2);margin:0 0 12px">Things a plant manager or safety lead would normally have to dig for &mdash; already pulled together below.</p>'+
     qaOrder.filter(function(k){return qa[k];}).map(function(k){ return renderQaBlock(qa[k]); }).join('');
 }
 
@@ -1864,10 +1940,10 @@ function renderGuidedDemo(){
   return '<div class="card card-pad">'+
     '<div style="font-size:12.5px;margin-bottom:12px">RISKON doesn&rsquo;t just analyze what happened. It learns from what happened <i>after</i> its recommendations.</div>'+
     steps.map(function(s,i){
-      return '<div style="display:flex;gap:10px;align-items:baseline;padding:8px 0;'+(i?'border-top:1px solid var(--border)':'')+'">'+
+      return '<div style="display:flex;gap:10px;align-items:baseline;padding:8px 0;flex-wrap:wrap;'+(i?'border-top:1px solid var(--border)':'')+'">'+
         '<span class="td-id" style="width:16px;flex:0 0 auto">'+(i+1)+'</span>'+
         '<a href="#'+s.hash+'" style="font-weight:600;font-size:12.5px;flex:0 0 auto">'+esc(s.label)+'</a>'+
-        '<span style="font-size:11.5px;color:var(--ink-2)">'+esc(s.note)+'</span>'+
+        '<span style="font-size:11.5px;color:var(--ink-2);flex:1 1 200px;min-width:0">'+esc(s.note)+'</span>'+
       '</div>';
     }).join('')+
   '</div>';
@@ -2261,7 +2337,7 @@ function renderAiAnalysisButton(incident){
   }
   if(!BACKEND_REACHABLE){
     return '<div style="margin-top:10px"><button class="btn btn-sm" disabled title="No backend reachable">'+ICONS.search+' Generate AI Analysis</button>'+
-      '<div style="margin-top:6px;font-size:11px;color:var(--ink-3)">Static demo mode &mdash; no backend reachable. Run the RISKON backend (see RISKON_BACKEND_SETUP.md) to enable live AI analysis.</div></div>';
+      '<div style="margin-top:6px;font-size:11px;color:var(--ink-3)">Static demo mode &mdash; no backend reachable. Run the RISKON backend (see README.md) to enable live AI analysis.</div></div>';
   }
   if(!AI_CONFIGURED){
     return '<div style="margin-top:10px"><button class="btn btn-sm" disabled title="ANTHROPIC_API_KEY not set">'+ICONS.search+' Generate AI Analysis</button>'+
@@ -2372,7 +2448,7 @@ function renderApprovalBar(incident){
     '</div>';
   }
   return '<div class="approval-bar">'+
-    '<h4>Human Review Decision <span class="ev-tag" style="background:var(--accent-soft);color:var(--accent);margin-left:4px">HUMAN DECISION</span></h4>'+
+    '<h4>Human Review Decision <span class="ev-tag ev-human" style="margin-left:4px">HUMAN DECISION</span></h4>'+
     '<div style="font-size:11.5px;color:var(--ink-3);margin-top:2px">Approving will create/update the linked risk-register entry and open the recommended corrective/preventive actions. Nothing above has been written to the register yet. This decision is recorded in the Audit Trail.</div>'+
     '<div class="approval-row">'+
       '<textarea id="reviewComment" placeholder="Optional reviewer comment&hellip;" rows="1"></textarea>'+
@@ -2571,8 +2647,9 @@ function renderWelcome(){
       '</div>'+
     '</div>'+
     '<div class="welcome-loop">'+loop.map(function(s,i){
-      return (i>0?'<div class="welcome-loop-connector"></div>':'')+
-        '<div class="welcome-loop-step"><div class="welcome-loop-icon">'+s.icon+'</div>'+
+      var delay = prefersReducedMotion() ? '' : ' style="animation-delay:'+(i*120)+'ms"';
+      return (i>0?'<svg class="welcome-loop-connector" viewBox="0 0 100 6" preserveAspectRatio="none"><line x1="0" y1="3" x2="100" y2="3" class="flowing"/></svg>':'')+
+        '<div class="welcome-loop-step reveal-in"'+delay+'><div class="welcome-loop-icon">'+s.icon+'</div>'+
         '<div class="welcome-loop-label">'+s.label+'</div><div class="welcome-loop-text">'+s.text+'</div></div>';
     }).join('')+'</div>'+
     '<div class="welcome-benefits">'+benefits.map(function(b){
@@ -2617,10 +2694,11 @@ function facilityStats(facilityId){
   var risks = DATA.riskAssessments.filter(function(r){ return r.facility_id===facilityId; });
   var openHighRisks = risks.filter(function(r){ return r.status==='Open' && (r.risk_level==='High'||r.risk_level==='Critical'); });
   var summary = (execData().facilityComparison.facility_summaries||{})[facilityId] || {};
+  var activeEmployees = DATA.employees.filter(function(e){ return e.facility_id===facilityId && e.is_active; }).length;
   return { incidents: incs.length, openIncidents: open.length, openActions: openActs.length,
     overdueActions: overdueActs.length, openHighRisks: openHighRisks.length,
     signalScore: summary.max_risk_signal_score || 0, topRisk: summary.fastest_increasing_risk,
-    riskCount: summary.risk_count || 0 };
+    riskCount: summary.risk_count || 0, employees: activeEmployees };
 }
 function renderFacilities(){
   var facs = DATA.facilities;
@@ -2669,10 +2747,11 @@ function renderFacilities(){
       '<div class="fac-card-name">'+esc(f.name)+'</div><div class="fac-card-loc">'+esc(f.city)+', '+esc(f.country)+'</div>'+
       '<div style="margin-top:8px">'+pill(band+' Signal', severityTone(band))+'</div>'+
       '<div class="fac-card-stats">'+
+        '<div><div class="fac-card-stat-v">'+stats.employees+'</div><div class="fac-card-stat-k">Active Employees</div></div>'+
         '<div><div class="fac-card-stat-v">'+stats.openIncidents+'</div><div class="fac-card-stat-k">Open Incidents</div></div>'+
         '<div><div class="fac-card-stat-v">'+stats.overdueActions+'</div><div class="fac-card-stat-k">Overdue Actions</div></div>'+
         '<div><div class="fac-card-stat-v">'+stats.openHighRisks+'</div><div class="fac-card-stat-k">High/Critical Risks</div></div>'+
-        '<div><div class="fac-card-stat-v" style="font-size:11.5px;font-weight:600">'+esc(stats.topRisk||'None')+'</div><div class="fac-card-stat-k">Top Emerging Risk</div></div>'+
+        '<div style="grid-column:1/-1"><div class="fac-card-stat-v" style="font-size:11.5px;font-weight:600">'+esc(stats.topRisk||'None')+'</div><div class="fac-card-stat-k">Top Emerging Risk</div></div>'+
       '</div></div>';
   }).join('');
 
@@ -2681,15 +2760,45 @@ function renderFacilities(){
   return mapSvg + '<div class="fac-card-grid">'+cards+'</div>' + detail;
 }
 
+function countBy(list, keyFn){
+  var m = {};
+  list.forEach(function(item){ var k = keyFn(item) || 'Unspecified'; m[k]=(m[k]||0)+1; });
+  return m;
+}
+function chipRow(counts, limit){
+  var keys = Object.keys(counts).sort(function(a,b){ return counts[b]-counts[a]; });
+  if(limit) keys = keys.slice(0, limit);
+  if(!keys.length) return '<span style="font-size:12px;color:var(--ink-3)">None on file.</span>';
+  return keys.map(function(k){ return '<span class="chip">'+esc(k)+' <span class="chip-count">'+counts[k]+'</span></span>'; }).join('');
+}
+function subHead(title, hint){
+  return '<h4 style="margin:18px 0 8px;font-size:12.5px">'+esc(title)+(hint?' <span style="font-weight:400;color:var(--ink-3)">('+esc(hint)+')</span>':'')+'</h4>';
+}
+
 function renderFacilityDetail(facilityId){
   var f = FAC[facilityId]; if(!f) return '';
-  var incs = DATA.incidents.filter(function(i){ return i.facility_id===facilityId; }).slice(0,8);
+  var stats = facilityStats(facilityId);
+  var incsAll = DATA.incidents.filter(function(i){ return i.facility_id===facilityId; });
+  var incs = incsAll.slice(0,8);
   var eq = DATA.equipment.filter(function(e){ return e.facility_id===facilityId; });
-  var acts = DATA.correctiveActions.filter(function(a){ return a.facility_id===facilityId && a.status!=='Completed'; }).slice(0,6);
+  var actsAll = DATA.correctiveActions.filter(function(a){ return a.facility_id===facilityId; });
+  var acts = actsAll.filter(function(a){ return a.status!=='Completed'; }).slice(0,6);
+  var employees = DATA.employees.filter(function(e){ return e.facility_id===facilityId; });
+  var activeEmployees = employees.filter(function(e){ return e.is_active; });
+  var hazardsHere = (DATA.hazards||[]).filter(function(h){ return h.facility_id===facilityId; });
+  var hazIds = hazardsHere.map(function(h){ return h.hazard_id; });
+  var controlsHere = DATA.controls.filter(function(c){ return hazIds.indexOf(c.hazard_id)>=0; });
+  var sopsHere = DATA.sops.filter(function(s){ return s.facility_id===facilityId; });
+  var inspectionsHere = (DATA.inspections||[]).filter(function(i){ return i.facility_id===facilityId; });
+  var maintenanceHere = (DATA.maintenance||[]).filter(function(m){ return m.facility_id===facilityId; });
+  var maintOverdue = maintenanceHere.filter(function(m){ return m.status==='Overdue'||m.status==='Delayed'; }).length;
+  var inspDeficiencies = inspectionsHere.reduce(function(sum,i){ return sum + (i.deficiencies_found||0); }, 0);
+  var hazardStatusCounts = countBy(hazardsHere, function(h){ return h.status; });
+
   // zones: derived from incidents.location free text, grouped -- exactly
   // the kind of real-but-unstructured field the exploration confirmed
   var zoneCounts = {};
-  DATA.incidents.filter(function(i){return i.facility_id===facilityId;}).forEach(function(i){
+  incsAll.forEach(function(i){
     var z = eqType(i.equipment_id) || i.hazard_category;
     zoneCounts[z] = (zoneCounts[z]||0)+1;
   });
@@ -2709,16 +2818,41 @@ function renderFacilityDetail(facilityId){
       '<button class="btn btn-sm" data-action="clearFacilitySelection">Close</button></div>'+
     '<div class="card-pad">'+
       '<div class="tiles">'+
-        '<div class="tile"><div class="tile-label">Equipment</div><div class="tile-value mono">'+eq.length+'</div></div>'+
-        '<div class="tile"><div class="tile-label">Employee Capacity</div><div class="tile-value mono">'+(f.employee_capacity||'&mdash;')+'</div></div>'+
         '<div class="tile"><div class="tile-label">Facility Type</div><div class="tile-value" style="font-size:14px">'+esc(f.facility_type)+'</div></div>'+
         '<div class="tile"><div class="tile-label">Established</div><div class="tile-value mono">'+(f.year_established||'&mdash;')+'</div></div>'+
+        '<div class="tile"><div class="tile-label">Floor Area</div><div class="tile-value mono">'+(f.square_footage?f.square_footage.toLocaleString()+' sqft':'&mdash;')+'</div></div>'+
+        '<div class="tile"><div class="tile-label">Employees</div><div class="tile-value mono">'+activeEmployees.length+' / '+(f.employee_capacity||'&mdash;')+'</div><div class="tile-sub">active, of design capacity</div></div>'+
+        '<div class="tile"><div class="tile-label">Equipment on Site</div><div class="tile-value mono">'+eq.length+'</div></div>'+
+        '<div class="tile" style="--tile-accent:var(--critical)"><div class="tile-label">High/Critical Risks</div><div class="tile-value mono">'+stats.openHighRisks+'</div></div>'+
       '</div>'+
-      '<h4 style="margin:16px 0 8px;font-size:12.5px">Zones by Incident Concentration <span style="font-weight:400;color:var(--ink-3)">(derived from real incident/equipment records)</span></h4>'+
-      '<div class="chipbar">'+zones.map(function(z){ return '<span class="chip">'+esc(z)+' <span class="chip-count">'+zoneCounts[z]+'</span></span>'; }).join('')+'</div>'+
+
+      subHead('Workforce', 'active employees by department')+
+      '<div class="chipbar">'+chipRow(countBy(activeEmployees, function(e){ return e.department; }))+'</div>'+
+
+      subHead('Equipment on Site', 'by category')+
+      '<div class="chipbar">'+chipRow(countBy(eq, function(e){ return e.category; }), 10)+'</div>'+
+
+      subHead('Safety Program')+
+      '<div class="tiles">'+
+        '<div class="tile"><div class="tile-label">SOPs on File</div><div class="tile-value mono">'+sopsHere.length+'</div></div>'+
+        '<div class="tile"><div class="tile-label">Safety Controls</div><div class="tile-value mono">'+controlsHere.length+'</div></div>'+
+        '<div class="tile"><div class="tile-label">Open Hazards</div><div class="tile-value mono">'+(hazardStatusCounts['Open']||0)+'</div><div class="tile-sub">of '+hazardsHere.length+' identified</div></div>'+
+        '<div class="tile"><div class="tile-label">Inspection Findings</div><div class="tile-value mono">'+inspDeficiencies+'</div><div class="tile-sub">deficiencies found, '+inspectionsHere.length+' inspections</div></div>'+
+        '<div class="tile" style="--tile-accent:var(--warning)"><div class="tile-label">Maintenance Behind Schedule</div><div class="tile-value mono">'+maintOverdue+'</div><div class="tile-sub">of '+maintenanceHere.length+' records</div></div>'+
+      '</div>'+
+
+      subHead('Zones by Incident Concentration', 'derived from real incident/equipment records')+
+      '<div class="chipbar">'+chipRow(zoneCounts, 6)+'</div>'+
+
       '<div class="cols-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px">'+
-        '<div><h4 style="margin-bottom:8px;font-size:12.5px">Recent Incidents</h4><div class="tablewrap"><table><thead><tr><th>ID</th><th>Title</th><th>Severity</th><th>Date</th></tr></thead><tbody>'+(incRows||'<tr><td colspan="4" style="text-align:center;color:var(--ink-3)">None</td></tr>')+'</tbody></table></div></div>'+
-        '<div><h4 style="margin-bottom:8px;font-size:12.5px">Open Corrective Actions</h4><div class="tablewrap"><table><thead><tr><th>ID</th><th>Description</th><th>Status</th><th>Due</th></tr></thead><tbody>'+(actRows||'<tr><td colspan="4" style="text-align:center;color:var(--ink-3)">None</td></tr>')+'</tbody></table></div></div>'+
+        '<div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">'+
+            '<h4 style="font-size:12.5px">Recent Incidents ('+incsAll.length+' total)</h4>'+
+            '<button class="btn btn-sm" data-action="goFacilityScoped" data-id="'+facilityId+'" data-route="incidents">View all &rarr;</button></div>'+
+          '<div class="tablewrap"><table><thead><tr><th>ID</th><th>Title</th><th>Severity</th><th>Date</th></tr></thead><tbody>'+(incRows||'<tr><td colspan="4" style="text-align:center;color:var(--ink-3)">None</td></tr>')+'</tbody></table></div></div>'+
+        '<div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">'+
+            '<h4 style="font-size:12.5px">Open Corrective Actions ('+actsAll.filter(function(a){return a.status!=='Completed';}).length+' open)</h4>'+
+            '<button class="btn btn-sm" data-action="goFacilityScoped" data-id="'+facilityId+'" data-route="actions">View all &rarr;</button></div>'+
+          '<div class="tablewrap"><table><thead><tr><th>ID</th><th>Description</th><th>Status</th><th>Due</th></tr></thead><tbody>'+(actRows||'<tr><td colspan="4" style="text-align:center;color:var(--ink-3)">None</td></tr>')+'</tbody></table></div></div>'+
       '</div>'+
     '</div>'+
   '</div>';
@@ -2756,12 +2890,27 @@ function riskGraphFor(equipmentId){
     assessments:assessments, latestByControl:latestByControl, signalBand:signalBand };
 }
 
+/* Glow filters for the Risk Graph -- tinted feFlood clipped to the node's
+   own silhouette (feComposite "in"), blurred, merged under the original --
+   a color-matched halo rather than a generic white glow. Defined once,
+   reused via url(#glow-{tone}); tone names match severityTone()'s output. */
+var GRAPH_GLOW_DEFS = '<defs>' + ['good','warning','serious','critical','accent'].map(function(tone){
+  return '<filter id="glow-'+tone+'" x="-60%" y="-60%" width="220%" height="220%">'+
+    '<feFlood flood-color="var(--'+tone+')" result="color"/>'+
+    '<feComposite in="color" in2="SourceGraphic" operator="in" result="tinted"/>'+
+    '<feGaussianBlur in="tinted" stdDeviation="3" result="blur"/>'+
+    '<feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>'+
+  '</filter>';
+}).join('') + '</defs>';
+
 function graphNode(x, y, w, h, label, sub, type, id, anchor, tone){
   var sel = App.riskGraphSelectedNode && App.riskGraphSelectedNode.type===type && App.riskGraphSelectedNode.id===id;
   var cls = 'graph-node-box'+(anchor?' anchor':'')+(sel&&!anchor?' selected':'');
   var strokeOverride = tone ? ' style="stroke:var(--'+tone+')"' : '';
+  var glowTone = (sel && !anchor) ? 'accent' : ((tone==='critical'||tone==='serious') ? tone : null);
+  var glowAttr = glowTone ? ' filter="url(#glow-'+glowTone+')" data-tone="'+glowTone+'"' : '';
   return '<g data-action="graphSelectNode" data-type="'+type+'" data-id="'+esc(id)+'" transform="translate('+x+','+y+')">'+
-    '<rect class="'+cls+'" width="'+w+'" height="'+h+'" rx="7"'+strokeOverride+'></rect>'+
+    '<rect class="'+cls+'" width="'+w+'" height="'+h+'" rx="7"'+strokeOverride+glowAttr+'></rect>'+
     '<text class="graph-node-label" x="10" y="'+(h/2 - (sub?4:-3))+'">'+esc(truncate(label,22))+'</text>'+
     (sub ? '<text class="graph-node-sub" x="10" y="'+(h/2+10)+'">'+esc(truncate(sub,26))+'</text>' : '')+
   '</g>';
@@ -2847,26 +2996,36 @@ function renderRiskGraph(){
   svgBody += graphNode(COL_X[5], 30, 150, NODE_H, g.signalBand+' Signal', g.incidents.length+' incidents traced', 'signal', 'summary', false, severityTone(g.signalBand));
 
   // Edges: equipment -> maintInsp/incidents/hazards ; hazards -> controls ; controls -> signal
+  // "Flowing" (animated dash, signal traveling toward the verdict) whenever
+  // this equipment's overall traced signal is High/Critical -- reuses the
+  // exact same severityTone() the terminal Risk Signal node already trusts,
+  // no new signal computation.
+  var globalFlowing = (g.signalBand==='High' || g.signalBand==='Critical');
   var edges = '';
-  function edge(fromCol, fromI, fromN, toCol, toI, toN, fromH, toH){
+  function edge(fromCol, fromI, fromN, toCol, toI, toN, fromH, toH, flowing){
     var x1 = COL_X[fromCol] + (fromCol===2?190:NODE_W), y1 = 30 + fromI*(NODE_H+GAP) + NODE_H/2;
     var x2 = COL_X[toCol], y2 = 30 + toI*(NODE_H+GAP) + (toCol===2?NODE_H:NODE_H)/2;
     var midX = (x1+x2)/2;
-    return '<path class="graph-edge" d="M'+x1+' '+y1+' C '+midX+' '+y1+', '+midX+' '+y2+', '+x2+' '+y2+'"></path>';
+    var cls = 'graph-edge'+(flowing?' flowing':'');
+    return '<path class="'+cls+'" d="M'+x1+' '+y1+' C '+midX+' '+y1+', '+midX+' '+y2+', '+x2+' '+y2+'"></path>';
   }
-  maintInsp.slice(0,MAX_SHOWN).forEach(function(_,i){ edges += edge(0,0,1, 1,i,1); });
-  g.incidents.slice(0,MAX_SHOWN).forEach(function(_,i){ edges += edge(0,0,1, 2,i,1); });
-  g.hazards.slice(0,MAX_SHOWN).forEach(function(_,i){ edges += edge(0,0,1, 3,i,1); });
+  maintInsp.slice(0,MAX_SHOWN).forEach(function(_,i){ edges += edge(0,0,1, 1,i,1, null,null, globalFlowing); });
+  g.incidents.slice(0,MAX_SHOWN).forEach(function(inc,i){ edges += edge(0,0,1, 2,i,1, null,null, globalFlowing || severityTone(inc.severity_reported)==='critical'); });
+  g.hazards.slice(0,MAX_SHOWN).forEach(function(_,i){ edges += edge(0,0,1, 3,i,1, null,null, globalFlowing); });
   g.controls.slice(0,MAX_SHOWN).forEach(function(c,i){
     var hIdx = g.hazards.slice(0,MAX_SHOWN).findIndex(function(h){return h.hazard_id===c.hazard_id;});
-    if(hIdx>=0) edges += edge(3,hIdx,1, 4,i,1);
+    if(hIdx>=0) edges += edge(3,hIdx,1, 4,i,1, null,null, globalFlowing);
   });
-  g.controls.slice(0,MAX_SHOWN).forEach(function(_,i){ edges += edge(4,i,1, 5,0,1); });
+  g.controls.slice(0,MAX_SHOWN).forEach(function(c,i){
+    var latest = g.latestByControl[c.control_id];
+    var ineffective = latest && latest.effectiveness_rating==='Ineffective';
+    edges += edge(4,i,1, 5,0,1, null,null, globalFlowing || ineffective);
+  });
 
   var maxRows = Math.max(1, maintInsp.length, g.incidents.length, g.hazards.length, g.controls.length, MAX_SHOWN===0?0:Math.min(MAX_SHOWN, Math.max(maintInsp.length,g.incidents.length,g.hazards.length,g.controls.length)));
   var svgH = 30 + Math.min(MAX_SHOWN, Math.max(1,maxRows))*(NODE_H+GAP) + 40;
 
-  var graphSvg = '<div class="graph-card">'+svgWrap(1260, svgH, edges+svgBody)+'</div>';
+  var graphSvg = '<div class="graph-card">'+svgWrap(1260, svgH, GRAPH_GLOW_DEFS+edges+svgBody)+'</div>';
 
   var detail = renderRiskGraphDetail(g);
 
@@ -3115,9 +3274,7 @@ function handleSignup(){
 function occupationToRoleLocal(occupation){
   // Mirrors backend/routes/users.py's OCCUPATION_TO_RBAC_ROLE mapping, used
   // only when no backend is reachable to derive a sensible default role --
-  // the backend's mapping is authoritative whenever it's reachable (section 7 of
-  // RISKON_ARCHITECTURE.md's "one source of truth" principle applies to the
-  // signup response the same way it does to bootstrap data).
+  // the backend's mapping is authoritative whenever it's reachable.
   return {'Plant Manager':'plant_manager','Safety Manager':'hse_manager','EHS Coordinator':'hse_manager',
     'Environmental Compliance Officer':'hse_manager','Executive':'executive'}[occupation] || 'employee';
 }
@@ -3274,7 +3431,7 @@ function handleGenerateAiAnalysis(incidentId){
     })
     .catch(function(){
       App.aiAnalysisLoading = null;
-      alert('Could not reach the backend to run AI analysis. Is it running? See RISKON_BACKEND_SETUP.md.');
+      alert('Could not reach the backend to run AI analysis. Is it running? See README.md for setup.');
       render();
     });
 }
@@ -3309,7 +3466,7 @@ function handleLiveIncidentReview(incident, liveRecord, decision, comment){
 }
 
 function handleCompleteAction(actionId){
-  if(!BACKEND_REACHABLE){ alert('No backend reachable -- this is a static demo build. See RISKON_BACKEND_SETUP.md.'); return; }
+  if(!BACKEND_REACHABLE){ alert('No backend reachable -- this is a static demo build. See README.md for setup.'); return; }
   fetch('/api/actions/'+actionId+'/complete', { method:'POST', headers:{'Content-Type':'application/json'}, body:'{}' })
     .then(function(resp){ return resp.json().then(function(body){ return {ok:resp.ok, body:body}; }); })
     .then(function(result){
@@ -3391,11 +3548,18 @@ function handleRecommendationFeedback(recId, decision){
 }
 
 document.addEventListener('click', function(e){
+  // Any click on a nav link should close the mobile drawer -- including a
+  // click on the CURRENT page's own link, which fires no 'hashchange' event
+  // for the hashchange-based close below to catch, so this must render
+  // itself rather than rely on that listener.
+  if(App.mobileNavOpen && e.target.closest('.rail-link')){ App.mobileNavOpen = false; render(); }
   var t = e.target.closest('[data-action]');
   if(!t) return;
   var action = t.dataset.action;
 
-  if(action==='toggleTheme'){ var nextTheme = currentEffectiveTheme()==='dark' ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', nextTheme); setStoredTheme(nextTheme); render(); return; }
+  if(action==='toggleMobileNav'){ App.mobileNavOpen = !App.mobileNavOpen; render(); return; }
+  if(action==='closeMobileNav'){ App.mobileNavOpen = false; render(); return; }
+
   if(action==='goInvestigation'){ if(!t.dataset.id) return; App.selectedIncidentId = t.dataset.id; navigate('investigation'); e.preventDefault(); return; }
   if(action==='selectIncident'){ App.selectedIncidentId = t.dataset.id; render(); return; }
   if(action==='toggleNewIncident'){ App.newIncidentOpen = !App.newIncidentOpen; render(); return; }
@@ -3410,6 +3574,7 @@ document.addEventListener('click', function(e){
   if(action==='graphSelectNode'){ App.riskGraphSelectedNode = {type:t.dataset.type, id:t.dataset.id}; render(); return; }
   if(action==='selectFacility'){ App.selectedFacilityId = (App.selectedFacilityId===t.dataset.id) ? null : t.dataset.id; render(); return; }
   if(action==='clearFacilitySelection'){ App.selectedFacilityId = null; render(); return; }
+  if(action==='goFacilityScoped'){ App.facilityScope = t.dataset.id; navigate(t.dataset.route); return; }
   if(action==='enterApp'){ navigate('dashboard'); return; }
   if(action==='startDemoFromWelcome'){ startDemo(); return; }
   if(action==='demoNext'){ demoStep(1); return; }
@@ -3588,7 +3753,10 @@ function render(){
     case 'signup': view = renderSignup(); break;
     default: view = renderDashboard();
   }
-  document.getElementById('viewRoot').innerHTML = view;
+  setViewRoot(view);
+  if(App.route.name==='investigation') pulseCurrentReasoningStage();
+  markCriticalAlerts();
+  initScrollReveal();
   if(DemoMode.active){
     var panel = document.createElement('div');
     panel.innerHTML = renderDemoPanel();

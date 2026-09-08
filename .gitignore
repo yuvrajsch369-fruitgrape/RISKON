@@ -14,8 +14,7 @@ __pycache__/
 venv/
 *.egg-info/
 
-# --- Node (unused today, but the backend's requirements list npm-based
-#      tooling as a possible future path — see RISKON_ARCHITECTURE.md) -------
+# --- Node (unused today, kept as a possible future path) -------
 node_modules/
 .next/
 dist/

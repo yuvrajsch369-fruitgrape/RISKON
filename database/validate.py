@@ -243,9 +243,18 @@ for table, expected in EXPECTED.items():
 # =========================================================================
 passed_count = sum(1 for _, ok, _ in results if ok)
 failed = [(n, d) for n, ok, d in results if not ok]
+# Row-count sanity was previously computed but never actually enforced --
+# `sys.exit()` below only ever looked at `failed`, so a dataset wildly off
+# from the spec's volumes (e.g. a broken generator producing half the
+# expected rows) still reported "All consistency checks passed" and exited
+# 0. Folding these in here means an out-of-tolerance table actually fails
+# the run, matching what the report table already implies it does.
+failed = failed + [(f"{table} row count", f"expected ~{expected} (±{max(3, round(expected*0.1))}), got {actual}")
+                    for table, expected, actual, within in volume_report if not within]
 
+total_checks = len(results) + len(volume_report)
 lines = ["# RISKON V0.1 — Database Validation Report", "",
-         f"Run against `database/riskon.db`. {passed_count}/{len(results)} checks passed.", ""]
+         f"Run against `database/riskon.db`. {total_checks - len(failed)}/{total_checks} checks passed.", ""]
 lines.append("## Consistency checks\n")
 lines.append("| Check | Result | Detail |")
 lines.append("|---|---|---|")

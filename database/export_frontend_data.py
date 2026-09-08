@@ -33,7 +33,7 @@ This module is used two ways:
      directly and calls it against the backend's own live connection, so the
      `GET /api/bootstrap` endpoint and the offline static build produce BYTE-
      IDENTICAL output from the same database — one code path, not two that can
-     drift apart. See RISKON_ARCHITECTURE.md "Why one data-shaping function."
+     drift apart.
 """
 import json
 import sqlite3
@@ -262,9 +262,10 @@ def build_frontend_data(conn, db_path=DB_PATH):
     """)
 
     # -----------------------------------------------------------------------
-    # 5 AI-reasoning example incidents (overlay, same as the previous export) —
-    # facility ids are compatible (same FAC-001/002/003 scheme, same underlying
-    # cities/states in both datasets), so these carry over unchanged.
+    # 5 hand-written AI-reasoning example incidents (overlay) — reference
+    # FAC-001/002/003, which still exist unchanged after the facility count
+    # grew to 7 (FAC-004..007 were appended, nothing existing was renumbered),
+    # so these carry over without modification.
     # -----------------------------------------------------------------------
     pipelines = {}
     for f in sorted(EXAMPLES_DIR.glob("*.json")):

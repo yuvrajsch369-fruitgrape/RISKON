@@ -513,8 +513,7 @@ CREATE INDEX idx_learning_evaluations_candidate ON learning_evaluations(candidat
 
 -- =============================================================================
 -- PART 3 — LIVE BACKEND (added when the FastAPI backend + Claude AI service
--- were introduced; see RISKON_ARCHITECTURE.md and RISKON_BACKEND_SETUP.md).
--- One new table: a real, server-persisted record of every live AI incident
+-- were introduced). One new table: a real, server-persisted record of every live AI incident
 -- analysis, distinct from the synthetic `recommendations` table Part 2 seeds
 -- (those were never reviewed by a real person or produced by a real model
 -- call — see docs/continuous-learning-engine.md). Rows here are only ever
@@ -553,8 +552,7 @@ CREATE INDEX IF NOT EXISTS idx_ai_incident_analyses_incident ON ai_incident_anal
 -- A lightweight, real, server-persisted profile: name + occupation + post
 -- (facility/site), plus the RBAC demo role that occupation maps onto. This is
 -- NOT authentication — there is no password, no session token, no login
--- check anywhere in the backend (see RISKON_BACKEND_SETUP.md §11/§13, which
--- already documents that gap for the rest of the API). Signing up only ever
+-- check anywhere in the backend. Signing up only ever
 -- creates a profile a browser can remember (localStorage) and display; it
 -- never gates access to any endpoint or screen. Created idempotently at
 -- backend startup by backend/db.py's ensure_schema().

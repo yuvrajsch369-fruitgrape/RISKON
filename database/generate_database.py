@@ -5,9 +5,11 @@ RISKON V0.1 — synthetic database generator for Rex Industrial Manufacturing.
 Builds database/riskon.db (SQLite) from schema.sql, generating ~19 related
 tables with deliberately injected patterns (see PATTERN NOTES below), then:
   - exports every table to database/csv/<table>.csv
-  - runs the consistency checks requested by the spec -> database/validation_report.md
   - writes database/test_scenarios.json (ground truth for 5 known scenarios)
   - writes database/example_records.json (one real row per table, for docs)
+
+Consistency checks are a separate, manual step (this script does not run
+them itself): `python3 database/validate.py` -> database/validation_report.md.
 
 All content is fictional. No real company, person, or confidential data.
 
