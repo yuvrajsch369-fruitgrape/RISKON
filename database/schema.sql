@@ -548,18 +548,20 @@ CREATE INDEX IF NOT EXISTS idx_ai_incident_analyses_incident ON ai_incident_anal
 -- END PART 3
 
 -- =============================================================================
--- PART 4 — SIGNUP / PROFILE (added with the dedicated RISKON signup page).
--- A lightweight, real, server-persisted profile: name + occupation + post
--- (facility/site), plus the RBAC demo role that occupation maps onto. This is
--- NOT authentication — there is no password, no session token, no login
--- check anywhere in the backend. Signing up only ever
--- creates a profile a browser can remember (localStorage) and display; it
--- never gates access to any endpoint or screen. Created idempotently at
--- backend startup by backend/db.py's ensure_schema().
+-- PART 4 — SIGNUP / LOGIN (real per-user accounts). A server-persisted
+-- profile: name + occupation + post (facility/site), the RBAC demo role that
+-- occupation maps onto, plus a real email + bcrypt password hash so this is
+-- genuine per-user authentication, not just a display profile. Rows created
+-- before this change have email/password_hash = NULL — permanently
+-- login-incapable legacy display profiles, never deleted or backfilled.
+-- Logging in does NOT change what the free "Viewing as (demo)" role switcher
+-- does (still 100% client-side) unless AUTH_REQUIRED is explicitly enabled —
+-- see backend/services/auth.py and backend/middleware.py. Created/migrated
+-- idempotently at backend startup by backend/db.py's ensure_schema().
 -- =============================================================================
 
 -- -----------------------------------------------------------------------------
--- 24. app_users  (signup profiles — see backend/routes/users.py)
+-- 24. app_users  (real accounts — see backend/routes/users.py, backend/services/auth.py)
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS app_users (
     user_id        TEXT PRIMARY KEY,
@@ -567,9 +569,31 @@ CREATE TABLE IF NOT EXISTS app_users (
     occupation        TEXT NOT NULL,
     post               TEXT NOT NULL,
     rbac_role           TEXT NOT NULL CHECK (rbac_role IN ('employee','hse_manager','plant_manager','executive')),
-    created_at            TEXT NOT NULL
+    created_at            TEXT NOT NULL,
+    email                  TEXT,     -- nullable: legacy pre-auth rows have none
+    password_hash            TEXT    -- nullable: legacy pre-auth rows have none; bcrypt hash when set
 );
+CREATE UNIQUE INDEX IF NOT EXISTS idx_app_users_email ON app_users(email COLLATE NOCASE);
 -- END PART 4
+
+-- =============================================================================
+-- PART 5 — SESSIONS (server-side session tokens for real login). An opaque
+-- random token looked up in this table on every request — not a signed/
+-- stateless cookie — so logout can genuinely revoke it immediately, with no
+-- signing secret to generate or rotate. See backend/services/auth.py.
+-- =============================================================================
+
+-- -----------------------------------------------------------------------------
+-- 25. sessions  (see backend/services/auth.py)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS sessions (
+    session_token   TEXT PRIMARY KEY,
+    user_id           TEXT NOT NULL REFERENCES app_users(user_id),
+    created_at          TEXT NOT NULL,
+    expires_at            TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_sessions_user ON sessions(user_id);
+-- END PART 5
 
 -- -----------------------------------------------------------------------------
 -- Indexes (facility/date/status lookups are the hot paths for the

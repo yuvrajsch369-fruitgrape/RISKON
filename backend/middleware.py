@@ -16,9 +16,11 @@ import secrets
 
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
-from starlette.responses import Response
+from starlette.responses import JSONResponse, Response
 
 from backend.config import settings
+from backend.db import db_session
+from backend.services.auth import SESSION_COOKIE_NAME, _lookup_session
 
 _UNPROTECTED_PATHS = {"/api/health"}
 
@@ -58,3 +60,43 @@ class DemoAccessMiddleware(BaseHTTPMiddleware):
             content="Authentication required.",
             headers={"WWW-Authenticate": 'Basic realm="RISKON Demo"'},
         )
+
+
+# -----------------------------------------------------------------------------
+# Real per-user login enforcement — a SEPARATE, independent gate from the one
+# above. DemoAccessMiddleware is one shared password for the whole public
+# demo; this is per-account, backed by backend/services/auth.py's real
+# sessions. Off by default (AUTH_REQUIRED unset) so nothing about today's
+# open, frictionless demo changes unless a real access-controlled pilot
+# deployment explicitly turns it on. Both gates can run at once.
+# -----------------------------------------------------------------------------
+_AUTH_EXEMPT_PATH_PREFIXES = ("/api/health", "/api/users/")
+# /api/users/* stays reachable even when enforcement is on: signup/login are
+# how you'd ever get a session in the first place, and GET /api/users/me must
+# be answerable with NO session (it's exactly how the frontend learns "you
+# are not logged in"). Only other /api/* business-data routes are protected.
+# The frontend itself ("/") is never blocked by path (see the check below) --
+# an unauthenticated visitor must still be able to load the page in order to
+# see a real login form, rather than getting a dead, unstyled 401 response.
+
+
+class AuthRequiredMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        if not settings.auth_required:
+            return await call_next(request)
+
+        path = request.url.path
+        if not path.startswith("/api/") or path.startswith(_AUTH_EXEMPT_PATH_PREFIXES):
+            return await call_next(request)
+
+        token = request.cookies.get(SESSION_COOKIE_NAME)
+        user = None
+        if token:
+            with db_session() as conn:
+                user = _lookup_session(conn, token)
+        if user is None:
+            return JSONResponse(
+                status_code=401,
+                content={"error": "authentication_required", "message": "Sign in required."},
+            )
+        return await call_next(request)

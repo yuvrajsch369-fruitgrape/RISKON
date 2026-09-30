@@ -4,10 +4,10 @@ Python script in this repo already uses (database/riskon.db). Plain
 `sqlite3`, no ORM: the dataset and query patterns are simple enough that an
 ORM would be extra machinery for no real benefit at this scale.
 
-`ensure_schema()` is idempotent and only ever creates the Part-3/Part-4
-tables (`ai_incident_analyses`, `app_users`) this backend introduces — it
-never touches or recreates any Part 1/2 table, and never regenerates
-synthetic seed data.
+`ensure_schema()` is idempotent and only ever creates the Part-3/4/5
+tables (`ai_incident_analyses`, `app_users`, `sessions`) this backend
+introduces — it never touches or recreates any Part 1/2 table, and never
+regenerates synthetic seed data.
 """
 import shutil
 import sqlite3
@@ -56,6 +56,16 @@ CREATE TABLE IF NOT EXISTS app_users (
     rbac_role         TEXT NOT NULL CHECK (rbac_role IN ('employee','hse_manager','plant_manager','executive')),
     created_at          TEXT NOT NULL
 );
+"""
+
+_PART5_SCHEMA = """
+CREATE TABLE IF NOT EXISTS sessions (
+    session_token   TEXT PRIMARY KEY,
+    user_id           TEXT NOT NULL REFERENCES app_users(user_id),
+    created_at          TEXT NOT NULL,
+    expires_at            TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_sessions_user ON sessions(user_id);
 """
 
 
@@ -108,12 +118,31 @@ def db_session():
         conn.close()
 
 
+def _ensure_app_users_auth_columns(conn: sqlite3.Connection) -> None:
+    """Adds email/password_hash to an app_users table that predates real
+    auth (this repo's committed seed DB, or an already-deployed volume).
+    SQLite's ALTER TABLE ADD COLUMN can't declare a UNIQUE constraint and
+    errors on a duplicate column name, so columns are checked individually
+    via PRAGMA table_info first. Never touches existing row values -- rows
+    created under the old fake-signup flow simply end up with
+    email/password_hash = NULL (legacy, login-incapable profiles). Safe to
+    call every startup, on a brand-new table or an already-populated one."""
+    existing = {row[1] for row in conn.execute("PRAGMA table_info(app_users)").fetchall()}
+    if "email" not in existing:
+        conn.execute("ALTER TABLE app_users ADD COLUMN email TEXT")
+    if "password_hash" not in existing:
+        conn.execute("ALTER TABLE app_users ADD COLUMN password_hash TEXT")
+    conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_app_users_email ON app_users(email COLLATE NOCASE)")
+
+
 def ensure_schema() -> None:
-    """Creates the Part-3/Part-4 tables if missing. Safe to call every startup."""
+    """Creates/migrates the Part-3/4/5 tables. Safe to call every startup."""
     conn = get_connection()
     try:
         conn.executescript(_PART3_SCHEMA)
         conn.executescript(_PART4_SCHEMA)
+        _ensure_app_users_auth_columns(conn)
+        conn.executescript(_PART5_SCHEMA)
         conn.commit()
     finally:
         conn.close()

@@ -26,7 +26,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from backend.config import ROOT, settings
 from backend.db import DatabaseNotFoundError, ensure_database_seeded, ensure_schema
 from backend.logging_config import configure_logging, get_logger
-from backend.middleware import DemoAccessMiddleware
+from backend.middleware import AuthRequiredMiddleware, DemoAccessMiddleware
 from backend.routes import actions, bootstrap, health, incidents, recommendations, users
 
 configure_logging()
@@ -60,9 +60,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 # Runs before CORS in request order (Starlette applies middleware in
-# reverse-added order) -- doesn't matter here since the demo gate only ever
-# short-circuits with a 401, never proceeds to a route that CORS would need
+# reverse-added order) -- doesn't matter here since both gates only ever
+# short-circuit with a 401, never proceed to a route that CORS would need
 # to have already touched.
+app.add_middleware(AuthRequiredMiddleware)
 app.add_middleware(DemoAccessMiddleware)
 
 

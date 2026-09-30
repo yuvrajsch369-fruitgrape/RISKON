@@ -63,6 +63,25 @@ class Settings:
     demo_access_username: str = os.environ.get("DEMO_ACCESS_USERNAME", "").strip()
     demo_access_password: str = os.environ.get("DEMO_ACCESS_PASSWORD", "").strip()
 
+    # --- Real per-user auth enforcement (opt-in) ------------------------------
+    # Off by default: signup/login/sessions are fully real either way, but
+    # this specifically controls whether unauthenticated requests get BLOCKED.
+    # With this off (the default), RISKON keeps behaving exactly as it always
+    # has -- open access, free "Viewing as (demo)" role switching -- so
+    # nothing about the existing sales-demo experience changes unless this is
+    # explicitly turned on for a real access-controlled pilot deployment.
+    auth_required: bool = _bool("AUTH_REQUIRED", False)
+
+    # Whether the session cookie gets Secure (HTTPS-only). An explicit env
+    # var rather than sniffing request.url.scheme, because Railway (and most
+    # PaaS) terminate TLS at their edge and forward plain HTTP to the
+    # container -- scheme-sniffing would see "http" even in production and
+    # silently omit Secure. Defaults to True outside local dev, so the common
+    # cases need no extra configuration.
+    session_cookie_secure: bool = _bool(
+        "SESSION_COOKIE_SECURE", os.environ.get("RISKON_ENV", "development").strip() != "development"
+    )
+
     # --- Misc -------------------------------------------------------------------
     log_level: str = os.environ.get("LOG_LEVEL", "INFO").strip().upper()
     environment: str = os.environ.get("RISKON_ENV", "development").strip()
@@ -87,6 +106,7 @@ class Settings:
             "anthropic_model": self.anthropic_model,
             "database_path": str(self.database_path),
             "demo_gate_enabled": self.demo_gate_enabled,
+            "auth_required": self.auth_required,
         }
 
 

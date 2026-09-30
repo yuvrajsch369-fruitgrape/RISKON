@@ -763,14 +763,22 @@ function fetchJsonWithTimeout(url, timeoutMs){
 }
 async function resolveLiveData(){
   var health = await fetchJsonWithTimeout('/api/health', 1500);
-  if(!health) return { data: null, reachable: false, aiConfigured: false };
+  if(!health) return { data: null, reachable: false, aiConfigured: false, authRequired: false, sessionUser: null };
   var boot = await fetchJsonWithTimeout('/api/bootstrap', 6000);
-  return { data: boot, reachable: true, aiConfigured: !!health.ai_configured };
+  var me = await fetchJsonWithTimeout('/api/users/me', 3000);
+  return { data: boot, reachable: true, aiConfigured: !!health.ai_configured,
+           authRequired: !!health.auth_required, sessionUser: me ? me.user : null };
 }
 
 var __live = await resolveLiveData();
 var BACKEND_REACHABLE = __live.reachable;
 var AI_CONFIGURED = __live.aiConfigured;
+// AUTH_REQUIRED reflects the backend's real, server-enforced setting -- when
+// true, an unauthenticated visitor gets shown the login screen below
+// regardless of what route they tried to reach (the API would 401 anyway;
+// this just means the UI actually says so instead of looking broken).
+var AUTH_REQUIRED = __live.authRequired;
+var SESSION_USER = __live.sessionUser;
 var DATA = __live.data || window.RISKON_DATA;
 DATA.auditTrail = DATA.auditTrail || [];
 
@@ -891,6 +899,8 @@ var App = {
   facilityScope: 'ALL',
   currentRole: 'hse_manager',
   mobileNavOpen: false,
+  isAuthenticated: false,
+  showLoginPanel: false,
   filters: {
     incidents: { q:'', facility:'', status:'', severity:'', category:'' },
     actions: { q:'', facility:'', type:'', status:'' },
@@ -1148,7 +1158,7 @@ function viewMeta(){
     facilities: { title:'Facilities', sub:'Every Rex Industrial facility, its real location, and its current risk signal &mdash; company-wide, independent of the facility filter above.' },
     reports: { title:'Reports', sub:'Generate and export summary reports from live operational data &mdash; no manual data pulls.' },
     admin: { title:'Administration', sub:'Your profile, company &amp; facility reference data, and the role-based access model this demo uses.' },
-    signup: { title: App.currentUser ? 'Your Profile' : 'Sign Up', sub:'Your name, occupation, and post &mdash; shown in the sidebar. Not a login; RISKON has no password or session.' }
+    signup: { title: App.isAuthenticated ? 'Your Account' : 'Sign Up / Log In', sub: App.isAuthenticated ? 'Your name, occupation, post, and email &mdash; shown in the sidebar. Logging out actually ends your session.' : 'Create a real account (email + password), or log in if you already have one.' }
   };
 }
 
@@ -3191,15 +3201,15 @@ function renderAdministration(){
 }
 
 /* =========================================================================
-   VIEW: SIGNUP - a dedicated profile page. NOT a login: there is no
-   password anywhere in RISKON, and nothing gates access based on whether
-   someone has signed up. What signing up does is real: name/occupation/post
-   are persisted server-side (POST /api/users/signup -> the real database's
-   app_users table) when a backend is reachable, and remembered in this
-   browser via localStorage either way (same pattern as the theme toggle) --
-   see getStoredUser()/setStoredUser() above. The signed-up name/occupation/
-   post is what the sidebar's lower-left corner shows, replacing the
-   placeholder "Sarah Chen" (see renderRailUser()).
+   VIEW: SIGNUP / LOGIN - a dedicated account page. Signing up now creates a
+   genuine account (POST /api/users/signup -> real database row with a
+   bcrypt password hash, a real server-side session set via an httponly
+   cookie) whenever a backend is reachable; the fully-offline fallback (no
+   backend at all) still works exactly as before, no password required.
+   name/occupation/post also still drive the sidebar's lower-left display
+   and the "Viewing as (demo)" role default (see renderRailUser()) -- that
+   part of the experience is unchanged. See getStoredUser()/setStoredUser()
+   above, and backend/services/auth.py for what actually backs a real login.
    ========================================================================= */
 function renderSignup(){
   var u = App.currentUser;
@@ -3209,66 +3219,134 @@ function renderSignup(){
   var postOpts = postOptions().map(function(p){
     return '<option value="'+esc(p)+'"'+(u && u.post===p ? ' selected':'')+'>'+esc(p)+'</option>';
   }).join('');
+  var loggedIn = App.isAuthenticated;
+
+  var loginPanel = (!loggedIn ? (
+    '<div class="newform-actions" style="margin-top:10px;justify-content:flex-start">'+
+      '<a href="#" data-action="toggleLoginMode" style="font-size:12px">'+(App.showLoginPanel?'New here? Create an account instead':'Already have an account? Log in instead')+'</a>'+
+    '</div>'+
+    (App.showLoginPanel ?
+      '<div class="formgrid" style="display:flex;flex-direction:column;gap:14px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">'+
+        '<div class="field"><label>Email</label><input type="email" id="li_email" placeholder="you@company.com"/></div>'+
+        '<div class="field"><label>Password</label><input type="password" id="li_password"/></div>'+
+        '<div class="newform-actions"><button class="btn btn-primary" data-action="submitLogin">'+ICONS.check+' Log In</button></div>'+
+      '</div>' : '')
+  ) : '');
 
   return (
     '<div class="card" style="max-width:520px;margin:0 auto">'+
       '<div class="card-pad">'+
-        (u ? '<div class="summary-callout" style="margin-bottom:16px"><p style="font-size:12.5px">Signed up as <b>'+esc(u.name)+'</b> ('+esc(u.occupation)+' &middot; '+esc(u.post)+'). Update the fields below and save, or clear your profile to go back to the default demo identity.</p></div>' : '')+
+        (loggedIn ? '<div class="summary-callout" style="margin-bottom:16px"><p style="font-size:12.5px">Signed in as <b>'+esc(u.name)+'</b> ('+esc(u.occupation)+' &middot; '+esc(u.post)+'), <b>'+esc(u.email||'')+'</b>. Update the fields below and save, or log out to go back to the default demo identity.</p></div>' : '')+
+        (App.showLoginPanel && !loggedIn ? '' :
         '<div class="formgrid" style="display:flex;flex-direction:column;gap:14px">'+
           '<div class="field"><label>Name</label><input type="text" id="su_name" placeholder="e.g. Jordan Rivera" value="'+esc(u?u.name:'')+'"/></div>'+
           '<div class="field"><label>Occupation</label><select id="su_occupation"><option value="">Select an occupation&hellip;</option>'+occOpts+'</select></div>'+
           '<div class="field"><label>Post</label><select id="su_post"><option value="">Select a facility&hellip;</option>'+postOpts+'</select></div>'+
+          '<div class="field"><label>Email</label><input type="email" id="su_email" placeholder="you@company.com" value="'+esc(u&&u.email?u.email:'')+'"/></div>'+
+          (!loggedIn ? '<div class="field"><label>Password</label><input type="password" id="su_password" placeholder="At least 12 characters"/></div>' : '')+
         '</div>'+
         '<div class="newform-actions" style="margin-top:18px">'+
-          (u ? '<button class="btn" data-action="clearProfile">Clear Profile</button>' : '')+
-          '<button class="btn btn-primary" data-action="submitSignup">'+ICONS.check+' '+(u?'Save Profile':'Create Profile')+'</button>'+
-        '</div>'+
-        '<div style="margin-top:14px;font-size:11px;color:var(--ink-3)">This is a profile, not a login &mdash; RISKON has no password or session in this prototype. Your occupation also sets a sensible default for the "Viewing as (demo)" role selector above, which you can still change manually at any time.</div>'+
+          (loggedIn ? '<button class="btn" data-action="handleLogout">Log Out</button>' : '')+
+          '<button class="btn btn-primary" data-action="submitSignup">'+ICONS.check+' '+(loggedIn?'Save Profile':'Create Account')+'</button>'+
+        '</div>')+
+        loginPanel+
+        (App.showLoginPanel && !loggedIn ? '' :
+        '<div style="margin-top:14px;font-size:11px;color:var(--ink-3)">'+
+          (loggedIn ? 'This is a real account: your email and password are checked server-side, and logging out actually ends your session.'
+                     : 'Creates a real account with your email and password (or, with no backend reachable, a local-only demo profile for this browser). ')+
+          ' Your occupation also sets a sensible default for the "Viewing as (demo)" role selector above, which you can still change manually at any time.'+
+        '</div>')+
       '</div>'+
     '</div>'
   );
+}
+
+function applyProfile(user){
+  App.currentUser = user;
+  setStoredUser(user);
+  if(user.rbac_role && ROLES[user.rbac_role]){
+    App.currentRole = user.rbac_role;
+    var r = currentRole();
+    if(r.scope==='facility' && App.facilityScope==='ALL'){ App.facilityScope = DATA.facilities[0].facility_id; }
+    if(r.scope==='all'){ App.facilityScope = 'ALL'; }
+  }
+  logAudit({ action:'Profile signed up / updated', entity_type:'Session', entity_id:user.user_id||'N/A',
+    previous_value:null, new_value:{name:user.name, occupation:user.occupation, post:user.post, rbac_role:user.rbac_role},
+    reason:'Submitted via the RISKON signup page.', source:'Human-generated', approval_status:'N/A' });
+  navigate('dashboard');
+  render();
 }
 
 function handleSignup(){
   var name = document.getElementById('su_name').value.trim();
   var occupation = document.getElementById('su_occupation').value;
   var post = document.getElementById('su_post').value;
+  var email = document.getElementById('su_email').value.trim();
 
-  var reqErr = Validators.requiredFields({name:name, occupation:occupation, post:post}, ['name','occupation','post']);
-  if(reqErr){ alert(reqErr); return; }
-
-  function applyProfile(user){
-    App.currentUser = user;
-    setStoredUser(user);
-    if(user.rbac_role && ROLES[user.rbac_role]){
-      App.currentRole = user.rbac_role;
-      var r = currentRole();
-      if(r.scope==='facility' && App.facilityScope==='ALL'){ App.facilityScope = DATA.facilities[0].facility_id; }
-      if(r.scope==='all'){ App.facilityScope = 'ALL'; }
-    }
-    logAudit({ action:'Profile signed up / updated', entity_type:'Session', entity_id:user.user_id||'N/A',
-      previous_value:null, new_value:{name:user.name, occupation:user.occupation, post:user.post, rbac_role:user.rbac_role},
-      reason:'Submitted via the RISKON signup page.', source:'Human-generated', approval_status:'N/A' });
-    navigate('dashboard');
-    render();
+  // Already logged in: this form only edits the local display fields (name/
+  // occupation/post/email shown in the sidebar and used as a role default).
+  // There's no "update account" endpoint yet -- re-POSTing to signup would
+  // hit the new email-uniqueness constraint and 409 against the account's
+  // own existing row, so this intentionally does not call the server.
+  if(App.isAuthenticated){
+    var reqErr = Validators.requiredFields({name:name, occupation:occupation, post:post}, ['name','occupation','post']);
+    if(reqErr){ alert(reqErr); return; }
+    var updated = Object.assign({}, App.currentUser, {name:name, occupation:occupation, post:post, email:email||App.currentUser.email});
+    applyProfile(updated);
+    return;
   }
+
+  var password = document.getElementById('su_password').value;
+  var reqErr = Validators.requiredFields({name:name, occupation:occupation, post:post, email:email, password:password},
+    ['name','occupation','post','email','password']);
+  if(reqErr){ alert(reqErr); return; }
 
   if(BACKEND_REACHABLE){
     fetch('/api/users/signup', {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ name:name, occupation:occupation, post:post })
+      body: JSON.stringify({ name:name, occupation:occupation, post:post, email:email, password:password })
     }).then(function(resp){ return resp.json().then(function(body){ return {ok:resp.ok, body:body}; }); })
       .then(function(result){
         if(!result.ok){ throw new Error(result.body && result.body.message ? result.body.message : 'Signup failed.'); }
+        App.isAuthenticated = true;
         applyProfile(result.body);
       })
-      .catch(function(){
-        // local-only fallback -- still a real, usable profile for this browser, just not saved server-side
-        applyProfile({ user_id:null, name:name, occupation:occupation, post:post, rbac_role:occupationToRoleLocal(occupation) });
-      });
+      // Reachable-but-failed (validation error, duplicate email, etc.) now
+      // shows the real error instead of silently faking a profile -- only a
+      // genuinely unreachable backend (the `else` branch below) falls back.
+      .catch(function(err){ alert(err.message || 'Signup failed. Please try again.'); });
   } else {
     applyProfile({ user_id:null, name:name, occupation:occupation, post:post, rbac_role:occupationToRoleLocal(occupation) });
   }
+}
+
+function handleLogin(){
+  var email = document.getElementById('li_email').value.trim();
+  var password = document.getElementById('li_password').value;
+  if(!email || !password){ alert('Enter your email and password.'); return; }
+  fetch('/api/users/login', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ email:email, password:password })
+  }).then(function(resp){ return resp.json().then(function(body){ return {ok:resp.ok, body:body}; }); })
+    .then(function(result){
+      if(!result.ok){ throw new Error(result.body && result.body.message ? result.body.message : 'Login failed.'); }
+      App.isAuthenticated = true;
+      App.showLoginPanel = false;
+      applyProfile(result.body);
+    })
+    .catch(function(err){ alert(err.message || 'Invalid email or password.'); });
+}
+
+function handleLogout(){
+  fetch('/api/users/logout', { method:'POST' }).then(function(){
+    App.currentUser = null;
+    App.isAuthenticated = false;
+    clearStoredUser();
+    logAudit({ action:'Logged out', entity_type:'Session', entity_id:'N/A', previous_value:null, new_value:null,
+      reason:'Logged out via the RISKON signup page.', source:'Human-generated', approval_status:'N/A' });
+    navigate('welcome');
+    render();
+  });
 }
 
 function occupationToRoleLocal(occupation){
@@ -3277,16 +3355,6 @@ function occupationToRoleLocal(occupation){
   // the backend's mapping is authoritative whenever it's reachable.
   return {'Plant Manager':'plant_manager','Safety Manager':'hse_manager','EHS Coordinator':'hse_manager',
     'Environmental Compliance Officer':'hse_manager','Executive':'executive'}[occupation] || 'employee';
-}
-
-function handleClearProfile(){
-  if(!confirm('Clear your RISKON profile? The sidebar will go back to the default demo identity.')) return;
-  App.currentUser = null;
-  clearStoredUser();
-  logAudit({ action:'Profile cleared', entity_type:'Session', entity_id:'N/A',
-    previous_value:null, new_value:null, reason:'Cleared via the RISKON signup page.',
-    source:'Human-generated', approval_status:'N/A' });
-  render();
 }
 
 /* =========================================================================
@@ -3569,7 +3637,9 @@ document.addEventListener('click', function(e){
   if(action==='generateAiAnalysis'){ handleGenerateAiAnalysis(t.dataset.id); return; }
   if(action==='completeAction'){ e.preventDefault(); handleCompleteAction(t.dataset.id); return; }
   if(action==='submitSignup'){ handleSignup(); return; }
-  if(action==='clearProfile'){ handleClearProfile(); return; }
+  if(action==='submitLogin'){ handleLogin(); return; }
+  if(action==='handleLogout'){ handleLogout(); return; }
+  if(action==='toggleLoginMode'){ e.preventDefault(); App.showLoginPanel = !App.showLoginPanel; render(); return; }
   if(action==='printReports'){ window.print(); return; }
   if(action==='graphSelectNode'){ App.riskGraphSelectedNode = {type:t.dataset.type, id:t.dataset.id}; render(); return; }
   if(action==='selectFacility'){ App.selectedFacilityId = (App.selectedFacilityId===t.dataset.id) ? null : t.dataset.id; render(); return; }
@@ -3725,6 +3795,17 @@ function render(){
     document.getElementById('app').innerHTML = renderWelcome();
     return;
   }
+  // Login wall: only takes effect when the backend has AUTH_REQUIRED turned
+  // on for a real access-controlled deployment (default: off, so this never
+  // fires and every route behaves exactly as it always has). Without this,
+  // an unauthenticated visitor would still get a clean 401 from the API on
+  // every data fetch, but the UI would look broken instead of clearly asking
+  // them to log in.
+  if(AUTH_REQUIRED && !App.isAuthenticated && App.route.name!=='signup'){
+    location.hash = '#signup';
+    App.route = { name:'signup', params:{} };
+    App.showLoginPanel = true;
+  }
   // route guard: a role that can't see a screen can't reach it by typing
   // the hash directly either -- this is the same check renderShell() uses
   // to decide what to list in the nav, applied defensively here too.
@@ -3770,10 +3851,15 @@ if(!location.hash){
 }
 setStoredFlag('riskon-visited', true);
 
-// a previously signed-up profile (this browser, via localStorage) takes
-// over both the sidebar display AND the demo role, same as choosing it
-// fresh would -- see renderRailUser()/handleSignup().
-App.currentUser = getStoredUser();
+// A real server session (this browser genuinely logged in) is authoritative
+// over the localStorage display profile; when there's no session (backend
+// unreachable, or just never logged in), fall back to exactly today's
+// behavior -- a previously signed-up profile (via localStorage) takes over
+// both the sidebar display AND the demo role, same as choosing it fresh
+// would -- see renderRailUser()/handleSignup().
+App.currentUser = SESSION_USER || getStoredUser();
+App.isAuthenticated = !!SESSION_USER;
+if(SESSION_USER) setStoredUser(SESSION_USER); // keep localStorage in sync for the offline-fallback path
 if(App.currentUser && App.currentUser.rbac_role && ROLES[App.currentUser.rbac_role]){
   App.currentRole = App.currentUser.rbac_role;
 }

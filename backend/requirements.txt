@@ -5,6 +5,7 @@ uvicorn[standard]>=0.30
 anthropic>=0.40
 pydantic>=2.7,<3.0
 python-dotenv>=1.0,<2.0
+bcrypt>=4.1,<5.0
 
 # test-only, not needed to run the app
 pytest>=8.0,<9.0
