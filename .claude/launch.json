@@ -12,6 +12,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8743"],
       "port": 8743
+    },
+    {
+      "name": "riskon-marketing",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd /Users/mac/Desktop/RISKON.Prototype/marketing && exec npm run dev -- --port 5180"],
+      "port": 5180
     }
   ]
 }

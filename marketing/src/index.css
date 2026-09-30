@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #faf9f6;
+  color: #0b0f14;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: #0d948833;
+}
+
+.font-tabular {
+  font-variant-numeric: tabular-nums;
+}
