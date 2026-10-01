@@ -10,12 +10,12 @@ renderCondensedPipeline() for the full before/after.
 import json
 from datetime import date, datetime
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 from backend.db import db_session
 from backend.logging_config import get_logger
 from backend.models.api_schemas import IncidentCreate, IncidentReviewDecision
-from backend.services import context_builder, ids
+from backend.services import auth, context_builder, ids
 from backend.services.ai import provider as ai_provider
 from backend.services.ai.provider import (
     AIProviderNotConfiguredError,
@@ -180,7 +180,8 @@ def list_incident_analyses(incident_id: str):
 
 
 @router.post("/api/incidents/{incident_id}/review")
-def review_incident(incident_id: str, body: IncidentReviewDecision):
+def review_incident(incident_id: str, body: IncidentReviewDecision,
+                     current_user: dict | None = Depends(auth.get_current_user_optional)):
     """Approve/Reject gate — mirrors the existing client-side handleApproval()
     logic, now genuinely persisted. On Approved, any `recommendations` from
     the incident's most recent AI analysis (if one exists) become real,
@@ -188,7 +189,15 @@ def review_incident(incident_id: str, body: IncidentReviewDecision):
     risk_register/risk_assessments entry — doing that convincingly would mean
     re-deriving likelihood/severity/control-effectiveness/trend factors the
     same way risk_intelligence/engine.py does, which is out of scope for this
-    endpoint."""
+    endpoint.
+
+    Who actually made this decision is resolved from the session cookie
+    (reviewed_by_user_id), never taken from the request body -- a client-
+    supplied reviewer field can't be trusted. NULL whenever there's no real
+    session (the default, open "Viewing as (demo)" flow has none), which is
+    honest about today's RBAC being a client-side demo, not a verified
+    identity (see backend/services/auth.py, frontend's ROLES object)."""
+    reviewer_user_id = current_user["user_id"] if current_user else None
     with db_session() as conn:
         incident = conn.execute("SELECT * FROM incidents WHERE incident_id=?", (incident_id,)).fetchone()
         if not incident:
@@ -239,16 +248,18 @@ def review_incident(incident_id: str, body: IncidentReviewDecision):
 
             conn.execute(
                 "UPDATE ai_incident_analyses SET human_review_status='Approved', "
-                "reviewed_by_employee_id=?, reviewed_at=? WHERE analysis_id=?",
+                "reviewed_by_employee_id=?, reviewed_at=?, review_comment=?, reviewed_by_user_id=? "
+                "WHERE analysis_id=?",
                 (body.reviewer_employee_id, datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
-                 latest_analysis["analysis_id"]),
+                 body.comment, reviewer_user_id, latest_analysis["analysis_id"]),
             )
         elif latest_analysis:
             conn.execute(
                 "UPDATE ai_incident_analyses SET human_review_status='Rejected', "
-                "reviewed_by_employee_id=?, reviewed_at=? WHERE analysis_id=?",
+                "reviewed_by_employee_id=?, reviewed_at=?, review_comment=?, reviewed_by_user_id=? "
+                "WHERE analysis_id=?",
                 (body.reviewer_employee_id, datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
-                 latest_analysis["analysis_id"]),
+                 body.comment, reviewer_user_id, latest_analysis["analysis_id"]),
             )
 
         conn.execute(

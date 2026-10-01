@@ -17,6 +17,14 @@ Regression tests for issues found during a full stress/hardening pass:
    loop and created a full duplicate set of corrective actions from the same
    analysis. Fixed with a one-way "already reviewed" check, same idiom as
    complete_action's "already Completed" guard.
+6. The reviewer's rejection/approval comment was accepted by the API and
+   silently discarded -- no column existed to store it. Fixed by adding
+   ai_incident_analyses.review_comment. Separately, reviewed_by_employee_id
+   was never actually populated by the frontend (no caller ever sends
+   reviewer_employee_id), so there was no record of WHO reviewed something.
+   Fixed with a new reviewed_by_user_id column resolved from the real
+   session cookie server-side (backend/services/auth.py) -- never trusted
+   from the request body, so a client can't spoof who "reviewed" something.
 """
 import json
 import sqlite3
@@ -232,3 +240,81 @@ def test_double_review_does_not_create_duplicate_actions(app_client, temp_db):
     actions = app_client.get("/api/actions", params={"limit": 1000}).json()["actions"]
     created_for_incident = [a for a in actions if a.get("source_incident_id") == incident_id]
     assert len(created_for_incident) == 2, f"expected exactly 2 actions, found {len(created_for_incident)}"
+
+
+# --- 6. review comment + real reviewer identity ---------------------------------
+
+def test_review_comment_persisted_on_reject(app_client, temp_db):
+    incident_id = "INC-0036"
+    _seed_fake_analysis(temp_db, incident_id, ["Do thing A"])
+
+    r = app_client.post(f"/api/incidents/{incident_id}/review",
+                         json={"decision": "Rejected", "comment": "AI missed that this was equipment failure."})
+    assert r.status_code == 200
+
+    analyses = app_client.get(f"/api/incidents/{incident_id}/analyses").json()["analyses"]
+    assert analyses[0]["review_comment"] == "AI missed that this was equipment failure."
+    assert analyses[0]["human_review_status"] == "Rejected"
+
+
+def test_review_comment_persisted_on_approve(app_client, temp_db):
+    incident_id = "INC-0036"
+    _seed_fake_analysis(temp_db, incident_id, ["Do thing A"])
+
+    r = app_client.post(f"/api/incidents/{incident_id}/review",
+                         json={"decision": "Approved", "comment": "Agreed, assigning follow-up."})
+    assert r.status_code == 200
+
+    analyses = app_client.get(f"/api/incidents/{incident_id}/analyses").json()["analyses"]
+    assert analyses[0]["review_comment"] == "Agreed, assigning follow-up."
+
+
+def test_reviewed_by_user_id_is_null_without_a_real_session(app_client, temp_db):
+    """The default, open 'Viewing as (demo)' flow has no real login -- there
+    genuinely is no verified identity to record, and the column must say so
+    honestly rather than guessing."""
+    incident_id = "INC-0036"
+    _seed_fake_analysis(temp_db, incident_id, ["Do thing A"])
+
+    app_client.post(f"/api/incidents/{incident_id}/review", json={"decision": "Approved"})
+
+    analyses = app_client.get(f"/api/incidents/{incident_id}/analyses").json()["analyses"]
+    assert analyses[0]["reviewed_by_user_id"] is None
+
+
+def test_reviewed_by_user_id_reflects_the_real_signed_in_session(app_client, temp_db):
+    """A real logged-in session (via /api/users/signup, which sets the
+    session cookie app_client carries on subsequent requests) must be
+    recorded as the reviewer -- resolved server-side from that session, not
+    from anything the client puts in the request body."""
+    incident_id = "INC-0036"
+    _seed_fake_analysis(temp_db, incident_id, ["Do thing A"])
+
+    signup = app_client.post("/api/users/signup", json={
+        "name": "Reviewer One", "occupation": "Safety Manager", "post": "Line",
+        "email": "reviewer@test.riskon.local", "password": "ReviewerPassword123",
+    })
+    assert signup.status_code == 201
+    real_user_id = signup.json()["user_id"]
+
+    r = app_client.post(f"/api/incidents/{incident_id}/review", json={"decision": "Approved"})
+    assert r.status_code == 200
+
+    analyses = app_client.get(f"/api/incidents/{incident_id}/analyses").json()["analyses"]
+    assert analyses[0]["reviewed_by_user_id"] == real_user_id
+
+
+def test_client_cannot_spoof_reviewer_identity(app_client, temp_db):
+    """IncidentReviewDecision has no reviewer-identity field a client can set
+    for reviewed_by_user_id at all -- confirms it's only ever resolved from
+    the session, never accepted as input, even if a request tries to smuggle
+    one in."""
+    incident_id = "INC-0036"
+    _seed_fake_analysis(temp_db, incident_id, ["Do thing A"])
+
+    r = app_client.post(f"/api/incidents/{incident_id}/review",
+                         json={"decision": "Approved", "reviewed_by_user_id": "USR-9999", "user_id": "USR-9999"})
+    assert r.status_code == 200
+
+    analyses = app_client.get(f"/api/incidents/{incident_id}/analyses").json()["analyses"]
+    assert analyses[0]["reviewed_by_user_id"] is None

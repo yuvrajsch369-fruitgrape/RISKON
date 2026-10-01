@@ -541,7 +541,11 @@ CREATE TABLE IF NOT EXISTS ai_incident_analyses (
     human_review_status              TEXT NOT NULL DEFAULT 'Pending' CHECK (human_review_status IN
                                         ('Pending','Approved','Rejected')),
     reviewed_by_employee_id            TEXT REFERENCES employees(employee_id),
-    reviewed_at                          TEXT
+    reviewed_at                          TEXT,
+    review_comment                        TEXT,     -- the reviewer's free-text reason, Approve or Reject
+    reviewed_by_user_id                     TEXT REFERENCES app_users(user_id)  -- the REAL signed-in
+        -- reviewer, resolved server-side from the session cookie (never a client-supplied field) --
+        -- NULL whenever there's no real session, e.g. the open "Viewing as (demo)" role-switcher flow
 );
 
 CREATE INDEX IF NOT EXISTS idx_ai_incident_analyses_incident ON ai_incident_analyses(incident_id);

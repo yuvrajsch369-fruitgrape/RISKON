@@ -42,7 +42,9 @@ CREATE TABLE IF NOT EXISTS ai_incident_analyses (
     human_review_status              TEXT NOT NULL DEFAULT 'Pending' CHECK (human_review_status IN
                                         ('Pending','Approved','Rejected')),
     reviewed_by_employee_id            TEXT REFERENCES employees(employee_id),
-    reviewed_at                          TEXT
+    reviewed_at                          TEXT,
+    review_comment                        TEXT,
+    reviewed_by_user_id                     TEXT REFERENCES app_users(user_id)
 );
 CREATE INDEX IF NOT EXISTS idx_ai_incident_analyses_incident ON ai_incident_analyses(incident_id);
 """
@@ -146,6 +148,23 @@ def _ensure_app_users_auth_columns(conn: sqlite3.Connection) -> None:
     conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_app_users_email ON app_users(email COLLATE NOCASE)")
 
 
+def _ensure_ai_incident_analyses_review_columns(conn: sqlite3.Connection) -> None:
+    """Adds review_comment/reviewed_by_user_id to an ai_incident_analyses
+    table that predates them -- same reasoning and pattern as
+    _ensure_app_users_auth_columns above: _PART3_SCHEMA's CREATE TABLE IF NOT
+    EXISTS is a no-op once the table already exists, so an already-running
+    database (this repo's committed seed DB, or an already-deployed volume)
+    needs these added explicitly. Confirmed necessary: a reviewer's rejection
+    comment was being accepted by the API and silently discarded -- there was
+    no column to put it in."""
+    existing = {row[1] for row in conn.execute("PRAGMA table_info(ai_incident_analyses)").fetchall()}
+    if "review_comment" not in existing:
+        conn.execute("ALTER TABLE ai_incident_analyses ADD COLUMN review_comment TEXT")
+    if "reviewed_by_user_id" not in existing:
+        conn.execute("ALTER TABLE ai_incident_analyses ADD COLUMN reviewed_by_user_id TEXT "
+                      "REFERENCES app_users(user_id)")
+
+
 def ensure_schema() -> None:
     """Creates/migrates the Part-3/4/5 tables. Safe to call every startup."""
     conn = get_connection()
@@ -153,6 +172,7 @@ def ensure_schema() -> None:
         conn.executescript(_PART3_SCHEMA)
         conn.executescript(_PART4_SCHEMA)
         _ensure_app_users_auth_columns(conn)
+        _ensure_ai_incident_analyses_review_columns(conn)
         conn.executescript(_PART5_SCHEMA)
         conn.commit()
     finally:
