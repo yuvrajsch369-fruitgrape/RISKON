@@ -8,11 +8,13 @@ Plant database built in database/generate_database.py.
 Field-mapping notes (see docs/database-design.md §10 for the full rationale):
   - incidents.related_sop_id has no direct column in the new schema; derived
     best-effort via hazard_id -> controls.related_sop_id (first match).
-  - incidents.status (New/In Review/Closed) is derived from the new schema's
-    two real status columns (investigation_status, closure_status) rather than
-    an AI-approval lifecycle, since the operational database has no AI-gate
-    concept of its own — Approved/Rejected only ever appear once a reviewer
-    acts on an incident inside the UI itself.
+  - incidents.status is normally derived from the two real status columns
+    (investigation_status, closure_status) into New/In Review/Closed — the
+    operational database has no AI-gate concept of its own. But Approved/
+    Rejected (set by a real POST /api/incidents/{id}/review call, persisted
+    in ai_incident_analyses.human_review_status) overrides that derivation
+    when present, so a genuine review decision survives a page reload
+    instead of only existing for the rest of that one browser session.
   - incidents.severity_ai / ai_confidence / ai_investigation_summary /
     ai_root_cause are null for every real incident: the operational database
     intentionally holds no AI output (see docs/ai-reasoning-engine.md — the
@@ -198,6 +200,24 @@ def build_frontend_data(conn, db_path=DB_PATH):
 
     equip_type_lookup = {e["equipment_id"]: e["equipment_type"] for e in equipment}
 
+    # A real review via POST /api/incidents/{id}/review persists its decision
+    # in ai_incident_analyses.human_review_status, but that fact previously
+    # never made it back into this export -- status below came ONLY from
+    # investigation_status/closure_status, which review_incident() doesn't
+    # touch beyond marking investigation_status 'Completed'. Confirmed bug:
+    # after reviewing an incident live and reloading the page, status came
+    # back "In Review" instead of "Approved"/"Rejected", so the UI re-showed
+    # the Approve/Reject form for an already-decided incident -- clicking it
+    # again hit the backend's (correct) "already reviewed" 400, confusingly.
+    # Most-recent-first here so the first hit per incident_id is the latest.
+    review_status_lookup = {}
+    for a in rows("""
+        SELECT incident_id, human_review_status FROM ai_incident_analyses
+        WHERE human_review_status IN ('Approved','Rejected')
+        ORDER BY created_at DESC
+    """):
+        review_status_lookup.setdefault(a["incident_id"], a["human_review_status"])
+
     # -----------------------------------------------------------------------
     # incidents — real ~100 rows, mapped to the frontend's flat shape
     # -----------------------------------------------------------------------
@@ -205,6 +225,7 @@ def build_frontend_data(conn, db_path=DB_PATH):
     for r in rows("SELECT * FROM incidents"):
         hz = hazard_lookup.get(r["hazard_id"], {"hazard_category": "Unclassified", "related_sop_id": None})
         equip_label = equip_type_lookup.get(r["equipment_id"]) or hz["hazard_category"]
+        status = review_status_lookup.get(r["incident_id"]) or _derive_status(r["investigation_status"], r["closure_status"])
         incidents.append({
             "incident_id": r["incident_id"],
             "facility_id": r["facility_id"],
@@ -219,7 +240,7 @@ def build_frontend_data(conn, db_path=DB_PATH):
             "severity_reported": r["initial_severity"],
             "severity_ai": None,
             "ai_confidence": None,
-            "status": _derive_status(r["investigation_status"], r["closure_status"]),
+            "status": status,
             "ai_investigation_summary": None,
             "ai_root_cause": None,
             "created_at": r["reported_at"],

@@ -3366,7 +3366,7 @@ function renderSignup(){
     '</div>'+
     (App.showLoginPanel ?
       '<div class="formgrid" style="display:flex;flex-direction:column;gap:14px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">'+
-        '<div class="field"><label>Email</label><input type="email" id="li_email" placeholder="you@company.com"/></div>'+
+        '<div class="field"><label>Email</label><input type="email" id="li_email" placeholder="you@company.com" value="'+esc(u&&u.email?u.email:'')+'"/></div>'+
         '<div class="field"><label>Password</label><input type="password" id="li_password"/></div>'+
         '<div class="newform-actions"><button class="btn btn-primary" data-action="submitLogin">'+ICONS.check+' Log In</button></div>'+
       '</div>' : '')
@@ -4001,6 +4001,15 @@ setStoredFlag('riskon-visited', true);
 App.currentUser = SESSION_USER || getStoredUser();
 App.isAuthenticated = !!SESSION_USER;
 if(SESSION_USER) setStoredUser(SESSION_USER); // keep localStorage in sync for the offline-fallback path
+// Confirmed real bug: a remembered profile with a real user_id (set only by
+// an actual signup -- the fully-offline fallback profile always has
+// user_id:null) means THIS browser signed up for a real account before. If
+// there's no live session now (expired, or the server-side account/db was
+// reset) the sidebar still shows that name -- but without this, the account
+// page defaulted to a brand-new "Create Account" form, pre-filled with that
+// same person's own name/email, which 409s confusingly if submitted instead
+// of making clear they just need to log back in.
+if(!SESSION_USER && App.currentUser && App.currentUser.user_id){ App.showLoginPanel = true; }
 if(App.currentUser && App.currentUser.rbac_role && ROLES[App.currentUser.rbac_role]){
   App.currentRole = App.currentUser.rbac_role;
 }

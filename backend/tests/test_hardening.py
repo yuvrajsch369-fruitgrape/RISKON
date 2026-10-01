@@ -25,6 +25,14 @@ Regression tests for issues found during a full stress/hardening pass:
    Fixed with a new reviewed_by_user_id column resolved from the real
    session cookie server-side (backend/services/auth.py) -- never trusted
    from the request body, so a client can't spoof who "reviewed" something.
+7. A real review decision didn't survive a page reload: database/
+   export_frontend_data.py derived incidents[].status purely from
+   investigation_status/closure_status, which review_incident() never sets
+   to anything reflecting Approved/Rejected -- so GET /api/bootstrap kept
+   reporting "In Review" after a real review, re-showing the Approve/Reject
+   form for an already-decided incident (clicking it then hit the (correct)
+   idempotency 400, confusingly). Fixed by overriding status from the latest
+   ai_incident_analyses.human_review_status when one exists.
 """
 import json
 import sqlite3
@@ -318,3 +326,44 @@ def test_client_cannot_spoof_reviewer_identity(app_client, temp_db):
 
     analyses = app_client.get(f"/api/incidents/{incident_id}/analyses").json()["analyses"]
     assert analyses[0]["reviewed_by_user_id"] is None
+
+
+# --- 7. bootstrap status reflects a real review after "reload" ------------------
+
+def _bootstrap_status_for(app_client, incident_id):
+    incidents = app_client.get("/api/bootstrap").json()["incidents"]
+    match = [i for i in incidents if i["incident_id"] == incident_id]
+    assert match, f"{incident_id} missing from /api/bootstrap response"
+    return match[0]["status"]
+
+
+def test_bootstrap_status_is_approved_after_a_real_review(app_client, temp_db):
+    incident_id = "INC-0036"
+    _seed_fake_analysis(temp_db, incident_id, ["Do thing A"])
+    assert _bootstrap_status_for(app_client, incident_id) != "Approved"  # sanity: not approved yet
+
+    r = app_client.post(f"/api/incidents/{incident_id}/review", json={"decision": "Approved"})
+    assert r.status_code == 200
+
+    # The real regression: this must come from a FRESH GET /api/bootstrap call
+    # (simulating a page reload), not from any in-memory state the review
+    # response itself returned.
+    assert _bootstrap_status_for(app_client, incident_id) == "Approved"
+
+
+def test_bootstrap_status_is_rejected_after_a_real_review(app_client, temp_db):
+    incident_id = "INC-0036"
+    _seed_fake_analysis(temp_db, incident_id, ["Do thing A"])
+
+    r = app_client.post(f"/api/incidents/{incident_id}/review", json={"decision": "Rejected"})
+    assert r.status_code == 200
+    assert _bootstrap_status_for(app_client, incident_id) == "Rejected"
+
+
+def test_bootstrap_status_unaffected_for_never_reviewed_incidents(app_client):
+    """The new review-status lookup must only ever override status for
+    incidents that actually have an Approved/Rejected analysis -- everything
+    else still comes from the original investigation_status/closure_status
+    derivation."""
+    status = _bootstrap_status_for(app_client, "INC-0036")
+    assert status in ("New", "In Review", "Closed")
