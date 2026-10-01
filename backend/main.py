@@ -26,7 +26,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from backend.config import ROOT, settings
 from backend.db import DatabaseNotFoundError, ensure_database_seeded, ensure_schema
 from backend.logging_config import configure_logging, get_logger
-from backend.middleware import AuthRequiredMiddleware, DemoAccessMiddleware
+from backend.middleware import AuthRequiredMiddleware, DemoAccessMiddleware, MaxBodySizeMiddleware
 from backend.routes import actions, bootstrap, health, incidents, recommendations, users
 
 configure_logging()
@@ -65,6 +65,9 @@ app.add_middleware(
 # to have already touched.
 app.add_middleware(AuthRequiredMiddleware)
 app.add_middleware(DemoAccessMiddleware)
+# Added last -- runs FIRST (outermost), rejecting an oversized body before
+# any other middleware or route touches it, let alone reads/parses it.
+app.add_middleware(MaxBodySizeMiddleware)
 
 
 @app.exception_handler(DatabaseNotFoundError)

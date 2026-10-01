@@ -80,6 +80,12 @@ class Settings:
     port: int = int(os.environ.get("PORT") or os.environ.get("RISKON_PORT", "8743"))
     cors_origins: list = [o.strip() for o in os.environ.get("CORS_ORIGINS", "*").split(",") if o.strip()]
 
+    # Rejects any request whose Content-Length exceeds this before the body is
+    # ever read/parsed -- see backend/middleware.py's MaxBodySizeMiddleware.
+    # 2MB is generous: the largest legitimate field across every request body
+    # in this API (IncidentCreate.description) caps at 5000 characters.
+    max_request_body_bytes: int = int(os.environ.get("MAX_REQUEST_BODY_BYTES", str(2 * 1024 * 1024)))
+
     # --- Demo access gate (NOT real authentication) ----------------------------
     # Empty by default, which disables the gate entirely -- local dev and the
     # existing test suite are completely unaffected. Set both to protect a

@@ -35,6 +35,22 @@ def decide_recommendation(recommendation_id: str, body: RecommendationDecision):
                             (recommendation_id,)).fetchone()
         if not rec:
             raise HTTPException(404, f"Recommendation {recommendation_id} not found.")
+        if rec["human_decision"] in ("Approved", "Rejected", "Modified"):
+            # Confirmed real gap: with no guard, a second call silently
+            # overwrote an already-final decision (Approved -> Rejected, no
+            # trace the original ever existed) -- this is exactly the kind of
+            # human-correction signal the continuous-learning engine treats
+            # as ground truth, so losing it silently is a real data-integrity
+            # problem, not just a UX nit. 'Pending' and 'Request More
+            # Information' are deliberately NOT blocked here: those are
+            # intermediate states a real follow-up decision should still be
+            # able to resolve, same reasoning as review_incident's one-way
+            # "already reviewed" guard but scoped to only the truly final
+            # decisions.
+            raise HTTPException(
+                400, f"Recommendation {recommendation_id} already has a final decision "
+                     f"({rec['human_decision']})."
+            )
         if body.decision != "Approved" and not (body.reason or body.modification_text):
             raise HTTPException(400, "A reason (or modification_text) is required for anything but Approved.")
 

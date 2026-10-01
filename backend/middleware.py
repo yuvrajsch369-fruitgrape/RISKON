@@ -100,3 +100,34 @@ class AuthRequiredMiddleware(BaseHTTPMiddleware):
                 content={"error": "authentication_required", "message": "Sign in required."},
             )
         return await call_next(request)
+
+
+# -----------------------------------------------------------------------------
+# Request body size cap. Confirmed by direct test: with no limit at all, a
+# single request could carry an arbitrarily large body -- Pydantic's
+# max_length constraints (e.g. IncidentCreate.description) only reject AFTER
+# FastAPI has already buffered and JSON-parsed the whole thing into memory, so
+# they're not actually a defense against a large-body resource-exhaustion
+# attempt, just a correctness check on an already-paid-for allocation. 20
+# concurrent 20MB bodies didn't visibly strain this dev machine, but nothing
+# stopped them from being much bigger, and production hosts (e.g. Railway's
+# smaller tiers) have far less headroom. Checking Content-Length and
+# rejecting BEFORE any body read/parse closes that -- the real legitimate
+# max across every request body in this API is a few KB (IncidentCreate's
+# largest field, description, caps at 5000 chars).
+# -----------------------------------------------------------------------------
+class MaxBodySizeMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        content_length = request.headers.get("content-length")
+        if content_length is not None:
+            try:
+                size = int(content_length)
+            except ValueError:
+                size = None
+            if size is not None and size > settings.max_request_body_bytes:
+                return JSONResponse(
+                    status_code=413,
+                    content={"error": "payload_too_large",
+                             "message": "Request body exceeds the maximum allowed size."},
+                )
+        return await call_next(request)

@@ -33,6 +33,21 @@ Regression tests for issues found during a full stress/hardening pass:
    form for an already-decided incident (clicking it then hit the (correct)
    idempotency 400, confusingly). Fixed by overriding status from the latest
    ai_incident_analyses.human_review_status when one exists.
+8. POST /api/recommendations/{id}/decision had no guard at all -- confirmed:
+   deciding an already-Approved recommendation a second time silently
+   overwrote it to Rejected with 200, no trace the original decision ever
+   existed. Fixed with the same one-way-transition idea as review_incident,
+   scoped to only the three truly final decisions (Approved/Rejected/
+   Modified) -- 'Pending' and 'Request More Information' are deliberately
+   still revisable, since a real follow-up decision should be able to
+   resolve them.
+9. No request body size limit existed anywhere: Pydantic's max_length
+   constraints (e.g. IncidentCreate.description, capped at 5000 chars) only
+   reject AFTER FastAPI has already buffered and JSON-parsed the whole body
+   -- confirmed a 50MB body was accepted, parsed, and only then 422'd on the
+   length check, meaning the large-body cost was already paid regardless of
+   the eventual rejection. Fixed with MaxBodySizeMiddleware, which checks
+   Content-Length and 413s before any read/parse happens.
 """
 import json
 import sqlite3
@@ -367,3 +382,55 @@ def test_bootstrap_status_unaffected_for_never_reviewed_incidents(app_client):
     derivation."""
     status = _bootstrap_status_for(app_client, "INC-0036")
     assert status in ("New", "In Review", "Closed")
+
+
+# --- 8. recommendation decisions can't be silently overwritten -----------------
+
+def test_second_decision_on_a_final_recommendation_is_rejected(app_client):
+    rec_id = "REC-DEMO-001"
+    r1 = app_client.post(f"/api/recommendations/{rec_id}/decision", json={"decision": "Approved"})
+    assert r1.status_code == 200
+    assert r1.json()["human_decision"] == "Approved"
+
+    r2 = app_client.post(f"/api/recommendations/{rec_id}/decision",
+                          json={"decision": "Rejected", "reason": "changed my mind"})
+    assert r2.status_code == 400
+
+    # The original decision must survive untouched -- this is the actual bug:
+    # confirmed a second call silently overwrote Approved -> Rejected with 200.
+    still = app_client.get("/api/recommendations").json()["recommendations"]
+    match = [r for r in still if r["recommendation_id"] == rec_id][0]
+    assert match["human_decision"] == "Approved"
+
+
+def test_request_more_info_can_still_be_followed_by_a_real_decision(app_client):
+    """'Request More Information' is an intermediate state, not a final
+    decision -- a real follow-up decision must still be able to resolve it,
+    unlike Approved/Rejected/Modified."""
+    rec_id = "REC-DEMO-001"
+    r1 = app_client.post(f"/api/recommendations/{rec_id}/decision",
+                          json={"decision": "Request More Information", "reason": "need more context"})
+    assert r1.status_code == 200
+    assert r1.json()["human_decision"] == "Request More Information"
+
+    r2 = app_client.post(f"/api/recommendations/{rec_id}/decision", json={"decision": "Approved"})
+    assert r2.status_code == 200
+    assert r2.json()["human_decision"] == "Approved"
+
+
+# --- 9. request body size cap ---------------------------------------------------
+
+def test_oversized_request_body_is_rejected_with_413(app_client):
+    oversized = "A" * (3 * 1024 * 1024)  # over the 2MB default cap
+    r = app_client.post("/api/incidents", json={
+        "title": "t", "description": oversized, "facility_id": "FAC-001",
+    })
+    assert r.status_code == 413
+    assert r.json()["error"] == "payload_too_large"
+
+
+def test_normal_sized_request_body_still_works(app_client):
+    r = app_client.post("/api/incidents", json={
+        "title": "t", "description": "a normal-sized description", "facility_id": "FAC-001",
+    })
+    assert r.status_code == 201
