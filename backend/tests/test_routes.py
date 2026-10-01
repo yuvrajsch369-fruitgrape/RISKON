@@ -12,6 +12,7 @@ from backend.config import settings
 
 
 def test_health_reports_db_ok_and_ai_not_configured(app_client, monkeypatch):
+    monkeypatch.setattr(settings, "ai_provider", "claude")  # pinned: must not depend on the local .env's AI_PROVIDER
     monkeypatch.setattr(settings, "anthropic_api_key", "")
     r = app_client.get("/api/health")
     assert r.status_code == 200
@@ -73,6 +74,7 @@ def test_analyze_incident_without_api_key_returns_503_not_fake_success(app_clien
     """The single most important safety test in this suite: with no
     ANTHROPIC_API_KEY configured, the AI endpoint must fail honestly, not
     fabricate a result."""
+    monkeypatch.setattr(settings, "ai_provider", "claude")  # pinned: must not depend on the local .env's AI_PROVIDER
     monkeypatch.setattr(settings, "anthropic_api_key", "")
     r = app_client.get("/api/incidents?limit=1")
     incident_id = r.json()["incidents"][0]["incident_id"]

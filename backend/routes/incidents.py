@@ -12,13 +12,12 @@ from datetime import date, datetime
 
 from fastapi import APIRouter, HTTPException
 
-from backend.config import settings
 from backend.db import db_session
 from backend.logging_config import get_logger
 from backend.models.api_schemas import IncidentCreate, IncidentReviewDecision
 from backend.services import context_builder, ids
-from backend.services.ai import claude_service
-from backend.services.ai.claude_service import (
+from backend.services.ai import provider as ai_provider
+from backend.services.ai.provider import (
     AIProviderNotConfiguredError,
     AIRequestFailedError,
     AIResponseInvalidError,
@@ -130,7 +129,7 @@ def analyze_incident(incident_id: str):
             raise HTTPException(404, f"Incident {incident_id} not found.")
 
         try:
-            analysis = claude_service.analyze_incident(context, incident_id)
+            analysis = ai_provider.analyze_incident(context, incident_id)
         except AIProviderNotConfiguredError as e:
             raise HTTPException(503, str(e))
         except AIRequestFailedError as e:
@@ -138,6 +137,7 @@ def analyze_incident(incident_id: str):
         except AIResponseInvalidError as e:
             raise HTTPException(502, str(e))
 
+        model_name = ai_provider.active_model_name()
         analysis_id = ids.new_uuid_id("AIAN")
         created_at = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         conn.execute("""
@@ -146,7 +146,7 @@ def analyze_incident(incident_id: str):
                 response_json, summary, confidence, requires_human_review, human_review_status
             ) VALUES (?,?,?,?,?,?,?,?,?,1,'Pending')
         """, (
-            analysis_id, incident_id, created_at, settings.anthropic_model, None,
+            analysis_id, incident_id, created_at, model_name, None,
             json.dumps(context, default=str), analysis.model_dump_json(),
             analysis.summary, analysis.confidence,
         ))
@@ -155,7 +155,7 @@ def analyze_incident(incident_id: str):
             "analysis_id": analysis_id,
             "incident_id": incident_id,
             "created_at": created_at,
-            "model": settings.anthropic_model,
+            "model": model_name,
             "analysis": analysis.model_dump(),
             "human_review_status": "Pending",
         }
