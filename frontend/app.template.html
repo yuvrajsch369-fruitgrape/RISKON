@@ -383,9 +383,10 @@
   .approval-bar h4{ font-size:12.5px; }
   .approval-bar .approval-row{ display:flex; gap:10px; align-items:flex-start; margin-top:10px; }
   .approval-bar textarea{ flex:1; }
-  .approval-banner{ display:flex; align-items:center; gap:10px; padding:14px 16px; border-radius: var(--radius); margin-top:16px; font-size:13px; font-weight:600; }
-  .approval-banner.approved{ background: var(--good-soft); color: color-mix(in srgb, var(--good) 75%, black 15%); }
-  .approval-banner.rejected{ background: var(--critical-soft); color: color-mix(in srgb, var(--critical) 80%, black 10%); }
+  .approval-banner{ display:flex; align-items:center; gap:10px; padding:14px 16px; border-radius: var(--radius); margin-top:16px; font-size:13px; font-weight:600; flex-wrap:wrap; }
+  .approval-banner.approved{ background: var(--good-soft); color: color-mix(in srgb, var(--good) 75%, white 25%); }
+  .approval-banner.rejected{ background: var(--critical-soft); color: color-mix(in srgb, var(--critical) 75%, white 25%); }
+  .approval-banner .btn{ margin-left:auto; }
 
   /* ---------- charts ---------- */
   .chartwrap{ padding: 6px 4px 4px; }
@@ -797,7 +798,13 @@ var ROLES = {
                     nav:['dashboard','executive','facilities','riskgraph','riskintel','learning','intelligence','reports','admin'] }
 };
 function currentRole(){ return ROLES[App.currentRole] || ROLES.hse_manager; }
-function roleCanSeeNav(name){ return currentRole().nav.indexOf(name) >= 0; }
+function roleCanSeeNav(name){
+  // The final-incident-report page isn't its own nav item -- it's a detail
+  // view reached from Investigations, so it rides on that same permission
+  // rather than needing its own entry in every role's nav array.
+  if(name==='incidentreport') name = 'investigation';
+  return currentRole().nav.indexOf(name) >= 0;
+}
 
 /* ---- signup page option lists -- occupation mirrors the real 18-title job
    catalog in database/csv/roles.csv plus "Executive" (a role the synthetic
@@ -1157,6 +1164,7 @@ function viewMeta(){
     riskgraph: { title:'Risk Graph', sub:'A traced relationship chain from real records &mdash; equipment, maintenance, incidents, hazards, and controls. Every edge is a real foreign key, not a decorative connection.' },
     facilities: { title:'Facilities', sub:'Every Rex Industrial facility, its real location, and its current risk signal &mdash; company-wide, independent of the facility filter above.' },
     reports: { title:'Reports', sub:'Generate and export summary reports from live operational data &mdash; no manual data pulls.' },
+    incidentreport: { title:'Final Incident Report'+(App.route.params&&App.route.params.id?' &middot; '+esc(App.route.params.id):''), sub:'The complete record for this incident: evidence, AI findings, the human decision, and everything it triggered &mdash; generated only once an incident has been reviewed.' },
     admin: { title:'Administration', sub:'Your profile, company &amp; facility reference data, and the role-based access model this demo uses.' },
     signup: { title: App.isAuthenticated ? 'Your Account' : 'Sign Up / Log In', sub: App.isAuthenticated ? 'Your name, occupation, post, and email &mdash; shown in the sidebar. Logging out actually ends your session.' : 'Create a real account (email + password), or log in if you already have one.' }
   };
@@ -2242,11 +2250,18 @@ function renderFullPipeline(pipeline, incident){
       s10=pipeline.stage_10_control_gaps, s11=pipeline.stage_11_recommended_actions,
       s12=pipeline.stage_12_risk_register_impact, s13=pipeline.stage_13_human_review_package;
 
+  // incident.status (not the static pipeline fixture's own stage_13.approval
+  // field) is always the live, authoritative decision -- approving/rejecting
+  // through the UI updates incident.status immediately, but these hand-
+  // authored example pipelines' own embedded "approval" field never changes.
+  // Reading incident.status here keeps this box honest after a real decision,
+  // both on the Investigation screen and the Final Incident Report.
+  var decided = incident.status==='Approved' || incident.status==='Rejected';
   var out = '';
-  out += '<div class="summary-callout"><h3>AI Summary &mdash; Pending Human Review</h3><p>'+esc(s13.summary_for_reviewer)+'</p>'+
+  out += '<div class="summary-callout"><h3>AI Summary'+(decided ? ' &mdash; '+esc(incident.status) : ' &mdash; Pending Human Review')+'</h3><p>'+esc(s13.summary_for_reviewer)+'</p>'+
     '<p style="margin-top:8px;font-size:11px;color:var(--ink-2)"><b>Data sources:</b> submitted incident report text, facility/equipment/SOP records &middot; '+
     '<b>Model:</b> '+esc(pipeline.model || 'claude-sonnet-5')+' &middot; <b>Pipeline run:</b> '+esc(pipeline.pipeline_run_id || pipeline.incident_id)+' &middot; '+
-    '<b>Human approval status:</b> '+esc((s13.approval && s13.approval.decision) || 'pending')+'</p></div>';
+    '<b>Human approval status:</b> '+esc(decided ? incident.status : 'Pending')+'</p></div>';
 
   out += stageBlock('2','Information Extraction','Facts extracted directly from the submitted report text.',
     '<div class="factgrid">'+
@@ -2443,10 +2458,12 @@ function renderInvestigation(){
 
 function renderApprovalBar(incident){
   if(incident.status==='Approved'){
-    return '<div class="approval-banner approved">'+ICONS.check+' Approved &mdash; risk register and corrective actions updated.</div>';
+    return '<div class="approval-banner approved">'+ICONS.check+' Approved &mdash; risk register and corrective actions updated.'+
+      '<button class="btn btn-sm" data-action="viewFinalReport" data-id="'+incident.incident_id+'">'+ICONS.reports+' View Final Report</button></div>';
   }
   if(incident.status==='Rejected'){
-    return '<div class="approval-banner rejected">'+ICONS.x+' Rejected &mdash; no changes were made to the risk register.</div>';
+    return '<div class="approval-banner rejected">'+ICONS.x+' Rejected &mdash; no changes were made to the risk register.'+
+      '<button class="btn btn-sm" data-action="viewFinalReport" data-id="'+incident.incident_id+'">'+ICONS.reports+' View Final Report</button></div>';
   }
   var role = currentRole();
   if(!role.canApprove){
@@ -2466,6 +2483,113 @@ function renderApprovalBar(incident){
       '<button class="btn btn-danger" data-action="rejectIncident" data-id="'+incident.incident_id+'">'+ICONS.x+' Reject</button>'+
     '</div>'+
   '</div>';
+}
+
+/* =========================================================================
+   VIEW: FINAL INCIDENT REPORT - generated, not authored. Every section below
+   pulls from data that already exists elsewhere in the app (the incident
+   record, its AI evidence trail, the audit trail, the corrective actions
+   and risk-register entry a decision created) -- this is a compiled,
+   printable read of the real record, not a separate copy of it. Only
+   reachable once an incident has an actual human decision on file; see
+   renderApprovalBar()'s "View Final Report" button.
+   ========================================================================= */
+function renderIncidentReport(){
+  var id = App.route.params && App.route.params.id;
+  var incident = DATA.incidents.find(function(i){ return i.incident_id===id; });
+
+  if(!incident){
+    return '<div class="empty-state">No incident found for ID &ldquo;'+esc(id||'')+'&rdquo;. <a href="#investigation">Back to Investigations</a></div>';
+  }
+  if(incident.status!=='Approved' && incident.status!=='Rejected'){
+    return '<div class="empty-state">'+esc(incident.incident_id)+' hasn&rsquo;t been reviewed yet &mdash; a final report only generates once a human has approved or rejected it.<br><br>'+
+      '<button class="btn btn-sm" style="margin-top:4px" data-action="goInvestigation" data-id="'+incident.incident_id+'">Go to Investigation</button></div>';
+  }
+
+  var decided = incident.status==='Approved' ? 'approved' : 'rejected';
+  var decisionEntry = DATA.auditTrail.filter(function(a){
+    return a.entity_type==='Incident' && a.entity_id===incident.incident_id &&
+      /reviewed/i.test(a.action) && a.approval_status===incident.status;
+  }).sort(function(a,b){ return new Date(b.timestamp)-new Date(a.timestamp); })[0];
+
+  var pipeline = incident.has_full_ai_pipeline ? DATA.aiPipelines[incident.ai_pipeline_id] : null;
+  var liveAnalysis = App.liveAnalyses[incident.incident_id];
+  var evidenceHtml = pipeline ? renderFullPipeline(pipeline, incident)
+    : liveAnalysis ? renderLiveAiAnalysis(incident, liveAnalysis)
+    : renderCondensedPipeline(incident);
+
+  var relatedActions = DATA.correctiveActions.filter(function(a){ return a.incident_id===incident.incident_id; });
+  var relatedRisk = DATA.riskAssessments.find(function(r){ return r.source_incident_id===incident.incident_id; });
+
+  var actionRows = relatedActions.map(function(a){
+    return '<tr><td class="td-id">'+a.corrective_action_id+'</td><td class="td-title" style="max-width:260px">'+esc(a.description)+'</td>'+
+      '<td class="td-muted">'+esc(empName(a.owner_employee_id))+'</td><td class="mono">'+fmtDateShort(a.due_date)+'</td>'+
+      '<td>'+pill(a.status, actionStatusTone(a.status))+'</td></tr>';
+  }).join('');
+
+  return (
+    '<div class="report-toolbar" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">'+
+      '<button class="btn btn-sm" data-action="goInvestigation" data-id="'+incident.incident_id+'">&larr; Back to Investigation</button>'+
+      '<button class="btn btn-primary" data-action="printReports">'+ICONS.reports+' Print / Export</button>'+
+    '</div>'+
+
+    '<div class="card card-pad" style="margin-bottom:14px">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">'+
+        '<div style="min-width:0">'+
+          '<div class="td-id" style="font-size:12px">'+incident.incident_id+' &middot; '+esc(facName(incident.facility_id))+'</div>'+
+          '<h2 style="font-size:19px;margin-top:4px;word-break:break-word">'+esc(incident.title)+'</h2>'+
+          '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">'+
+            pill('Reported: '+incident.severity_reported, severityTone(incident.severity_reported))+
+            pill(incident.status, incidentStatusTone(incident.status))+
+            '<span class="pill tone-neutral">'+esc(incident.hazard_category)+'</span>'+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="evidence-text" style="margin-top:12px">'+esc(incident.description)+'</div>'+
+      '<div style="margin-top:8px;font-size:11.5px;color:var(--ink-3)">Reported by '+esc(empName(incident.reporter_employee_id))+' ('+esc(empRole(incident.reporter_employee_id))+') &middot; Occurred '+fmtDate(incident.date_occurred)+
+        (incident.equipment_id? ' &middot; Equipment: '+esc(eqType(incident.equipment_id)) : '')+
+        (incident.related_sop_id? ' &middot; Related SOP: '+esc(sopTitle(incident.related_sop_id)) : '')+
+      '</div>'+
+    '</div>'+
+
+    '<h3 style="margin:18px 0 10px">Investigation Findings</h3>'+
+    evidenceHtml+
+
+    '<div class="card card-pad" style="margin-top:14px">'+
+      '<h3 style="font-size:14px">Human Review Decision <span class="ev-tag ev-human" style="margin-left:4px">HUMAN DECISION</span></h3>'+
+      '<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">'+pill(incident.status, incident.status==='Approved'?'good':'critical')+'</div>'+
+      (decisionEntry ?
+        '<div style="margin-top:10px;font-size:12.75px;color:var(--ink-2)">Reviewed by <b>'+esc(decisionEntry.user)+'</b> ('+esc(decisionEntry.user_role)+') on '+esc(decisionEntry.timestamp)+'</div>'+
+        (decisionEntry.reason && decisionEntry.reason!=='(no reviewer comment provided)' ?
+          '<div class="evidence-text" style="margin-top:8px"><b>Reviewer comment:</b> '+esc(decisionEntry.reason)+'</div>' :
+          '<div style="margin-top:8px;font-size:11.5px;color:var(--ink-3)">No reviewer comment was left.</div>')
+        : '<div style="margin-top:10px;font-size:11.5px;color:var(--ink-3)">No matching audit entry found for this decision.</div>')+
+    '</div>'+
+
+    (decided==='approved' ? (
+      '<div class="card" style="margin-top:14px">'+
+        '<div class="card-head"><h3>Corrective / Preventive Actions Opened ('+relatedActions.length+')</h3><span class="card-head-sub">Created automatically on approval, each assigned to a real owner with a real due date.</span></div>'+
+        '<div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>ID</th><th>Description</th><th>Owner</th><th>Due</th><th>Status</th></tr></thead><tbody>'+
+          (actionRows || '<tr><td colspan="5" style="text-align:center;color:var(--ink-3)">None opened.</td></tr>')+
+        '</tbody></table></div>'+
+      '</div>'+
+      (relatedRisk ?
+        '<div class="card card-pad" style="margin-top:14px">'+
+          '<h3 style="font-size:14px">Risk Register Impact</h3>'+
+          '<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">'+
+            '<span class="td-id">'+relatedRisk.risk_assessment_id+'</span>'+
+            pill(relatedRisk.risk_level, riskLevelTone(relatedRisk.risk_level))+
+            '<span class="pill tone-neutral">Score '+relatedRisk.risk_score+'</span>'+
+          '</div>'+
+          '<div style="margin-top:8px;font-size:12.75px;color:var(--ink-2)">'+esc(relatedRisk.hazard_category)+' &middot; likelihood '+relatedRisk.likelihood+' &times; impact '+relatedRisk.impact+'</div>'+
+        '</div>' : '')
+    ) : (
+      '<div class="summary-callout" style="margin-top:14px"><p style="font-size:12.5px">This incident was rejected on human review &mdash; no corrective actions were opened and no risk register entry was created.</p></div>'
+    ))+
+
+    '<div style="margin-top:18px;font-size:11px;color:var(--ink-3)">Generated '+fmtDate('2026-09-03')+' from the live RISKON record for '+incident.incident_id+'. '+
+      'Every AI-generated field above is labeled FACT, PATTERN, HYPOTHESIS, or RECOMMENDATION and was reviewed by a person before this incident was marked '+incident.status.toLowerCase()+'.</div>'
+  );
 }
 
 /* =========================================================================
@@ -3630,6 +3754,7 @@ document.addEventListener('click', function(e){
 
   if(action==='goInvestigation'){ if(!t.dataset.id) return; App.selectedIncidentId = t.dataset.id; navigate('investigation'); e.preventDefault(); return; }
   if(action==='selectIncident'){ App.selectedIncidentId = t.dataset.id; render(); return; }
+  if(action==='viewFinalReport'){ navigate('incidentreport', {id:t.dataset.id}); return; }
   if(action==='toggleNewIncident'){ App.newIncidentOpen = !App.newIncidentOpen; render(); return; }
   if(action==='submitIncident'){ submitNewIncident(); return; }
   if(action==='approveIncident'){ handleApproval(t.dataset.id,'approved'); render(); return; }
@@ -3830,6 +3955,7 @@ function render(){
     case 'facilities': view = renderFacilities(); break;
     case 'riskgraph': view = renderRiskGraph(); break;
     case 'reports': view = renderReports(); break;
+    case 'incidentreport': view = renderIncidentReport(); break;
     case 'admin': view = renderAdministration(); break;
     case 'signup': view = renderSignup(); break;
     default: view = renderDashboard();
