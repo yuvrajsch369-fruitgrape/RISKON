@@ -29,5 +29,9 @@ coverage/
 .vscode/
 .idea/
 
+# --- SQLite WAL-mode sidecar files (local runtime state, never the committed dataset) ---
+database/*.db-wal
+database/*.db-shm
+
 # --- Claude Code local session settings (machine/user-specific, not project config) -
 .claude/settings.local.json*

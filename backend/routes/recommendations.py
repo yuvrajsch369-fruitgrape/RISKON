@@ -3,7 +3,7 @@ row — the server-side counterpart to the frontend's existing (session-only)
 handleRecommendationFeedback(). See docs/continuous-learning-engine.md."""
 from datetime import datetime
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 
 from backend.db import db_session
 from backend.logging_config import get_logger
@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.get("/api/recommendations")
-def list_recommendations(human_decision: str | None = None, limit: int = 200):
+def list_recommendations(human_decision: str | None = None, limit: int = Query(default=200, ge=1, le=1000)):
     with db_session() as conn:
         if human_decision:
             rows = conn.execute(

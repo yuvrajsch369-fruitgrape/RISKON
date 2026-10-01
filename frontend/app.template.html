@@ -764,16 +764,27 @@ function fetchJsonWithTimeout(url, timeoutMs){
 }
 async function resolveLiveData(){
   var health = await fetchJsonWithTimeout('/api/health', 1500);
-  if(!health) return { data: null, reachable: false, aiConfigured: false, authRequired: false, sessionUser: null };
+  if(!health) return { data: null, reachable: false, aiConfigured: false, aiProvider: 'claude', aiModel: null,
+                        authRequired: false, sessionUser: null };
   var boot = await fetchJsonWithTimeout('/api/bootstrap', 6000);
   var me = await fetchJsonWithTimeout('/api/users/me', 3000);
   return { data: boot, reachable: true, aiConfigured: !!health.ai_configured,
+           aiProvider: health.ai_provider || 'claude', aiModel: health.ai_model || null,
            authRequired: !!health.auth_required, sessionUser: me ? me.user : null };
 }
 
 var __live = await resolveLiveData();
 var BACKEND_REACHABLE = __live.reachable;
 var AI_CONFIGURED = __live.aiConfigured;
+// Which provider/model actually answers POST /api/incidents/{id}/analyze --
+// server-reported (backend/config.py's AI_PROVIDER), never assumed to be
+// Claude: see backend/services/ai/provider.py, added when NVIDIA NIM became
+// a swappable alternative. Drives the button/loading copy below so it never
+// claims to be running a model that isn't actually configured.
+var AI_PROVIDER = __live.aiProvider;
+var AI_MODEL = __live.aiModel;
+var AI_PROVIDER_LABEL = (AI_PROVIDER === 'nvidia_nim') ? 'NVIDIA NIM' : 'Claude';
+var AI_PROVIDER_ENV_VAR = (AI_PROVIDER === 'nvidia_nim') ? 'NVIDIA_API_KEY' : 'ANTHROPIC_API_KEY';
 // AUTH_REQUIRED reflects the backend's real, server-enforced setting -- when
 // true, an unauthenticated visitor gets shown the login screen below
 // regardless of what route they tried to reach (the API would 401 anyway;
@@ -2353,20 +2364,24 @@ function renderCondensedPipeline(incident){
    renderAiAnalysisButton() shows exactly one of three honest states -- it
    never pretends AI ran when it didn't:
      1. no backend reachable at all (static demo mode, same as before)
-     2. backend reachable but ANTHROPIC_API_KEY not set (server-verified,
-        not guessed client-side)
+     2. backend reachable but the active provider's API key isn't set
+        (server-verified via /api/health's ai_provider, not guessed
+        client-side -- Claude's ANTHROPIC_API_KEY or NIM's NVIDIA_API_KEY,
+        whichever backend/config.py's AI_PROVIDER actually points at)
      3. backend reachable and AI configured -- a real, wired button ---- */
 function renderAiAnalysisButton(incident){
   if(App.aiAnalysisLoading === incident.incident_id){
-    return '<div style="margin-top:10px"><button class="btn btn-sm" disabled>'+ICONS.search+' Analyzing with Claude&hellip;</button></div>';
+    return '<div style="margin-top:10px"><button class="btn btn-sm" disabled>'+ICONS.search+' Analyzing with '+esc(AI_PROVIDER_LABEL)+'&hellip;</button>'+
+      (AI_PROVIDER==='nvidia_nim' ? '<div style="margin-top:6px;font-size:11px;color:var(--ink-3)">The free NVIDIA tier can take a minute or two to respond &mdash; this is expected, not stuck.</div>' : '')+
+      '</div>';
   }
   if(!BACKEND_REACHABLE){
     return '<div style="margin-top:10px"><button class="btn btn-sm" disabled title="No backend reachable">'+ICONS.search+' Generate AI Analysis</button>'+
       '<div style="margin-top:6px;font-size:11px;color:var(--ink-3)">Static demo mode &mdash; no backend reachable. Run the RISKON backend (see README.md) to enable live AI analysis.</div></div>';
   }
   if(!AI_CONFIGURED){
-    return '<div style="margin-top:10px"><button class="btn btn-sm" disabled title="ANTHROPIC_API_KEY not set">'+ICONS.search+' Generate AI Analysis</button>'+
-      '<div style="margin-top:6px;font-size:11px;color:var(--critical)">AI provider not configured. Add ANTHROPIC_API_KEY to the environment to enable AI features.</div></div>';
+    return '<div style="margin-top:10px"><button class="btn btn-sm" disabled title="'+esc(AI_PROVIDER_ENV_VAR)+' not set">'+ICONS.search+' Generate AI Analysis</button>'+
+      '<div style="margin-top:6px;font-size:11px;color:var(--critical)">AI provider not configured. Add '+esc(AI_PROVIDER_ENV_VAR)+' to the environment to enable AI features.</div></div>';
   }
   return '<div style="margin-top:10px"><button class="btn btn-sm btn-primary" data-action="generateAiAnalysis" data-id="'+incident.incident_id+'">'+ICONS.search+' Generate AI Analysis</button></div>';
 }

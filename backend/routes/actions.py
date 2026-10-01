@@ -4,7 +4,7 @@ frontend at all (today an action's status only ever changes via the
 synthetic seed data)."""
 from datetime import date, datetime
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 
 from backend.db import db_session
 from backend.logging_config import get_logger
@@ -15,7 +15,8 @@ router = APIRouter()
 
 
 @router.get("/api/actions")
-def list_actions(status: str | None = None, facility_id: str | None = None, limit: int = 300):
+def list_actions(status: str | None = None, facility_id: str | None = None,
+                  limit: int = Query(default=300, ge=1, le=1000)):
     with db_session() as conn:
         clauses, params = [], []
         if status:

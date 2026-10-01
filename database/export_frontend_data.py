@@ -78,7 +78,13 @@ def _derive_status(investigation_status, closure_status):
 
 
 def _derive_shift(incident_datetime):
-    hour = int(incident_datetime[11:13])
+    # A malformed incident_datetime (bad manual edit, a future data-entry bug)
+    # must degrade this ONE incident's derived shift, never take down the
+    # entire /api/bootstrap response for every user over one bad row.
+    try:
+        hour = int(incident_datetime[11:13])
+    except (TypeError, ValueError, IndexError):
+        return "Unknown"
     if 6 <= hour < 14:
         return "Day"
     if 14 <= hour < 22:

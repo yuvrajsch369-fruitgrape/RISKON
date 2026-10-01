@@ -28,3 +28,43 @@ def next_id(conn: sqlite3.Connection, table: str, id_column: str, prefix: str, w
 def new_uuid_id(prefix: str) -> str:
     """For tables with no natural sequential convention yet (ai_incident_analyses)."""
     return f"{prefix}-{uuid.uuid4().hex[:12]}"
+
+
+def next_id_with_retry(conn: sqlite3.Connection, table: str, id_column: str, prefix: str, insert_fn,
+                        width: int = 4, max_attempts: int = 8) -> str:
+    """Computes next_id() and calls insert_fn(candidate_id) to perform the
+    actual INSERT, retrying with a freshly computed id on a UNIQUE
+    constraint collision.
+
+    next_id() alone has a real race: two concurrent requests can both read
+    the same "current highest" row before either has committed, compute the
+    same candidate, and then both attempt to INSERT it -- confirmed under
+    load (25 concurrent incident creates produced 21 `IntegrityError: UNIQUE
+    constraint failed` failures). The second writer's INSERT only runs once
+    it has the write lock (i.e. after the first has committed), so re-reading
+    next_id() at that point sees the first writer's new row and produces a
+    correct, non-colliding id -- insert_fn must let sqlite3.IntegrityError
+    propagate (never swallow it) for this retry to have something to catch.
+
+    Only retries when the collision is actually on `{table}.{id_column}`.
+    insert_fn can also legitimately raise IntegrityError for an unrelated
+    reason (e.g. users.py's email UNIQUE index on a duplicate signup) --
+    retrying THAT with a new id would silently burn every attempt on an
+    error a new id can never fix, surfacing as a confusing 500 instead of
+    the real 409. SQLite's error message names the failing column, so this
+    checks for it rather than assuming every IntegrityError here is "our" id
+    race.
+    """
+    collision_marker = f"{table}.{id_column}"
+    last_exc = None
+    for _ in range(max_attempts):
+        candidate = next_id(conn, table, id_column, prefix, width=width)
+        try:
+            insert_fn(candidate)
+            return candidate
+        except sqlite3.IntegrityError as e:
+            if collision_marker not in str(e):
+                raise
+            last_exc = e
+            continue
+    raise last_exc

@@ -100,6 +100,17 @@ def get_connection() -> sqlite3.Connection:
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
+    # Without busy_timeout, a second connection hitting a lock another
+    # connection holds fails IMMEDIATELY with "database is locked" instead of
+    # waiting -- under concurrent requests (FastAPI runs sync route handlers
+    # in a thread pool, so this app genuinely has multiple simultaneous
+    # SQLite connections) that surfaces as a bare 500. 5s gives a writer time
+    # to finish its transaction instead. WAL mode additionally lets readers
+    # proceed while a write is in progress rather than blocking on it --
+    # persists in the database file itself, so this is a one-time cost, not
+    # a per-connection one, but is safe/idempotent to (re)issue every time.
+    conn.execute("PRAGMA busy_timeout = 5000")
+    conn.execute("PRAGMA journal_mode = WAL")
     return conn
 
 

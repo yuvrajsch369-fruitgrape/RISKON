@@ -51,15 +51,18 @@ def signup(body: UserSignup, response: Response):
             password_hash = auth.hash_password(body.password)
         except ValueError as e:
             raise HTTPException(422, str(e))
-        user_id = ids.next_id(conn, "app_users", "user_id", "USR")
         rbac_role = _rbac_role_for(body.occupation)
         created_at = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-        conn.execute(
-            "INSERT INTO app_users (user_id, name, occupation, post, rbac_role, created_at, email, password_hash) "
-            "VALUES (?,?,?,?,?,?,?,?)",
-            (user_id, body.name.strip(), body.occupation.strip(), body.post.strip(), rbac_role, created_at,
-             body.email, password_hash),
-        )
+
+        def _insert(user_id: str) -> None:
+            conn.execute(
+                "INSERT INTO app_users (user_id, name, occupation, post, rbac_role, created_at, email, "
+                "password_hash) VALUES (?,?,?,?,?,?,?,?)",
+                (user_id, body.name.strip(), body.occupation.strip(), body.post.strip(), rbac_role, created_at,
+                 body.email, password_hash),
+            )
+
+        user_id = ids.next_id_with_retry(conn, "app_users", "user_id", "USR", _insert)
         token = auth.create_session(conn, user_id)
         logger.info("user_signed_up user_id=%s occupation=%s rbac_role=%s", user_id, body.occupation, rbac_role)
         result = {

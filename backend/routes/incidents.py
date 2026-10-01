@@ -10,7 +10,7 @@ renderCondensedPipeline() for the full before/after.
 import json
 from datetime import date, datetime
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 
 from backend.db import db_session
 from backend.logging_config import get_logger
@@ -40,7 +40,7 @@ def _row_to_dict(row):
 
 
 @router.get("/api/incidents")
-def list_incidents(facility_id: str | None = None, limit: int = 200):
+def list_incidents(facility_id: str | None = None, limit: int = Query(default=200, ge=1, le=1000)):
     with db_session() as conn:
         if facility_id:
             rows = conn.execute(
@@ -85,7 +85,6 @@ def create_incident(body: IncidentCreate):
                                           "pass reporter_employee_id explicitly.")
             reporter_id = row["employee_id"]
 
-        incident_id = ids.next_id(conn, "incidents", "incident_id", "INC")
         now = datetime.utcnow()
         occurred = body.date_occurred or now.date().isoformat()
         # The incidents table has no separate `title` column (see database/schema.sql
@@ -96,22 +95,25 @@ def create_incident(body: IncidentCreate):
         # real database instead of only existing in the request body.
         description = f"{body.title}. {body.description}" + (f" (Location: {body.location})" if body.location else "")
 
-        conn.execute("""
-            INSERT INTO incidents (
-                incident_id, facility_id, location, incident_datetime, incident_type, description,
-                equipment_id, hazard_id, involved_employee_id, involved_contractor_id, injury_status,
-                potential_consequence, initial_severity, immediate_action, investigation_status,
-                root_cause_category, related_risk_register_id, reported_by_employee_id, reported_at,
-                closure_status, closed_date
-            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-        """, (
-            incident_id, body.facility_id, body.location or "Not specified",
-            f"{occurred} 00:00:00", "Unsafe Condition", description,
-            None, None, None, None, "None reported",
-            "Not yet assessed", body.severity_reported, "Not yet documented", "Not Started",
-            None, None, reporter_id, now.strftime("%Y-%m-%d %H:%M:%S"),
-            "Open", None,
-        ))
+        def _insert(incident_id: str) -> None:
+            conn.execute("""
+                INSERT INTO incidents (
+                    incident_id, facility_id, location, incident_datetime, incident_type, description,
+                    equipment_id, hazard_id, involved_employee_id, involved_contractor_id, injury_status,
+                    potential_consequence, initial_severity, immediate_action, investigation_status,
+                    root_cause_category, related_risk_register_id, reported_by_employee_id, reported_at,
+                    closure_status, closed_date
+                ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            """, (
+                incident_id, body.facility_id, body.location or "Not specified",
+                f"{occurred} 00:00:00", "Unsafe Condition", description,
+                None, None, None, None, "None reported",
+                "Not yet assessed", body.severity_reported, "Not yet documented", "Not Started",
+                None, None, reporter_id, now.strftime("%Y-%m-%d %H:%M:%S"),
+                "Open", None,
+            ))
+
+        incident_id = ids.next_id_with_retry(conn, "incidents", "incident_id", "INC", _insert)
         row = conn.execute("SELECT * FROM incidents WHERE incident_id=?", (incident_id,)).fetchone()
         logger.info("incident_created incident_id=%s facility_id=%s", incident_id, body.facility_id)
         return dict(row)
@@ -191,6 +193,14 @@ def review_incident(incident_id: str, body: IncidentReviewDecision):
         incident = conn.execute("SELECT * FROM incidents WHERE incident_id=?", (incident_id,)).fetchone()
         if not incident:
             raise HTTPException(404, f"Incident {incident_id} not found.")
+        if incident["investigation_status"] == "Completed":
+            # Without this guard, a double-click or a retried request (flaky
+            # network, browser resend) re-runs the Approved branch below and
+            # creates a SECOND full set of duplicate actions from the same
+            # analysis's recommendations -- confirmed: two POSTs produced 4
+            # actions instead of 2. Reviewing is a one-way transition, same
+            # idiom as complete_action's "already Completed" 400 below.
+            raise HTTPException(400, f"Incident {incident_id} has already been reviewed.")
 
         latest_analysis = conn.execute(
             "SELECT * FROM ai_incident_analyses WHERE incident_id=? ORDER BY created_at DESC LIMIT 1",
@@ -210,18 +220,21 @@ def review_incident(incident_id: str, body: IncidentReviewDecision):
             for rec_text in analysis.get("recommendations", []):
                 if not owner_id:
                     break
-                action_id = ids.next_id(conn, "actions", "action_id", "ACT")
-                conn.execute("""
-                    INSERT INTO actions (
-                        action_id, action_type, source_type, source_incident_id, related_control_id,
-                        description, facility_id, owner_employee_id, created_date, original_due_date,
-                        due_date, reschedule_count, status, completion_date, verification_method
-                    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,0,'Open',NULL,?)
-                """, (
-                    action_id, "Corrective", "Incident", incident_id, None,
-                    rec_text[:500], incident["facility_id"], owner_id, today, due, due,
-                    "Follow-up inspection",
-                ))
+
+                def _insert_action(action_id: str, rec_text=rec_text) -> None:
+                    conn.execute("""
+                        INSERT INTO actions (
+                            action_id, action_type, source_type, source_incident_id, related_control_id,
+                            description, facility_id, owner_employee_id, created_date, original_due_date,
+                            due_date, reschedule_count, status, completion_date, verification_method
+                        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,0,'Open',NULL,?)
+                    """, (
+                        action_id, "Corrective", "Incident", incident_id, None,
+                        rec_text[:500], incident["facility_id"], owner_id, today, due, due,
+                        "Follow-up inspection",
+                    ))
+
+                action_id = ids.next_id_with_retry(conn, "actions", "action_id", "ACT", _insert_action)
                 created_actions.append(action_id)
 
             conn.execute(
