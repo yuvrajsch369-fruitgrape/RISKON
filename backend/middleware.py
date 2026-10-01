@@ -70,14 +70,23 @@ class DemoAccessMiddleware(BaseHTTPMiddleware):
 # open, frictionless demo changes unless a real access-controlled pilot
 # deployment explicitly turns it on. Both gates can run at once.
 # -----------------------------------------------------------------------------
-_AUTH_EXEMPT_PATH_PREFIXES = ("/api/health", "/api/users/")
-# /api/users/* stays reachable even when enforcement is on: signup/login are
-# how you'd ever get a session in the first place, and GET /api/users/me must
-# be answerable with NO session (it's exactly how the frontend learns "you
-# are not logged in"). Only other /api/* business-data routes are protected.
-# The frontend itself ("/") is never blocked by path (see the check below) --
-# an unauthenticated visitor must still be able to load the page in order to
-# see a real login form, rather than getting a dead, unstyled 401 response.
+_AUTH_EXEMPT_PATHS = {"/api/health", "/api/users/signup", "/api/users/login", "/api/users/logout", "/api/users/me"}
+# Only these exact paths stay reachable when enforcement is on: signup/login/
+# logout are how you'd ever get (or end) a session in the first place, and
+# GET /api/users/me must be answerable with NO session (it's exactly how the
+# frontend learns "you are not logged in"). Every other /api/* route --
+# GET /api/users/{id} included -- requires a real session.
+#
+# Deliberately exact-path, not prefix, matching. Confirmed real gap with the
+# previous "/api/users/" PREFIX exemption: it also covered GET
+# /api/users/{user_id}, an arbitrary-id lookup with no legitimate pre-auth
+# use case (the frontend never calls it) -- meaning a real locked-down
+# deployment with AUTH_REQUIRED on still let anyone enumerate every real
+# user's name/email/role/facility with zero session, just by incrementing
+# the (sequential, predictable) USR-nnnn id. The frontend itself ("/") is
+# never blocked by path (see the check below) -- an unauthenticated visitor
+# must still be able to load the page in order to see a real login form,
+# rather than getting a dead, unstyled 401 response.
 
 
 class AuthRequiredMiddleware(BaseHTTPMiddleware):
@@ -86,7 +95,7 @@ class AuthRequiredMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
 
         path = request.url.path
-        if not path.startswith("/api/") or path.startswith(_AUTH_EXEMPT_PATH_PREFIXES):
+        if not path.startswith("/api/") or path in _AUTH_EXEMPT_PATHS:
             return await call_next(request)
 
         token = request.cookies.get(SESSION_COOKIE_NAME)

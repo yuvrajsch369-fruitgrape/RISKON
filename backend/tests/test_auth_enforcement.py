@@ -47,3 +47,21 @@ def test_enabled_me_reachable_with_no_session(app_client, monkeypatch):
 def test_enabled_frontend_root_still_reachable(app_client, monkeypatch):
     monkeypatch.setattr(settings, "auth_required", True)
     assert app_client.get("/").status_code == 200
+
+
+def test_enabled_blocks_arbitrary_user_lookup(app_client, monkeypatch):
+    """Confirmed real gap: the previous exemption matched on the "/api/users/"
+    PREFIX, which also covered GET /api/users/{user_id} -- an arbitrary-id
+    lookup the frontend never calls and has no legitimate pre-auth use case.
+    With AUTH_REQUIRED on, that let anyone enumerate every real user's name/
+    email/role/facility with zero session, just by incrementing the
+    sequential USR-nnnn id. Must now require a real session like any other
+    business-data route."""
+    signup = app_client.post("/api/users/signup", json=_SIGNUP_BODY)
+    user_id = signup.json()["user_id"]
+    app_client.post("/api/users/logout")  # drop the session; keep the account
+
+    monkeypatch.setattr(settings, "auth_required", True)
+    r = app_client.get(f"/api/users/{user_id}")
+    assert r.status_code == 401
+    assert r.json()["error"] == "authentication_required"
